@@ -95,6 +95,20 @@ class CmvMySqlTarget(luigi.Target):
                 raise
         return row is not None
 
+    def delete(self, connection=None):
+        if connection is None:
+            connection = self.connect()
+            connection.autocommit = True
+
+        cursor = connection.cursor()
+
+        try:
+            cursor.execute("""DELETE FROM {target_table}
+                WHERE update_id = %s""".format(target_table=self.table),
+                           (self.update_id,))
+        except mysql.connector.Error:
+            raise
+
     def connect(self, autocommit=False):
         connection = mysql.connector.connect(user=self.user,
                                              password=self.password,
