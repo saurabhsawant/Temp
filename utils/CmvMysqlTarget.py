@@ -33,7 +33,6 @@ class CmvMySqlTarget(luigi.Target):
 
         """
         # "root@password@192.168.99.100:3306@luigi_poc@item_property2"
-
         if ':' in connect_args['host']:
             self.host, self.port = connect_args['host'].split(':')
             self.port = int(self.port)
@@ -117,30 +116,3 @@ class CmvMySqlTarget(luigi.Target):
                                              database=self.database,
                                              autocommit=autocommit)
         return connection
-
-    def create_target_table(self):
-        """
-        Create marker table if it doesn't exist.
-
-        Using a separate connection since the transaction might have to be reset.
-        """
-        connection = self.connect(autocommit=True)
-        cursor = connection.cursor()
-        try:
-            cursor.execute(
-                """ CREATE TABLE {marker_table} (
-                        id            BIGINT(20)    NOT NULL AUTO_INCREMENT,
-                        update_id     VARCHAR(128)  NOT NULL,
-                        target_table  VARCHAR(128),
-                        inserted      TIMESTAMP DEFAULT NOW(),
-                        PRIMARY KEY (update_id),
-                        KEY id (id)
-                    )
-                """.format(marker_table=self.marker_table)
-            )
-        except mysql.connector.Error as e:
-            if e.errno == errorcode.ER_TABLE_EXISTS_ERROR:
-                pass
-            else:
-                raise
-        connection.close()
