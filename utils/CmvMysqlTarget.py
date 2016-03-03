@@ -8,7 +8,6 @@ try:
     import mysql.connector
     from mysql.connector import errorcode
 except ImportError as e:
-    print("things going wrong")
     logger.warning("Loading MySQL module without the python package mysql-connector-python. \
         This will crash at runtime if MySQL functionality is used.")
 
@@ -30,7 +29,6 @@ class CmvMySqlTarget(luigi.Target):
         :type column_names: list of strings
         :param column_values: values of columns.
         :type column_values: list of strings
-
         """
         # "root@password@192.168.99.100:3306@luigi_poc@item_property2"
         if ':' in connect_args['host']:
