@@ -17,7 +17,7 @@ class CmvMySqlTarget(luigi.Target):
     Target for a resource in MySql.
     """
 
-    def __init__(self, connect_args, update_id, column_names, column_values):
+    def __init__(self, connect_args, table=None, update_id=None, column_names=None, column_values=None):
         """
         Initializes a MySqlTarget instance.
 
@@ -40,10 +40,12 @@ class CmvMySqlTarget(luigi.Target):
         self.database = connect_args['database']
         self.user = connect_args['user']
         self.password = connect_args['password']
-        self.table = connect_args['table']
+        self.table = table
         self.update_id = update_id
-        self.column_names = ["update_id"] + column_names
-        self.column_values = [self.update_id] + column_values
+        if column_names:
+            self.column_names = ["update_id"] + column_names
+        if column_values:
+            self.column_values = [self.update_id] + column_values
 
     def touch(self, connection=None):
         """
@@ -71,6 +73,29 @@ class CmvMySqlTarget(luigi.Target):
 
         # make sure update is properly marked
         assert self.exists(connection)
+
+    def query(self, query_string, query_values=None, connection=None):
+        """
+        :param query_string: query string examples:
+        [1] select * from table.
+        [2] SELECT * FROM foo WHERE bar = %s AND baz = %s
+        :param query_values:
+        [1] None
+        [2] list with bar and baz values.
+        :param connection: optional connection
+        :return: iterator with rows
+        """
+        if connection is None:
+            connection = self.connect()
+            connection.autocommit = True
+
+        cursor = connection.cursor()
+
+        try:
+            cursor.execute(query_string, query_values)
+            return cursor.fetchall()
+        except mysql.connector.Error:
+            raise
 
     def exists(self, connection=None):
         if connection is None:
