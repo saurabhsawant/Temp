@@ -1,0 +1,51 @@
+{
+  "show_data.stdout_print": false,
+  "show_data.info_print":   false,
+  "rookery": {
+    "materialized": {
+      "view": {
+        "time_limit": -900,
+        "cache_namespace": "$name_space",
+        "numPartitions": 10,
+        "showInfo": false,
+        "checkSavedRdd": true,
+        "aggregateSaveRdd": true,
+        "cmvGenerator": "worflow-cmv",
+        "cmvHourToDisk": false,
+        "saveAllProviders": true,
+        "heliosUrl": "helios.next-staging.ooyala.com:8081",
+        "heliosParallelizm": 15,
+        "pcodes": "$pcode_dict",
+        "cache":{
+          "isSave":true,
+          "isInMem":false,
+          "cassandra":{
+            "seeds": [
+              "$cassandra_seeds"
+            ],
+            "keyspace": "$key_space",
+            "max-thrift-size" : "64000000",
+            "delete-cl-quorum" : true
+          }
+        }
+      }
+    },
+    "input-source":"hdfs-parquet-session",
+    "hdfs":{
+      "files":[],
+      "timeFilter": false,
+      "oneHourPack": true,
+      "perFileSplit": 20,
+      "readColumns": ["pcode", "countryCode", "region", "state", "dma", "deviceType", "operatingSystem", "browser", "fqdn", "embedCode", "playerId",
+        "playsStarted", "displays", "playsRequested", "playheadUpdates", "milliSecondsWatched", "playthrough25", "playthrough50", "playthrough75", "playthrough100",
+        "sharing/embedCopied", "sharing/urlsCopied", "sharing/emailsSent", "sharing/facebook", "sharing/twitter", "sharing/digg", "sharing/stumbleupon",
+        "guid", "replaysStarted", "segmentWatchedBins/_1", "segmentWatchedBins/_2", "contentWatchedBins/_1", "contentWatchedBins/_2", "startTime", "playerLoads", "autoplaysStarted", "replaysStarted"],
+      "canBeEmpty":true
+    },
+    "events":{
+      "start_time":"$start_time",
+      "end_time":"$end_time",
+      "rdd_duration":"min15"
+    }
+  }
+}

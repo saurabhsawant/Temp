@@ -23,3 +23,9 @@ def get_providers_from_helios():
         """
     query_values = ['live']
     return CmvMySqlTarget(connect_args=connect_args).query(query_string, query_values)
+
+def prepare_ptz(pcode_tz_rows):
+    pcode_info = {}
+    for pcode_tz in pcode_tz_rows:
+        pcode_info[pcode_tz[0]] = {'numOfPartition':1, 'input-paths':[], 'timezone':pcode_tz[1]}
+    return pcode_info
