@@ -6,6 +6,7 @@ from luigi.contrib.hdfs import HdfsTarget
 from CmvLib import *
 import json
 from datetime import timedelta
+import requests
 
 class InputSessionFile(luigi.ExternalTask):
     cube_time = luigi.DateMinuteParameter()
@@ -31,6 +32,7 @@ class CmvMin15(luigi.Task):
     cassandra_seeds = luigi.Parameter(significant=False)
     jobserver_host = luigi.Parameter(significant=False)
 
+
     tmpl_subst_params = {"start_time": start_time,
                          "end_time": end_time,
                          "key_space": key_space,
@@ -43,8 +45,7 @@ class CmvMin15(luigi.Task):
             if key_type is dict:
                 self.check_replacements(json_data[k])
             elif key_type is unicode and json_data[k].startswith('$'):
-                param_tobe_replaced = json_data[k][1:]
-                json_data[k] = self.tmpl_subst_params[param_tobe_replaced]
+                json_data[k] = self.tmpl_subst_params[json_data[k][1:]]
 
     def process_config_tmpl(self, tmpl_file):
         with open(tmpl_file) as json_file:
@@ -69,6 +70,12 @@ class CmvMin15(luigi.Task):
 
     def run(self):
         config_json = self.process_config_tmpl("/Users/jmettu/repos/analytics-workflow-service/utils/cmv_template.json")
+        # js_url = 'http://' + self.jobserver_host + '/jobs?appName=' + self.datacube_jar +
+        # '&classPath=ooyala.cnd.CreateDelphiDatacube' + '&context=' + self.context + '&sync=false'
+        js_url = 'http://{js_host}/jobs?appName={dc_jar}&classPath=ooyala.' \
+                 'cnd.CreateDelphiDatacube&context={ctxt}&sync=false'.\
+                  format(js_host=self.jobserver_host, dc_jar=self.datacube_jar, ctxt=self.context)
+        self.submit_config_to_js(config_json, js_url)
 
     def output(self):
         return luigi.contrib.hdfs.HdfsTarget('/tmp/luigi-poc/touchme')

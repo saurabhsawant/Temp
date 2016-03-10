@@ -20,9 +20,7 @@
           "isSave":true,
           "isInMem":false,
           "cassandra":{
-            "seeds": [
-              "$cassandra_seeds"
-            ],
+            "seeds": "$cassandra_seeds",
             "keyspace": "$key_space",
             "max-thrift-size" : "64000000",
             "delete-cl-quorum" : true
@@ -33,8 +31,8 @@
     "input-source":"hdfs-parquet-session",
     "hdfs":{
       "files":[],
-      "timeFilter": false,
-      "oneHourPack": true,
+      "timeFilter": true,
+      "oneHourPack": false,
       "perFileSplit": 20,
       "readColumns": ["pcode", "countryCode", "region", "state", "dma", "deviceType", "operatingSystem", "browser", "fqdn", "embedCode", "playerId",
         "playsStarted", "displays", "playsRequested", "playheadUpdates", "milliSecondsWatched", "playthrough25", "playthrough50", "playthrough75", "playthrough100",
