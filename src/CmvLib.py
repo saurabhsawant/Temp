@@ -1,4 +1,6 @@
 __author__ = 'jmettu'
+import requests
+import json
 
 from utils.CmvMysqlTarget import *
 logger = logging.getLogger('luigi-interface')
@@ -29,3 +31,10 @@ def prepare_ptz(pcode_tz_rows):
     for pcode_tz in pcode_tz_rows:
         pcode_info[pcode_tz[0]] = {'numOfPartition':1, 'input-paths':[], 'timezone':pcode_tz[1]}
     return pcode_info
+
+def submit_config_to_js(self, config_json, js_url):
+    headers = {'content-type': 'application/json'}
+    r = requests.post(js_url, json.dumps(config_json), headers)
+    r.raise_for_status()
+    return r.json()
+
