@@ -31,25 +31,19 @@ class CmvMin15(luigi.Task):
     sqlcmv_nameSpace = luigi.Parameter(significant=False)
     cassandra_seeds = luigi.Parameter(significant=False)
     jobserver_host = luigi.Parameter(significant=False)
+    hdfs_dir_list = []
 
     tmpl_subst_params = {"start_time": start_time,
                          "end_time": end_time,
                          "key_space": key_space,
                          "name_space": name_space,
-                         "pcode_dic": prepare_ptz(get_providers_from_helios())}
-
-    def check_replacements(self, json_data):
-        for k in json_data:
-            key_type = type(json_data[k])
-            if key_type is dict:
-                self.check_replacements(json_data[k])
-            elif key_type is unicode and json_data[k].startswith('$'):
-                json_data[k] = self.tmpl_subst_params[json_data[k][1:]]
+                         "cassandra_seeds": cassandra_seeds,
+                         "pcode_dic": prepare_ptz(get_providers_from_helios(), hdfs_dir_list)}
 
     def process_config_tmpl(self, tmpl_file):
         with open(tmpl_file) as json_file:
             json_data = json.load(json_file)
-            self.check_replacements(json_data)
+            replace_config_params(json_data, self.tmpl_subst_params)
             return json_data
 
     def prepare_js_url(self):
@@ -69,13 +63,14 @@ class CmvMin15(luigi.Task):
             logging.info("start_time = %s", self.start_time)
             logging.info("now_time = %s", now)
             cube_timeranges.append(now)
+            self.hdfs_dir_list.append(self.cube_time.strftime(self.hdfs_sessions+'/%Y/%m/%d/%H/%M/'))
             now += timedelta(minutes=15)
 
         return [InputSessionFile(cube_time=cube_time) for cube_time in cube_timeranges]
 
     def run(self):
         config_json = self.process_config_tmpl("/Users/jmettu/repos/analytics-workflow-service/utils/cmv_template.json")
-        self.submit_config_to_js(config_json, self.prepare_js_url())
+        submit_config_to_js(config_json, self.prepare_js_url())
 
     def output(self):
         return luigi.contrib.hdfs.HdfsTarget('/tmp/luigi-poc/touchme')
