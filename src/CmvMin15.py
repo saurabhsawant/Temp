@@ -32,7 +32,6 @@ class CmvMin15(luigi.Task):
     cassandra_seeds = luigi.Parameter(significant=False)
     jobserver_host = luigi.Parameter(significant=False)
 
-
     tmpl_subst_params = {"start_time": start_time,
                          "end_time": end_time,
                          "key_space": key_space,
@@ -53,6 +52,12 @@ class CmvMin15(luigi.Task):
             self.check_replacements(json_data)
             return json_data
 
+    def prepare_js_url(self):
+        js_url = 'http://{js_host}/jobs?appName={dc_jar}&classPath=ooyala.' \
+                 'cnd.CreateDelphiDatacube&context={ctxt}&sync=false'. \
+            format(js_host=self.jobserver_host, dc_jar=self.datacube_jar, ctxt=self.context)
+        return js_url
+
     def requires(self):
         check_boundaries(self.start_time)
         check_boundaries(self.end_time)
@@ -70,12 +75,7 @@ class CmvMin15(luigi.Task):
 
     def run(self):
         config_json = self.process_config_tmpl("/Users/jmettu/repos/analytics-workflow-service/utils/cmv_template.json")
-        # js_url = 'http://' + self.jobserver_host + '/jobs?appName=' + self.datacube_jar +
-        # '&classPath=ooyala.cnd.CreateDelphiDatacube' + '&context=' + self.context + '&sync=false'
-        js_url = 'http://{js_host}/jobs?appName={dc_jar}&classPath=ooyala.' \
-                 'cnd.CreateDelphiDatacube&context={ctxt}&sync=false'.\
-                  format(js_host=self.jobserver_host, dc_jar=self.datacube_jar, ctxt=self.context)
-        self.submit_config_to_js(config_json, js_url)
+        self.submit_config_to_js(config_json, self.prepare_js_url())
 
     def output(self):
         return luigi.contrib.hdfs.HdfsTarget('/tmp/luigi-poc/touchme')
