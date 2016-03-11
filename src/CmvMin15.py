@@ -1,12 +1,11 @@
 __author__ = 'jmettu'
 
-import luigi
-import logging
 from luigi.contrib.hdfs import HdfsTarget
 from CmvLib import *
 import json
 from datetime import timedelta
 from pprint import pprint
+import time
 
 class InputSessionFile(luigi.ExternalTask):
     cube_time = luigi.DateMinuteParameter()
@@ -33,13 +32,17 @@ class CmvMin15(luigi.Task):
     jobserver_host = luigi.Parameter(significant=False)
     hdfs_sessions = luigi.Parameter(significant=False)
     hdfs_dir_set = set()
+    provider_list_str = None
 
     def process_config_tmpl(self, tmpl_file):
+        #cass_str_list = '[' + ','.join('"' + i + '"' for i in self.cassandra_seeds.split(',')) + ']'
+        #cass_str_list = str(self.cassandra_seeds.split(',')).replace("'", "\"")
+        cass_str_list = ["cass-next-staging1.services.ooyala.net","cass-next-staging1.services.ooyala.net","cass-next-staging1.services.ooyala.net"]
         tmpl_subst_params = {"start_time": date_to_cmvformat(self.start_time),
                              "end_time": date_to_cmvformat(self.end_time),
                              "key_space": self.key_space,
                              "name_space": self.name_space,
-                             "cassandra_seeds": self.cassandra_seeds,
+                             "cassandra_seeds": cass_str_list,
                              "pcode_dict": prepare_ptz(get_providers_from_helios(), list(self.hdfs_dir_set))}
 
         with open(tmpl_file) as json_file:
@@ -49,7 +52,7 @@ class CmvMin15(luigi.Task):
 
     def prepare_js_url(self):
         js_url = 'http://{js_host}/jobs?appName={dc_jar}&classPath=ooyala.' \
-                 'cnd.CreateDelphiDatacube&context={ctxt}&sync=false'. \
+                 'cnd.CreateDelphiDatacube&context={ctxt}'. \
             format(js_host=self.jobserver_host, dc_jar=self.datacube_jar, ctxt=self.context)
         return js_url
 
@@ -70,10 +73,21 @@ class CmvMin15(luigi.Task):
 
     def run(self):
         config_json = self.process_config_tmpl("/Users/jmettu/repos/analytics-workflow-service/utils/cmv_template.json")
-        with open('json.txt', 'w') as outfile:
+        with open('new_config.json', 'w') as outfile:
             json.dump(config_json, outfile, indent=4)
         rslt_json = submit_config_to_js(config_json, self.prepare_js_url())
-        pprint(rslt_json)
+        job_id = rslt_json['result']['jobId']
+
+        js_resp = self.poll_js_jobid(job_id, self.jobserver_host)
+
+        if js_resp['status'] != 'OK':
+            logging.info("Job Server responded with an error. Job Server Response: %s", js_resp)
+            raise Exception('Error in Job Server Response.')
+        else:
+            provider_list_str = js_resp['result']['providers']
+            if provider_list_str is not None:
+                print provider_list_str.replace('Set', '')[1:len(provider_list_str)-4]
+
 
     def output(self):
         return luigi.contrib.hdfs.HdfsTarget('/tmp/luigi-poc/touchme')
