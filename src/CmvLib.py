@@ -1,6 +1,7 @@
 __author__ = 'jmettu'
 import requests
 import json
+import time
 
 from utils.CmvMysqlTarget import *
 logger = logging.getLogger('luigi-interface')
@@ -30,7 +31,7 @@ def replace_config_params(json_data, tmpl_subst_params):
     for k in json_data:
         key_type = type(json_data[k])
         if key_type is dict:
-            replace_config_params(json_data[k])
+            replace_config_params(json_data[k], tmpl_subst_params)
         elif key_type is unicode and json_data[k].startswith('$'):
             json_data[k] = tmpl_subst_params[json_data[k][1:]]
 
@@ -42,9 +43,23 @@ def prepare_ptz(pcode_tz_rows, file_list):
         pcode_info.values()[0]['input-paths'] = file_list
     return pcode_info
 
-def submit_config_to_js(self, config_json, js_url):
+def submit_config_to_js(config_json, js_url):
     headers = {'content-type': 'application/json'}
+    logging.info("Submitting jobserver config to url: %s", js_url)
     r = requests.post(js_url, json.dumps(config_json), headers)
     r.raise_for_status()
     return r.json()
+
+def date_to_cmvformat(dt):
+    return '{y}-{mo}-{d}T{h}:{mi}Z'.format(y=dt.year, mo=dt.month, d=dt.day, h=dt.hour, mi=int(dt.minute/15)*15)
+
+def poll_js_jobid(job_id, js_host):
+    while True:
+        js_resp = requests.get('http://{js_host}/jobs/{job_id}'
+                               .format(js_host=js_host, job_id=job_id)).json()
+        if js_resp['status'] != 'RUNNING':
+            return js_resp
+        time.sleep(30)
+
+
 

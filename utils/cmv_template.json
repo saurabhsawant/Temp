@@ -13,7 +13,7 @@
         "cmvGenerator": "worflow-cmv",
         "cmvHourToDisk": false,
         "saveAllProviders": true,
-        "heliosUrl": "helios.next-staging.ooyala.com:8081",
+        "heliosUrl": "helios.prod.ooyala.com:8081",
         "heliosParallelizm": 15,
         "pcodes": "$pcode_dict",
         "cache":{
