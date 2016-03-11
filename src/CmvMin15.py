@@ -35,14 +35,11 @@ class CmvMin15(luigi.Task):
     provider_list_str = None
 
     def process_config_tmpl(self, tmpl_file):
-        #cass_str_list = '[' + ','.join('"' + i + '"' for i in self.cassandra_seeds.split(',')) + ']'
-        #cass_str_list = str(self.cassandra_seeds.split(',')).replace("'", "\"")
-        cass_str_list = ["cass-next-staging1.services.ooyala.net","cass-next-staging1.services.ooyala.net","cass-next-staging1.services.ooyala.net"]
         tmpl_subst_params = {"start_time": date_to_cmvformat(self.start_time),
                              "end_time": date_to_cmvformat(self.end_time),
                              "key_space": self.key_space,
                              "name_space": self.name_space,
-                             "cassandra_seeds": cass_str_list,
+                             "cassandra_seeds": self.cassandra_seeds.split(','),
                              "pcode_dict": prepare_ptz(get_providers_from_helios(), list(self.hdfs_dir_set))}
 
         with open(tmpl_file) as json_file:
@@ -78,7 +75,7 @@ class CmvMin15(luigi.Task):
         rslt_json = submit_config_to_js(config_json, self.prepare_js_url())
         job_id = rslt_json['result']['jobId']
 
-        js_resp = self.poll_js_jobid(job_id, self.jobserver_host)
+        js_resp = poll_js_jobid(job_id, self.jobserver_host)
 
         if js_resp['status'] != 'OK':
             logging.info("Job Server responded with an error. Job Server Response: %s", js_resp)
@@ -87,7 +84,6 @@ class CmvMin15(luigi.Task):
             provider_list_str = js_resp['result']['providers']
             if provider_list_str is not None:
                 print provider_list_str.replace('Set', '')[1:len(provider_list_str)-4]
-
 
     def output(self):
         return luigi.contrib.hdfs.HdfsTarget('/tmp/luigi-poc/touchme')
