@@ -1,10 +1,11 @@
 __author__ = 'jmettu'
 
 from luigi.contrib.hdfs import HdfsTarget
-from cmvlib import *
+from lib.cmvlib import *
 import json
 from datetime import timedelta
 import luigi
+import logging
 from pprint import pprint
 import time
 
