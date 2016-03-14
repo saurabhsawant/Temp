@@ -17,7 +17,7 @@ class CmvMysqlTarget(luigi.Target):
     Target for a resource in MySql.
     """
 
-    def __init__(self, connect_args, update_id=None, column_names=None, column_values=None):
+    def __init__(self, connect_args, row_col_dict=None):
         """
         Initializes a MySqlTarget instance.
 
@@ -30,7 +30,6 @@ class CmvMysqlTarget(luigi.Target):
         :param column_values: values of columns.
         :type column_values: list of strings
         """
-        # "root@password@192.168.99.100:3306@luigi_poc@item_property2"
         if ':' in connect_args['host']:
             self.host, self.port = connect_args['host'].split(':')
             self.port = int(self.port)
@@ -41,11 +40,14 @@ class CmvMysqlTarget(luigi.Target):
         self.user = connect_args['user']
         self.password = connect_args['password']
         self.table = connect_args['table']
-        self.update_id = update_id
-        if column_names:
-            self.column_names = ["update_id"] + column_names
-        if column_values:
-            self.column_values = [self.update_id] + column_values
+        self.column_names = []
+        self.column_values = []
+        self.target_id = None
+        if row_col_dict:
+            self.target_id = row_col_dict['target_id']
+            for col in row_col_dict:
+                self.column_names.append(col)
+                self.column_values.append(row_col_dict[col])
 
     def touch(self, connection=None):
         """
@@ -66,7 +68,7 @@ class CmvMysqlTarget(luigi.Target):
         insert_stmt = """INSERT INTO {target_table} ({column_names})
                VALUES ({values_str_fmt})
                ON DUPLICATE KEY UPDATE
-               update_id = VALUES(update_id)
+               target_id = VALUES(target_id)
             """.format(target_table=self.table, column_names=column_names_string, values_str_fmt=values_str_fmt)
 
         connection.cursor().execute(insert_stmt, self.column_values)
@@ -105,10 +107,12 @@ class CmvMysqlTarget(luigi.Target):
         cursor = connection.cursor()
 
         try:
+            logging.info("Checking exists for table: {table}, and target_id: {target_id}".
+                         format(table=self.table, target_id=self.target_id))
             cursor.execute("""SELECT 1 FROM {target_table}
-                WHERE update_id = %s
+                WHERE target_id = %s
                 LIMIT 1""".format(target_table=self.table),
-                           (self.update_id,))
+                           (self.target_id,))
             row = cursor.fetchone()
         except mysql.connector.Error as e:
             if e.errno == mysql.connector.errorcode.ER_NO_SUCH_TABLE:
@@ -126,12 +130,14 @@ class CmvMysqlTarget(luigi.Target):
 
         try:
             cursor.execute("""DELETE FROM {target_table}
-                WHERE update_id = %s""".format(target_table=self.table),
-                           (self.update_id,))
+                WHERE target_id = %s""".format(target_table=self.table),
+                           (self.target_id,))
         except mysql.connector.Error:
             raise
 
     def connect(self, autocommit=False):
+        logging.info("Connecting to db: {db} at host: {host}, port: {port}, user: {user}".
+                     format(db=self.database, host=self.host, port=self.port, user=self.user))
         connection = mysql.connector.connect(user=self.user,
                                              password=self.password,
                                              host=self.host,

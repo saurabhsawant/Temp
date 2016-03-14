@@ -33,17 +33,25 @@ class BuildMin15Datacube(luigi.Task):
     cassandra_seeds = luigi.Parameter(significant=False)
     jobserver_host = luigi.Parameter(significant=False)
     hdfs_sessions = luigi.Parameter(significant=False)
+    min15_target_table_name = luigi.Parameter(significant=False)
+    min15_target_db_name = luigi.Parameter(significant=False)
     hdfs_dir_set = set()
     provider_list_str = None
-
     connect_args = dict()
-    connect_args['user'] = 'root'
-    connect_args['password'] = 'password'
-    connect_args['host'] = '192.168.99.100:3306'
-    connect_args['database'] = 'wario'
-    connect_args['table'] = 'cmv_min15'
-    column_names = ['pcode_list']
-    column_values = []
+
+    row_col_dict = {}
+    row_col_dict['pcode_list'] = None
+    row_col_dict['target_id'] = None
+
+    def task_init(self):
+        logging.info('Initializing task params: {cn_args}, {tgt_id}'.
+                     format(cn_args=self.connect_args, tgt_id=self.task_id))
+        self.connect_args['user'] = 'root'
+        self.connect_args['password'] = 'password'
+        self.connect_args['host'] = '192.168.99.100:3306'
+        self.connect_args['database'] = self.min15_target_db_name
+        self.connect_args['table'] = self.min15_target_table_name
+        self.row_col_dict['target_id'] = self.task_id
 
     def process_config_tmpl(self, tmpl_file):
         pcode_tz_list = Helios.get_providers_from_helios()
@@ -98,12 +106,13 @@ class BuildMin15Datacube(luigi.Task):
                 pcode_list = provider_list_str.replace('Set', '')[1:len(provider_list_str)-4]
 
         # mysql target
-        self.column_values.append(pcode_list)
-
+        self.row_col_dict['target_id'] = self.task_id
+        self.row_col_dict['pcode_list'] = pcode_list
         self.output().touch()
 
     def output(self):
-        return CmvMysqlTarget(self.connect_args, self.task_id, self.column_names, self.column_values)
+        self.task_init()
+        return CmvMysqlTarget(self.connect_args, self.row_col_dict)
 
 if __name__ == '__main__':
     luigi.run(['BuildMin15Datacube', '--workers', '1'])
