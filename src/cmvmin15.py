@@ -1,7 +1,7 @@
 __author__ = 'jmettu'
 
 from luigi.contrib.hdfs import HdfsTarget
-from CmvLib import *
+from cmvlib import *
 import json
 from datetime import timedelta
 from pprint import pprint
@@ -17,7 +17,7 @@ class InputSessionFile(luigi.ExternalTask):
         logging.info(hdfs_str)
         return HdfsTarget(hdfs_str)
 
-class CmvMin15(luigi.Task):
+class BuildMin15Datacube(luigi.Task):
     start_time = luigi.DateMinuteParameter()
     end_time = luigi.DateMinuteParameter()
     context = luigi.Parameter(significant=False)
@@ -34,17 +34,27 @@ class CmvMin15(luigi.Task):
     hdfs_dir_set = set()
     provider_list_str = None
 
+    connect_args = dict()
+    connect_args['user'] = 'root'
+    connect_args['password'] = 'password'
+    connect_args['host'] = '192.168.99.100:3306'
+    connect_args['database'] = 'wario'
+    connect_args['table'] = 'cmv_min15'
+    column_names = ['pcode_list']
+    column_values = []
+
     def process_config_tmpl(self, tmpl_file):
-        tmpl_subst_params = {"start_time": date_to_cmvformat(self.start_time),
-                             "end_time": date_to_cmvformat(self.end_time),
+        pcode_tz_list = Helios.get_providers_from_helios()
+        tmpl_subst_params = {"start_time": CmvLib.date_to_cmvformat(self.start_time),
+                             "end_time": CmvLib.date_to_cmvformat(self.end_time),
                              "key_space": self.key_space,
                              "name_space": self.name_space,
                              "cassandra_seeds": self.cassandra_seeds.split(','),
-                             "pcode_dict": prepare_ptz(get_providers_from_helios(), list(self.hdfs_dir_set))}
+                             "pcode_dict": CmvLib.prepare_ptz(pcode_tz_list, list(self.hdfs_dir_set))}
 
         with open(tmpl_file) as json_file:
             json_data = json.load(json_file)
-            replace_config_params(json_data, tmpl_subst_params)
+            CmvLib.replace_config_params(json_data, tmpl_subst_params)
             return json_data
 
     def prepare_js_url(self):
@@ -54,8 +64,8 @@ class CmvMin15(luigi.Task):
         return js_url
 
     def requires(self):
-        check_boundaries(self.start_time)
-        check_boundaries(self.end_time)
+        CmvLib.check_boundaries(self.start_time)
+        CmvLib.check_boundaries(self.end_time)
         cube_timeranges = set()
         now = self.start_time
         logging.info("end_time = %s", self.end_time)
@@ -69,13 +79,13 @@ class CmvMin15(luigi.Task):
         return [InputSessionFile(cube_time=cube_time) for cube_time in cube_timeranges]
 
     def run(self):
-        config_json = self.process_config_tmpl("/Users/jmettu/repos/analytics-workflow-service/utils/cmv_template.json")
+        config_json = self.process_config_tmpl("/Users/jmettu/repos/wario/utils/cmv_template.json")
         with open('new_config.json', 'w') as outfile:
             json.dump(config_json, outfile, indent=4)
-        rslt_json = submit_config_to_js(config_json, self.prepare_js_url())
+        rslt_json = CmvLib.submit_config_to_js(config_json, self.prepare_js_url())
         job_id = rslt_json['result']['jobId']
 
-        js_resp = poll_js_jobid(job_id, self.jobserver_host)
+        js_resp = CmvLib.poll_js_jobid(job_id, self.jobserver_host)
 
         if js_resp['status'] != 'OK':
             logging.info("Job Server responded with an error. Job Server Response: %s", js_resp)
@@ -83,11 +93,15 @@ class CmvMin15(luigi.Task):
         else:
             provider_list_str = js_resp['result']['providers']
             if provider_list_str is not None:
-                print provider_list_str.replace('Set', '')[1:len(provider_list_str)-4]
+                pcode_list = provider_list_str.replace('Set', '')[1:len(provider_list_str)-4]
+
+        # mysql target
+        self.column_values.append(pcode_list)
+
+        self.output().touch()
 
     def output(self):
-        return luigi.contrib.hdfs.HdfsTarget('/tmp/luigi-poc/touchme')
+        return cmv_mysql_target(self.connect_args, self.task_id, self.column_names, self.column_values)
 
 if __name__ == '__main__':
-    #luigi.run(['CmvMin15', '--workers', '1', '--local-scheduler'])
-    luigi.run(['CmvMin15', '--workers', '1'])
+    luigi.run(['BuildMin15Datacube', '--workers', '1'])

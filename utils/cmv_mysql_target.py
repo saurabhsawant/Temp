@@ -12,12 +12,12 @@ except ImportError as e:
         This will crash at runtime if MySQL functionality is used.")
 
 
-class CmvMySqlTarget(luigi.Target):
+class cmv_mysql_target(luigi.Target):
     """
     Target for a resource in MySql.
     """
 
-    def __init__(self, connect_args, table=None, update_id=None, column_names=None, column_values=None):
+    def __init__(self, connect_args, update_id=None, column_names=None, column_values=None):
         """
         Initializes a MySqlTarget instance.
 
@@ -40,7 +40,7 @@ class CmvMySqlTarget(luigi.Target):
         self.database = connect_args['database']
         self.user = connect_args['user']
         self.password = connect_args['password']
-        self.table = table
+        self.table = connect_args['table']
         self.update_id = update_id
         if column_names:
             self.column_names = ["update_id"] + column_names
