@@ -1,2 +1,2 @@
-Wario is the workflow mechanism for IQ.
+Wario handles workflow for IQ.
 ==========================
