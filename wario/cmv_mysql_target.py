@@ -12,7 +12,7 @@ except ImportError as e:
         This will crash at runtime if MySQL functionality is used.")
 
 
-class cmv_mysql_target(luigi.Target):
+class CmvMysqlTarget(luigi.Target):
     """
     Target for a resource in MySql.
     """

@@ -4,6 +4,7 @@ from luigi.contrib.hdfs import HdfsTarget
 from cmvlib import *
 import json
 from datetime import timedelta
+import luigi
 from pprint import pprint
 import time
 
@@ -79,7 +80,7 @@ class BuildMin15Datacube(luigi.Task):
         return [InputSessionFile(cube_time=cube_time) for cube_time in cube_timeranges]
 
     def run(self):
-        config_json = self.process_config_tmpl("/Users/jmettu/repos/wario/utils/cmv_template.json")
+        config_json = self.process_config_tmpl("/Users/jmettu/repos/wario/wario/cmv_template.json")
         with open('new_config.json', 'w') as outfile:
             json.dump(config_json, outfile, indent=4)
         rslt_json = CmvLib.submit_config_to_js(config_json, self.prepare_js_url())
@@ -101,7 +102,7 @@ class BuildMin15Datacube(luigi.Task):
         self.output().touch()
 
     def output(self):
-        return cmv_mysql_target(self.connect_args, self.task_id, self.column_names, self.column_values)
+        return CmvMysqlTarget(self.connect_args, self.task_id, self.column_names, self.column_values)
 
 if __name__ == '__main__':
     luigi.run(['BuildMin15Datacube', '--workers', '1'])

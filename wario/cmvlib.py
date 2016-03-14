@@ -2,8 +2,9 @@ __author__ = 'jmettu'
 import requests
 import json
 import time
+from cmv_mysql_target import CmvMysqlTarget
 
-from utils.cmv_mysql_target import *
+import logging
 logger = logging.getLogger('luigi-interface')
 
 
@@ -24,7 +25,7 @@ class Helios:
             where P.timezone_id=T.id and P.status = %s
             """
         query_values = ['live']
-        return cmv_mysql_target(connect_args=connect_args).query(query_string, query_values)
+        return CmvMysqlTarget(connect_args=connect_args).query(query_string, query_values)
 
 class CmvLib:
 
