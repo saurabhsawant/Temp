@@ -80,7 +80,7 @@ class BuildMin15Datacube(luigi.Task):
         return [InputSessionFile(cube_time=cube_time) for cube_time in cube_timeranges]
 
     def run(self):
-        config_json = self.process_config_tmpl("/Users/jmettu/repos/wario/wario/cmv_template.json")
+        config_json = self.process_config_tmpl("/Users/jmettu/repos/wario/wario/utils/cmv_template.json")
         with open('new_config.json', 'w') as outfile:
             json.dump(config_json, outfile, indent=4)
         rslt_json = CmvLib.submit_config_to_js(config_json, self.prepare_js_url())
