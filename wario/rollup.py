@@ -28,7 +28,7 @@ class DailyRollup(luigi.Task):
         if not hasattr(self, 'cmvdeps'):
             cmvdeps = []
             dateminute = date_to_utc(self.day, self.timezone)
-            for i in range(0, 3):
+            for i in range(0, 96):
                 cmvdeps.append(Cmv(dateminute=dateminute))
                 dateminute = next_rounded_min15(dateminute)
             self.cmvdeps = cmvdeps
@@ -36,7 +36,7 @@ class DailyRollup(luigi.Task):
 
     def get_jobserver_job_config(self):
         datefmt = "%Y-%m-%dT%H:%M"
-        with open("utils/rollup_cfg.json") as f:
+        with open("utils/rollup_template.json") as f:
             cfg = json.load(f)
             rmv = cfg['rookery']['materialized']['view']
             rmv['cache_namespace'] = self.cache_namespace
