@@ -53,7 +53,7 @@ class DailyRollup(luigi.Task):
             'rdd_rollup_duration': 'day'
         }
 
-        with open("utils/rollup_template.json") as f:
+        with open("utils/daily_rollup_template.json") as f:
             cfg = json.load(f)
             CmvLib.replace_config_params(cfg, tmpl_values)
             return cfg
