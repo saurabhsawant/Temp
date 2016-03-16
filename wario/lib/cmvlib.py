@@ -1,7 +1,12 @@
 __author__ = 'jmettu'
-import requests
+from datetime import datetime
+from datetime import timedelta
 import json
+import pytz
+from pytz import timezone
+import requests
 import time
+
 from cmv_mysql_target import CmvMysqlTarget
 
 import logging
@@ -80,3 +85,24 @@ class Json:
     def pretty_dumps(json_data):
         return json.dumps(json_data, indent=4, separators=(',', ': '))
 
+
+class DateTime:
+
+    @staticmethod
+    def date_to_utc(date, timezone_str):
+        """Converts date in timezone to utc"""
+        tz = timezone(timezone_str)
+        day = datetime(date.year, date.month, date.day)
+        return tz.localize(day).astimezone(pytz.utc)
+
+    @staticmethod
+    def next_rounded_min15(dateminute):
+        """Return the next rounded min15"""
+        round_minutes = 15
+        min15 = dateminute.replace(minute=(dateminute.minute / round_minutes) * round_minutes)
+        return min15 + timedelta(minutes=round_minutes)
+
+    @staticmethod
+    def next_day(date):
+        """Return one day after date"""
+        return datetime(date.year, date.month, date.day) + timedelta(days=1)

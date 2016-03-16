@@ -11,7 +11,7 @@ from wario.cmv import Cmv
 from wario.lib.cmvlib import CmvLib
 from wario.lib.cmvlib import CmvMysqlTarget
 from wario.lib.cmvlib import Json
-from wario.lib.datetime_lib import date_to_utc, next_rounded_min15, next_day
+from wario.lib.cmvlib import DateTime
 
 LOGGER = logging.getLogger('DailyRollup')
 
@@ -50,10 +50,10 @@ class DailyRollup(luigi.Task):
 
     def requires(self):
         cmvmin15s = []
-        dateminute = date_to_utc(self.day, self.timezone)
+        dateminute = DateTime.date_to_utc(self.day, self.timezone)
         for _ in range(0, 96):
             cmvmin15s.append(Cmv(dateminute=dateminute))
-            dateminute = next_rounded_min15(dateminute)
+            dateminute = DateTime.next_rounded_min15(dateminute)
         return cmvmin15s
 
     def get_js_job_config(self):
@@ -71,7 +71,7 @@ class DailyRollup(luigi.Task):
             'cassandra_seeds': parse_cassandra_seeds(self.cassandra_seeds),
             'keyspace': self.cassandra_keyspace,
             'start_time': self.day.strftime(datefmt),
-            'end_time': next_day(self.day).strftime(datefmt),
+            'end_time': DateTime.next_day(self.day).strftime(datefmt),
             'rdd_duration': 'min15',
             'rdd_rollup_duration': 'day'
         }
