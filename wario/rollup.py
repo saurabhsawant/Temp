@@ -20,7 +20,7 @@ class DailyRollup(luigi.Task):
                                               'cass-next-staging2.services.ooyala.net,' \
                                               'cass-next-staging3.services.ooyala.net', significant=False)
     rollup_namespace = luigi.Parameter(default='nst-rollup', significant=False)
-    jobserver_host = luigi.Parameter(default='jobserver-next-staging3.services.ooyala.net:8090', significant=False)
+    jobserver_host = luigi.Parameter(default='jobserver-next-staging1.services.ooyala.net:8090', significant=False)
     jobserver_app_name = luigi.Parameter(default='datacubeMaster', significant=False)
     jobserver_context = luigi.Parameter(default='next-staging', significant=False)
 
@@ -36,24 +36,26 @@ class DailyRollup(luigi.Task):
 
     def get_jobserver_job_config(self):
         datefmt = "%Y-%m-%dT%H:%M"
-        with open("utils/rollup_template.json") as f:
-            cfg = json.load(f)
-            rmv = cfg['rookery']['materialized']['view']
-            rmv['cache_namespace'] = self.cache_namespace
-            rmv['rollup_namespace'] = self.rollup_namespace
-            rmv['pcodes'] = {
+        tmpl_values = {
+            'cache_namespace': self.cache_namespace,
+            'rollup_namespace': self.rollup_namespace,
+            'pcodes': {
                 self.pcode: {
-                    "numOfPartitions": 1,
+                    'numOfPartitions': 1,
                     "timezone": self.timezone
                 }
-            }
-            rmv['cache']['cassandra']['keyspace'] = self.cassandra_keyspace
-            rmv['cache']['cassandra']['seeds'] = self.parse_cassandra_seeds(self.cassandra_seeds)
-            events = cfg['rookery']['events']
-            events['rdd_duration'] = 'min15'
-            events['start_time'] = self.day.strftime(datefmt)
-            events['end_time'] = next_day(self.day).strftime(datefmt)
-            events['rdd_rollup_duration'] = "day"
+            },
+            'cassandra_seeds': self.parse_cassandra_seeds(self.cassandra_seeds),
+            'keyspace': self.cassandra_keyspace,
+            'start_time': self.day.strftime(datefmt),
+            'end_time': next_day(self.day).strftime(datefmt),
+            'rdd_duration': 'min15',
+            'rdd_rollup_duration': 'day'
+        }
+
+        with open("utils/rollup_template.json") as f:
+            cfg = json.load(f)
+            CmvLib.replace_config_params(cfg, tmpl_values)
             return cfg
 
     def parse_cassandra_seeds(self, seeds):
@@ -68,6 +70,7 @@ class DailyRollup(luigi.Task):
 
     def run(self):
         cfg = self.get_jobserver_job_config()
+        print(pretty_json(cfg))
         resp = CmvLib.submit_config_to_js(cfg, self.get_js_url())
         job_id = resp['result']['jobId']
 

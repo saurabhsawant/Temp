@@ -7,8 +7,8 @@
     "materialized": {
       "view": {
         "rollupPartitionSize": 30000,
-        "cache_namespace": "",
-        "rollup_namespace": "",
+        "cache_namespace": "$cache_namespace",
+        "rollup_namespace": "$rollup_namespace",
         "checkSavedRdd": false,
         "aggregateSaveRdd": false,
         "datacubeCheckProbability": 0.0,
@@ -23,13 +23,13 @@
         "max_rollup_size": 6000000,
         "max_rollup_iteration_size": 900000,
 
-        "pcodes": "",
+        "pcodes": "$pcodes",
         "cache": {
           "isSave": true,
           "isInMem": false,
           "cassandra": {
-            "seeds": "",
-            "keyspace": "",
+            "seeds": "$cassandra_seeds",
+            "keyspace": "$keyspace",
             "max-thrift-size": 64000000,
             "delete-cl-quorum": true
           }
@@ -37,10 +37,10 @@
       }
     },
     "events":{
-      "start_time": "",
-      "end_time": "",
-      "rdd_duration": "",
-      "rdd_rollup_duration": ""
+      "start_time": "$start_time",
+      "end_time": "$end_time",
+      "rdd_duration": "$rdd_duration",
+      "rdd_rollup_duration": "$rdd_rollup_duration"
     }
   }
 }
