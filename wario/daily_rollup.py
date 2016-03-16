@@ -6,9 +6,9 @@ import time
 
 from cmv import Cmv
 from lib.cmvlib import CmvLib
+from lib.cmvlib import CmvMysqlTarget
 from lib.cmv_utils import pretty_json
 from lib.datetime_lib import date_to_utc, next_rounded_min15, next_day
-from lib.mysql_lib import create_mysql_target
 
 class DailyRollup(luigi.Task):
     day = luigi.DateParameter(default=datetime(year=2016,month=3,day=8))
@@ -23,6 +23,8 @@ class DailyRollup(luigi.Task):
     jobserver_host = luigi.Parameter(default='jobserver-next-staging1.services.ooyala.net:8090', significant=False)
     jobserver_app_name = luigi.Parameter(default='datacubeMaster', significant=False)
     jobserver_context = luigi.Parameter(default='next-staging', significant=False)
+    rollup_target_table_name = luigi.Parameter(default='rollup', significant=False)
+    rollup_target_db_name = luigi.Parameter(default='cmvworkflow', significant=False)
 
     def requires(self):
         if not hasattr(self, 'cmvdeps'):
@@ -84,7 +86,14 @@ class DailyRollup(luigi.Task):
         self.output().touch()
 
     def output(self):
-        datefmt = "%Y-%m-%d"
-        day_str = self.day.strftime(datefmt)
-        update_id = self.pcode + ':day:' + day_str
-        return create_mysql_target(update_id, day_str)
+        connect_args = {
+            'user': 'root',
+            'password': '',
+            'host': 'localhost',
+            'database': self.rollup_target_db_name,
+            'table': self.rollup_target_table_name
+        }
+        row_col_dict = {
+            'target_id': self.task_id
+        }
+        return CmvMysqlTarget(connect_args, row_col_dict)
