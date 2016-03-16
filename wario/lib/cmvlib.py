@@ -106,3 +106,21 @@ class DateTime:
     def next_day(date):
         """Return one day after date"""
         return datetime(date.year, date.month, date.day) + timedelta(days=1)
+
+
+class day_utc_min15_iter:
+    """Iterator over the list of utc min15s covered by the given day in the time zone"""
+    def __init__(self, day, timezone_str):
+        self.min15 = DateTime.date_to_utc(day, timezone_str)
+        self.last_min15 = DateTime.date_to_utc(day + timedelta(days=1), timezone_str)
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        if self.min15 != self.last_min15:
+            min15 = self.min15
+            self.min15 = DateTime.next_rounded_min15(min15)
+            return min15
+        else:
+            raise StopIteration()
