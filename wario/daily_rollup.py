@@ -10,8 +10,9 @@ import luigi
 from wario.cmv import Cmv
 from wario.lib.cmvlib import CmvLib
 from wario.lib.cmvlib import CmvMysqlTarget
-from wario.lib.cmvlib import Json
 from wario.lib.cmvlib import DateTime
+from wario.lib.cmvlib import Json
+from wario.lib.cmvlib import day_utc_min15_iter
 
 LOGGER = logging.getLogger('DailyRollup')
 
@@ -50,10 +51,8 @@ class DailyRollup(luigi.Task):
 
     def requires(self):
         cmvmin15s = []
-        dateminute = DateTime.date_to_utc(self.day, self.timezone)
-        for _ in range(0, 96):
-            cmvmin15s.append(Cmv(dateminute=dateminute))
-            dateminute = DateTime.next_rounded_min15(dateminute)
+        for min15 in day_utc_min15_iter(self.day, self.timezone):
+            cmvmin15s.append(Cmv(dateminute=min15))
         return cmvmin15s
 
     def get_js_job_config(self):
@@ -94,7 +93,6 @@ class DailyRollup(luigi.Task):
 
     def run(self):
         job_cfg = self.get_js_job_config()
-        LOGGER.info('Running job...\n%s', Json.pretty_dumps(job_cfg))
         submit_status = CmvLib.submit_config_to_js(job_cfg, self.get_js_job_url())
         job_id = submit_status['result']['jobId']
         time.sleep(5)
