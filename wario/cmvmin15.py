@@ -38,9 +38,10 @@ class BuildMin15Datacube(luigi.Task):
     hdfs_dir_set = set()
     provider_list_str = None
     connect_args = dict()
+    pcode_tz_dict = dict()
 
-    row_col_dict = {}
-    row_col_dict['pcode_list'] = None
+    row_col_dict = dict()
+    row_col_dict['ptz_dict'] = None
     row_col_dict['target_id'] = None
 
     def task_init(self):
@@ -48,13 +49,15 @@ class BuildMin15Datacube(luigi.Task):
                      format(cn_args=self.connect_args, tgt_id=self.task_id))
         self.connect_args['user'] = 'root'
         self.connect_args['password'] = 'password'
-        self.connect_args['host'] = '192.168.99.100:3306'
+        self.connect_args['host'] = 'localhost:3306'
+        #self.connect_args['host'] = '192.168.99.100:3306'
         self.connect_args['database'] = self.min15_target_db_name
         self.connect_args['table'] = self.min15_target_table_name
         self.row_col_dict['target_id'] = self.task_id
 
     def process_config_tmpl(self, tmpl_file):
         pcode_tz_list = Helios.get_providers_from_helios()
+        self.pcode_tz_dict = dict(pcode_tz_list)
         tmpl_subst_params = {"start_time": CmvLib.date_to_cmvformat(self.start_time),
                              "end_time": CmvLib.date_to_cmvformat(self.end_time),
                              "key_space": self.key_space,
@@ -103,11 +106,14 @@ class BuildMin15Datacube(luigi.Task):
         else:
             provider_list_str = js_resp['result']['providers']
             if provider_list_str is not None:
-                pcode_list = provider_list_str.replace('Set', '')[1:len(provider_list_str)-4]
+                pcode_list = provider_list_str.replace('Set', '')[1:len(provider_list_str)-4].split(',')
 
         # mysql target
+
+        ptz_dict = {str(pcode): self.pcode_tz_dict[str(pcode)] for pcode in pcode_list}
+
         self.row_col_dict['target_id'] = self.task_id
-        self.row_col_dict['pcode_list'] = pcode_list
+        self.row_col_dict['ptz_dict'] = json.dumps(ptz_dict)
         self.output().touch()
 
     def output(self):
@@ -115,4 +121,5 @@ class BuildMin15Datacube(luigi.Task):
         return CmvMysqlTarget(self.connect_args, self.row_col_dict)
 
 if __name__ == '__main__':
-    luigi.run(['BuildMin15Datacube', '--workers', '1'])
+    luigi.run(['BuildMin15Datacube', '--workers', '1', '--local-scheduler'])
+    #luigi.run(['BuildMin15Datacube', '--workers', '1'])
