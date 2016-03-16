@@ -1,36 +1,38 @@
 from datetime import datetime
 import json
+import logging
 import luigi
+import time
 
 from cmv import Cmv
+from lib.cmvlib import CmvLib
+from lib.cmv_utils import pretty_json
 from lib.datetime_lib import date_to_utc, next_rounded_min15, next_day
 from lib.mysql_lib import create_mysql_target
-from lib.jobserver_lib import run_jobserver_job
-from lib.cmv_utils import pretty_json
 
 class DailyRollup(luigi.Task):
     day = luigi.DateParameter(default=datetime(year=2016,month=3,day=8))
-    pcode = luigi.Parameter(default="VzcGw6NlhJZUFfutRhfdpVYIQrRp")
-    timezone = luigi.Parameter(default="Asia/Kolkata", significant=False)
-    cache_namespace = luigi.Parameter(default="nst_namespace", significant=False)
-    cassandra_keyspace = luigi.Parameter(default="nst_keyspace", significant=False)
+    pcode = luigi.Parameter(default='VzcGw6NlhJZUFfutRhfdpVYIQrRp')
+    timezone = luigi.Parameter(default='Asia/Kolkata', significant=False)
+    cache_namespace = luigi.Parameter(default='nst_namespace', significant=False)
+    cassandra_keyspace = luigi.Parameter(default='nst_keyspace', significant=False)
     cassandra_seeds = luigi.Parameter(default='cass-next-staging1.services.ooyala.net,' \
                                               'cass-next-staging2.services.ooyala.net,' \
                                               'cass-next-staging3.services.ooyala.net', significant=False)
-    rollup_namespace = luigi.Parameter(default="nst-rollup", significant=False)
+    rollup_namespace = luigi.Parameter(default='nst-rollup', significant=False)
+    jobserver_host = luigi.Parameter(default='jobserver-next-staging3.services.ooyala.net:8090', significant=False)
+    jobserver_app_name = luigi.Parameter(default='datacubeMaster', significant=False)
+    jobserver_context = luigi.Parameter(default='next-staging', significant=False)
 
     def requires(self):
         if not hasattr(self, 'cmvdeps'):
             cmvdeps = []
             dateminute = date_to_utc(self.day, self.timezone)
-            for i in range(0, 30):
+            for i in range(0, 3):
                 cmvdeps.append(Cmv(dateminute=dateminute))
                 dateminute = next_rounded_min15(dateminute)
             self.cmvdeps = cmvdeps
         return self.cmvdeps
-
-    def get_jobserver_job_class(self):
-        return 'ooyala.cnd.RollupDelphiDatacubes'
 
     def get_jobserver_job_config(self):
         datefmt = "%Y-%m-%dT%H:%M"
@@ -57,13 +59,25 @@ class DailyRollup(luigi.Task):
     def parse_cassandra_seeds(self, seeds):
         return seeds.split(",")
 
+    def get_js_url(self):
+        js_url = 'http://{js_host}/jobs?appName={app_name}&classPath={job_class}&' \
+                 'context={js_context}&timeout=100&sync=false'.format(
+                    js_host=self.jobserver_host, app_name=self.jobserver_app_name,
+                    job_class='ooyala.cnd.RollupDelphiDatacubes', js_context=self.jobserver_context)
+        return js_url
+
     def run(self):
         cfg = self.get_jobserver_job_config()
-        ok, output = run_jobserver_job(self.get_jobserver_job_class(), cfg)
-        if not ok:
-            raise Exception('Rollup job failed:', json.dumps(cfg) + "\n" + output)
+        resp = CmvLib.submit_config_to_js(cfg, self.get_js_url())
+        job_id = resp['result']['jobId']
+
+        time.sleep(5)
+        job_status = CmvLib.poll_js_jobid(job_id, self.jobserver_host)
+        if job_status['status'] != 'OK':
+            logging.info("Job Server responded with an error. Job Server Response: %s", job_status)
+            raise Exception('Error in Job Server Response.')
         else:
-            print(pretty_json(output))
+            print(pretty_json(job_status))
         self.output().touch()
 
     def output(self):
