@@ -10,7 +10,7 @@ import luigi
 from wario.cmv import Cmv
 from wario.lib.cmvlib import CmvLib
 from wario.lib.cmvlib import CmvMysqlTarget
-from wario.lib.cmv_utils import pretty_json
+from wario.lib.cmvlib import Json
 from wario.lib.datetime_lib import date_to_utc, next_rounded_min15, next_day
 
 LOGGER = logging.getLogger('DailyRollup')
@@ -94,7 +94,7 @@ class DailyRollup(luigi.Task):
 
     def run(self):
         job_cfg = self.get_js_job_config()
-        LOGGER.info('Running job...\n%s', pretty_json(job_cfg))
+        LOGGER.info('Running job...\n%s', Json.pretty_dumps(job_cfg))
         submit_status = CmvLib.submit_config_to_js(job_cfg, self.get_js_job_url())
         job_id = submit_status['result']['jobId']
         time.sleep(5)
@@ -103,7 +103,7 @@ class DailyRollup(luigi.Task):
             LOGGER.error("Job Server responded with an error. Job Server Response: %s", job_status)
             raise Exception('Error in Job Server Response.')
         else:
-            LOGGER.info("Job completed:\n%s", pretty_json(job_status))
+            LOGGER.info("Job completed:\n%s", Json.pretty_dumps(job_status))
         self.output().touch()
 
     def output(self):

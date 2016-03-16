@@ -74,4 +74,9 @@ class CmvLib:
             time.sleep(30)
 
 
+class Json:
+
+    @staticmethod
+    def pretty_dumps(json_data):
+        return json.dumps(json_data, indent=4, separators=(',', ': '))
 
