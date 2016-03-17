@@ -8,8 +8,8 @@ import time
 import luigi
 
 from wario.cmv import Cmv
+from wario.lib.cmv_mysql_target import CmvMysqlTarget
 from wario.lib.cmvlib import CmvLib
-from wario.lib.cmvlib import CmvMysqlTarget
 from wario.lib.cmvlib import DateTime
 from wario.lib.cmvlib import Json
 from wario.lib.cmvlib import day_utc_min15_iter
