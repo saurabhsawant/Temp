@@ -1,0 +1,46 @@
+{
+  "rookery": {
+    "show_data": {
+      "stdout_print": false,
+      "info_print": false
+    },
+    "materialized": {
+      "view": {
+        "rollupPartitionSize": 30000,
+        "cache_namespace": "$cache_namespace",
+        "rollup_namespace": "$rollup_namespace",
+        "checkSavedRdd": false,
+        "aggregateSaveRdd": false,
+        "datacubeCheckProbability": 0.0,
+        "cmvGenerator": "workflow-rollup",
+        "cmvHourToDisk": false,
+        "rollup_thread_count": 15,
+        "normalizeColumnName": "uniq_displays",
+        "maxColumnSize": 40000000,
+
+        "max_cube_read_size": 100,
+        "read_batch_length":  20,
+        "max_rollup_size": 6000000,
+        "max_rollup_iteration_size": 900000,
+
+        "pcodes": "$pcodes",
+        "cache": {
+          "isSave": true,
+          "isInMem": false,
+          "cassandra": {
+            "seeds": "$cassandra_seeds",
+            "keyspace": "$keyspace",
+            "max-thrift-size": 64000000,
+            "delete-cl-quorum": true
+          }
+        }
+      }
+    },
+    "events":{
+      "start_time": "$start_time",
+      "end_time": "$end_time",
+      "rdd_duration": "$rdd_duration",
+      "rdd_rollup_duration": "$rdd_rollup_duration"
+    }
+  }
+}

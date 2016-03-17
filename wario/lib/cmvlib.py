@@ -1,7 +1,12 @@
 __author__ = 'jmettu'
-import requests
+from datetime import datetime
+from datetime import timedelta
 import json
+import pytz
+from pytz import timezone
+import requests
 import time
+
 from cmv_mysql_target import CmvMysqlTarget
 
 import logging
@@ -77,4 +82,48 @@ class CmvLib:
             time.sleep(30)
 
 
+class Json:
 
+    @staticmethod
+    def pretty_dumps(json_data):
+        return json.dumps(json_data, indent=4, separators=(',', ': '))
+
+
+class DateTime:
+
+    @staticmethod
+    def date_to_utc(date, timezone_str):
+        """Converts date in timezone to utc"""
+        tz = timezone(timezone_str)
+        day = datetime(date.year, date.month, date.day)
+        return tz.localize(day).astimezone(pytz.utc)
+
+    @staticmethod
+    def next_rounded_min15(dateminute):
+        """Return the next rounded min15"""
+        round_minutes = 15
+        min15 = dateminute.replace(minute=(dateminute.minute / round_minutes) * round_minutes)
+        return min15 + timedelta(minutes=round_minutes)
+
+    @staticmethod
+    def next_day(date):
+        """Return one day after date"""
+        return datetime(date.year, date.month, date.day) + timedelta(days=1)
+
+
+class day_utc_min15_iter:
+    """Iterator over the list of utc min15s covered by the given day in the time zone"""
+    def __init__(self, day, timezone_str):
+        self.min15 = DateTime.date_to_utc(day, timezone_str)
+        self.last_min15 = DateTime.date_to_utc(day + timedelta(days=1), timezone_str)
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        if self.min15 != self.last_min15:
+            min15 = self.min15
+            self.min15 = DateTime.next_rounded_min15(min15)
+            return min15
+        else:
+            raise StopIteration()
