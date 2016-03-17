@@ -49,8 +49,8 @@ class BuildMin15Datacube(luigi.Task):
                      format(cn_args=self.connect_args, tgt_id=self.task_id))
         self.connect_args['user'] = 'root'
         self.connect_args['password'] = 'password'
-        self.connect_args['host'] = 'localhost:3306'
-        #self.connect_args['host'] = '192.168.99.100:3306'
+        #self.connect_args['host'] = 'localhost:3306'
+        self.connect_args['host'] = '192.168.99.100:3306'
         self.connect_args['database'] = self.min15_target_db_name
         self.connect_args['table'] = self.min15_target_table_name
         self.row_col_dict['target_id'] = self.task_id
@@ -81,10 +81,8 @@ class BuildMin15Datacube(luigi.Task):
         CmvLib.check_boundaries(self.end_time)
         cube_timeranges = set()
         now = self.start_time
-        logging.info("end_time = %s", self.end_time)
+        logging.info("start_time = %s, end_time = %s", self.start_time, self.end_time)
         while now < self.end_time:
-            logging.info("start_time = %s", self.start_time)
-            logging.info("now_time = %s", now)
             cube_timeranges.add(now)
             self.hdfs_dir_set.add(now.strftime(self.hdfs_sessions+'/%Y/%m/%d/%H/%M/'))
             now += timedelta(minutes=15)
@@ -109,9 +107,14 @@ class BuildMin15Datacube(luigi.Task):
                 pcode_list = provider_list_str.replace('Set', '')[1:len(provider_list_str)-4].split(',')
 
         # mysql target
-
-        ptz_dict = {str(pcode): self.pcode_tz_dict[str(pcode)] for pcode in pcode_list}
-
+        ptz_list = []
+        ptz_dict_item = dict()
+        for pcode in pcode_list:
+            ptz_dict_item['pcode'] = str(pcode).lstrip()
+            ptz_dict_item['timezone'] = self.pcode_tz_dict[str(pcode).lstrip()]
+            ptz_list.append(ptz_dict_item)
+        ptz_dict = dict()
+        ptz_dict['ptz_items'] = ptz_list
         self.row_col_dict['target_id'] = self.task_id
         self.row_col_dict['ptz_dict'] = json.dumps(ptz_dict)
         self.output().touch()
@@ -121,5 +124,5 @@ class BuildMin15Datacube(luigi.Task):
         return CmvMysqlTarget(self.connect_args, self.row_col_dict)
 
 if __name__ == '__main__':
-    luigi.run(['BuildMin15Datacube', '--workers', '1', '--local-scheduler'])
-    #luigi.run(['BuildMin15Datacube', '--workers', '1'])
+    #luigi.run(['BuildMin15Datacube', '--workers', '1', '--local-scheduler'])
+    luigi.run(['BuildMin15Datacube', '--workers', '1'])

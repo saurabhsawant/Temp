@@ -58,7 +58,9 @@ class CmvLib:
         logging.info("Submitting jobserver config to url: %s", js_url)
         r = requests.post(js_url, json.dumps(config_json), headers)
         r.raise_for_status()
-        return r.json()
+        js_rslt = r.json()
+        logging.info("Job Server response: %s", js_rslt)
+        return js_rslt
 
     @staticmethod
     def date_to_cmvformat(dt):
@@ -66,6 +68,7 @@ class CmvLib:
 
     @staticmethod
     def poll_js_jobid(job_id, js_host):
+        logging.info('Started polling Job Server')
         while True:
             js_resp = requests.get('http://{js_host}/jobs/{job_id}'
                                    .format(js_host=js_host, job_id=job_id)).json()
