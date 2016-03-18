@@ -90,7 +90,7 @@ class BuildMin15Datacube(luigi.Task):
         return [InputSessionFile(cube_time=cube_time) for cube_time in cube_timeranges]
 
     def run(self):
-        config_json = self.process_config_tmpl("/Users/jmettu/repos/wario/wario/utils/cmv_template.json")
+        config_json = self.process_config_tmpl("wario/utils/cmv_template.json")
         with open('new_config.json', 'w') as outfile:
             json.dump(config_json, outfile, indent=4)
         rslt_json = CmvLib.submit_config_to_js(config_json, self.prepare_js_url())
@@ -99,7 +99,7 @@ class BuildMin15Datacube(luigi.Task):
         js_resp = CmvLib.poll_js_jobid(job_id, self.jobserver_host)
 
         if js_resp['status'] != 'OK':
-            logging.info("Job Server responded with an error. Job Server Response: %s", js_resp)
+            logging.error("Job Server responded with an error. Job Server Response: %s", js_resp)
             raise Exception('Error in Job Server Response.')
         else:
             provider_list_str = js_resp['result']['providers']
@@ -110,6 +110,8 @@ class BuildMin15Datacube(luigi.Task):
         ptz_list = []
         ptz_dict_item = dict()
         for pcode in pcode_list:
+            if not pcode:
+                continue
             ptz_dict_item['pcode'] = str(pcode).lstrip()
             ptz_dict_item['timezone'] = self.pcode_tz_dict[str(pcode).lstrip()]
             ptz_list.append(ptz_dict_item)

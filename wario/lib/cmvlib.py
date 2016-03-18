@@ -1,6 +1,7 @@
 __author__ = 'jmettu'
 from datetime import datetime
 from datetime import timedelta
+from dateutil import tz
 import json
 import pytz
 from pytz import timezone
@@ -79,8 +80,7 @@ class CmvLib:
                                    .format(js_host=js_host, job_id=job_id)).json()
             if js_resp['status'] != 'RUNNING':
                 return js_resp
-            time.sleep(30)
-
+            time.sleep(120)
 
 class Json:
 
@@ -90,6 +90,18 @@ class Json:
 
 
 class DateTime:
+
+    @staticmethod
+    def utc_to_any_tz(utc_datetime, tz_iana_name):
+        """Converts utc time to a different timezone based on the given iana name
+            :param utc_datetime: utc datetime object
+            :param tz_iana_name : tz iana name
+            :returns new timezone datetime object
+        """
+        from_zone = tz.gettz('UTC')
+        to_zone = tz.gettz(tz_iana_name)
+        utc = utc_datetime.replace(tzinfo=from_zone)
+        return utc.astimezone(to_zone)
 
     @staticmethod
     def date_to_utc(date, timezone_str):

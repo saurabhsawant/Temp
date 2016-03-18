@@ -7,12 +7,14 @@ import time
 
 import luigi
 
-from wario.cmv import Cmv
-from wario.lib.cmv_mysql_target import CmvMysqlTarget
-from wario.lib.cmvlib import CmvLib
-from wario.lib.cmvlib import DateTime
-from wario.lib.cmvlib import Json
-from wario.lib.cmvlib import day_utc_min15_iter
+#from wario.cmv import Cmv
+from lib.cmv_mysql_target import CmvMysqlTarget
+from lib.cmvlib import CmvLib
+from lib.cmvlib import DateTime
+from lib.cmvlib import Json
+from lib.cmvlib import day_utc_min15_iter
+from datetime import timedelta
+from cmvmin15 import BuildMin15Datacube
 
 LOGGER = logging.getLogger('DailyRollup')
 
@@ -52,7 +54,7 @@ class DailyRollup(luigi.Task):
     def requires(self):
         cmvmin15s = []
         for min15 in day_utc_min15_iter(self.day, self.timezone):
-            cmvmin15s.append(Cmv(dateminute=min15))
+            cmvmin15s.append(BuildMin15Datacube(start_time=min15, end_time=min15+timedelta(minutes=15)))
         return cmvmin15s
 
     def get_js_job_config(self):
