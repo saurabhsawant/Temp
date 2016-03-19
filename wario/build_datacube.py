@@ -33,8 +33,8 @@ class BuildDataCube(luigi.Task):
         connect_args = dict()
         connect_args['user'] = 'root'
         connect_args['password'] = 'password'
-        connect_args['host'] = '192.168.99.100:3306'
-        #connect_args['host'] = 'localhost:3306'
+        #connect_args['host'] = '192.168.99.100:3306'
+        connect_args['host'] = 'localhost:3306'
         connect_args['database'] = self.min15_target_db_name
         connect_args['table'] = self.min15_target_table_name
 
@@ -66,7 +66,7 @@ class BuildDataCube(luigi.Task):
         pass
 
 if __name__ == '__main__':
-    #luigi.run(['BuildDataCube', '--workers', '1', '--local-scheduler'])
-    luigi.run(['BuildDataCube', '--workers', '4'])
+    #luigi.run(['BuildDataCube', '--workers', '2', '--local-scheduler'])
+    luigi.run(['BuildDataCube', '--workers', '2'])
 
 

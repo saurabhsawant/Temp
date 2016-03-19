@@ -72,6 +72,7 @@ class CmvMysqlTarget(luigi.Target):
             """.format(target_table=self.table, column_names=column_names_string, values_str_fmt=values_str_fmt)
 
         connection.cursor().execute(insert_stmt, self.column_values)
+        logging.info('Updated Target table {trgt}'.format(trgt=self.table))
 
         # make sure update is properly marked
         assert self.exists(connection)

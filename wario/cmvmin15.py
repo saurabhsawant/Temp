@@ -49,8 +49,8 @@ class BuildMin15Datacube(luigi.Task):
                      format(cn_args=self.connect_args, tgt_id=self.task_id))
         self.connect_args['user'] = 'root'
         self.connect_args['password'] = 'password'
-        #self.connect_args['host'] = 'localhost:3306'
-        self.connect_args['host'] = '192.168.99.100:3306'
+        self.connect_args['host'] = 'localhost:3306'
+        #self.connect_args['host'] = '192.168.99.100:3306'
         self.connect_args['database'] = self.min15_target_db_name
         self.connect_args['table'] = self.min15_target_table_name
         self.row_col_dict['target_id'] = self.task_id
@@ -108,9 +108,9 @@ class BuildMin15Datacube(luigi.Task):
 
         # mysql target
         ptz_list = []
-        ptz_dict_item = dict()
         for pcode in pcode_list:
-            if not pcode:
+            ptz_dict_item = dict()
+            if not pcode or str(pcode).lstrip() == 'unknown':
                 continue
             ptz_dict_item['pcode'] = str(pcode).lstrip()
             ptz_dict_item['timezone'] = self.pcode_tz_dict[str(pcode).lstrip()]
