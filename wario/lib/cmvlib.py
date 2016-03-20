@@ -82,6 +82,43 @@ class CmvLib:
                 return js_resp
             time.sleep(120)
 
+    @staticmethod
+    def poll_js_jobid_new(job_id, js_host):
+        import urllib2
+        logging.info('Started polling Job Server')
+        while True:
+            resp = urllib2.urlopen('http://{js_host}/jobs/{job_id}'
+                                   .format(js_host=js_host, job_id=job_id))
+            json_resp = json.load(resp)
+            if json_resp['status'] != 'RUNNING':
+                return json_resp
+            time.sleep(120)
+
+    @staticmethod
+    def poll_js_jobid_curl(job_id, js_host):
+        import subprocess
+        import re
+        logging.info('Started polling Job Server')
+        js_url = 'http://{js_host}/jobs/{job_id}'.format(js_host=js_host, job_id=job_id)
+        while True:
+            commandJob = 'curl {js_url}'.format(js_url=js_url)
+            sleepTime = 5
+            sleepWork = 10
+            for num in range(10000):
+                print("Sleeping ", num)
+                time.sleep(sleepTime)
+                sleepTime = sleepWork
+                p = subprocess.Popen(commandJob, shell=True, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+                (output, err) = p.communicate()
+                matchStr = '.*"status": "([^"]*)"'
+                jobResObj = re.match(matchStr, re.sub("\n", " ", output))
+                if (jobResObj and (not re.search("RUNNING", jobResObj.group(1)))):
+                    logging.info("command: " + commandJob + "\nresult " + output[-100:] + " err? " + err + "\n")
+                    logging.info("curl {num}".format(num=num))
+                    return CmvLib.poll_js_jobid_new(job_id, js_host)
+            return CmvLib.poll_js_jobid_new(job_id, js_host)
+
+
 class Json:
 
     @staticmethod
