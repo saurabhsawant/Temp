@@ -70,8 +70,8 @@ class DailyRollupGenerator(CmvBaseTask):
     def run(self):
         job_cfg = self.get_js_job_config()
         logging.info('Running daily rollup job...')
-        submit_status = CmvLib.submit_config_to_js(job_cfg, self.get_js_job_url())
-        job_id = submit_status['result']['jobId']
+        submission_status = CmvLib.submit_config_to_js(job_cfg, self.get_js_job_url())
+        job_id = submission_status['result']['jobId']
         time.sleep(5)
         job_status = CmvLib.poll_js_jobid(job_id, self.jobserver_host_port)
         if job_status['status'] != 'OK':
