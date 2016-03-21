@@ -1,22 +1,20 @@
 """Daily rollup task"""
 
 from datetime import datetime
+from datetime import timedelta
 import json
 import logging
 import time
 
 import luigi
 
-#from wario.cmv import Cmv
-from lib.cmv_mysql_target import CmvMysqlTarget
-from lib.cmvlib import CmvLib
-from lib.cmvlib import DateTime
-from lib.cmvlib import Json
-from lib.cmvlib import day_utc_min15_iter
-from datetime import timedelta
-from cmvmin15 import BuildMin15Datacube
-
-LOGGER = logging.getLogger('DailyRollup')
+from wario.cmv import Cmv
+from wario.lib.cmv_mysql_target import CmvMysqlTarget
+from wario.lib.cmvlib import CmvLib
+from wario.lib.cmvlib import DateTime
+from wario.lib.cmvlib import Json
+from wario.lib.cmvlib import day_utc_min15_iter
+from wario.cmvmin15 import BuildMin15Datacube
 
 def parse_cassandra_seeds(seeds):
     """Parses a list of cassandra seeds from the given string"""
@@ -48,7 +46,7 @@ class DailyRollup(luigi.Task):
     rollup_target_db_host = luigi.Parameter(default='localhost', significant=False)
     rollup_target_db_user = luigi.Parameter(default='root', significant=False)
     rollup_target_db_password = luigi.Parameter(default='', significant=False)
-    rollup_target_db_name = luigi.Parameter(default='cmvworkflow', significant=False)
+    rollup_target_db_name = luigi.Parameter(default='wario', significant=False)
     rollup_target_table_name = luigi.Parameter(default='rollup', significant=False)
 
     def requires(self):
@@ -95,15 +93,16 @@ class DailyRollup(luigi.Task):
 
     def run(self):
         job_cfg = self.get_js_job_config()
+        logging.info('Running daily rollup job...')
         submit_status = CmvLib.submit_config_to_js(job_cfg, self.get_js_job_url())
         job_id = submit_status['result']['jobId']
         time.sleep(5)
         job_status = CmvLib.poll_js_jobid(job_id, self.jobserver_host_port)
         if job_status['status'] != 'OK':
-            LOGGER.error("Job Server responded with an error. Job Server Response: %s", job_status)
+            logging.error("Job Server responded with an error. Job Server Response: %s", job_status)
             raise Exception('Error in Job Server Response.')
         else:
-            LOGGER.info("Job completed:\n%s", Json.pretty_dumps(job_status))
+            logging.info("Daily rollup job completed successfully.")
         self.output().touch()
         print ('rollup done')
 
