@@ -1,6 +1,5 @@
 __author__ = 'jmettu'
 
-from luigi.contrib.hdfs import HdfsTarget
 from lib.cmvlib import *
 import json
 from datetime import timedelta
@@ -8,16 +7,6 @@ import luigi
 import logging
 from pprint import pprint
 import time
-
-class InputSessionFile(luigi.ExternalTask):
-    cube_time = luigi.DateMinuteParameter()
-    hdfs_sessions = luigi.Parameter(significant=False)
-    hdfs_namenode = luigi.Parameter(significant=False)
-
-    def output(self):
-        hdfs_str = self.cube_time.strftime(self.hdfs_sessions+'/%Y/%m/%d/%H/%M/_SUCCESS')
-        logging.info('Requires %s', hdfs_str)
-        return HdfsTarget(hdfs_str)
 
 class Min15Generator(CmvBaseTask):
     start_time = luigi.DateMinuteParameter()

@@ -14,6 +14,7 @@ from cmv_mysql_target import CmvMysqlTarget
 import logging
 logger = logging.getLogger('luigi-interface')
 
+import luigi
 
 class Helios:
 
@@ -144,6 +145,17 @@ class CmvLib:
                     logging.info("curl {num}".format(num=num))
                     return CmvLib.poll_js_jobid_requests(job_id, js_host)
             return CmvLib.poll_js_jobid_requests(job_id, js_host)
+
+
+class InputSessionFile(luigi.ExternalTask):
+    cube_time = luigi.DateMinuteParameter()
+    hdfs_sessions = luigi.Parameter(significant=False)
+    hdfs_namenode = luigi.Parameter(significant=False)
+
+    def output(self):
+        hdfs_str = self.cube_time.strftime(self.hdfs_sessions+'/%Y/%m/%d/%H/%M/_SUCCESS')
+        logging.info(hdfs_str)
+        return HdfsTarget(hdfs_str)
 
 
 class Json:
