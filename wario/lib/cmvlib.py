@@ -146,6 +146,24 @@ class CmvLib:
                     return CmvLib.poll_js_jobid_requests(job_id, js_host)
             return CmvLib.poll_js_jobid_requests(job_id, js_host)
 
+    @staticmethod
+    def submit_config_to_appsvr(config_json, appsvr_url):
+        logging.info("Submitting appsvr config to url: %s", appsvr_url)
+        r = requests.post(appsvr_url, json.dumps(config_json))
+        r.raise_for_status()
+        submit_status = r.json()
+        logging.info("Appsvr response: %s", submit_status)
+        return submit_status
+
+    @staticmethod
+    def poll_appsvr_job_status(job_status_url):
+        logging.info('Started polling Appsvr')
+        while True:
+            job_status = requests.get(job_status_url)
+            if job_status['status'] != 'RUNNING':
+                return job_status
+            time.sleep(3)
+
 
 class InputSessionFile(luigi.ExternalTask):
     cube_time = luigi.DateMinuteParameter()
