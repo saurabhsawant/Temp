@@ -105,6 +105,7 @@ class DailyRollup(luigi.Task):
         else:
             LOGGER.info("Job completed:\n%s", Json.pretty_dumps(job_status))
         self.output().touch()
+        print ('rollup done')
 
     def output(self):
         connect_args = {

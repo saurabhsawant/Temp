@@ -28,9 +28,9 @@ class Helios:
         query_string = """
             select P.pcode as PCODE, T.iana_name as TIMEZONE
             from providers as P, timezones as T
-            where P.timezone_id=T.id and P.status = %s
+            where P.timezone_id=T.id and P.status != %s and status != %s and status != %s
             """
-        query_values = ['live']
+        query_values = ['churned', 'deleted', 'disabled']
         return CmvMysqlTarget(connect_args=connect_args).query(query_string, query_values)
 
 class CmvLib:
@@ -73,7 +73,7 @@ class CmvLib:
         return '{y}-{mo}-{d}T{h}:{mi}Z'.format(y=dt.year, mo=dt.month, d=dt.day, h=dt.hour, mi=int(dt.minute/15)*15)
 
     @staticmethod
-    def poll_js_jobid(job_id, js_host):
+    def poll_js_jobid_requests(job_id, js_host):
         logging.info('Started polling Job Server')
         while True:
             js_resp = requests.get('http://{js_host}/jobs/{job_id}'
@@ -83,7 +83,7 @@ class CmvLib:
             time.sleep(120)
 
     @staticmethod
-    def poll_js_jobid_new(job_id, js_host):
+    def poll_js_jobid_urllib(job_id, js_host):
         import urllib2
         logging.info('Started polling Job Server')
         while True:
@@ -95,7 +95,7 @@ class CmvLib:
             time.sleep(120)
 
     @staticmethod
-    def poll_js_jobid_curl(job_id, js_host):
+    def poll_js_jobid(job_id, js_host):
         import subprocess
         import re
         logging.info('Started polling Job Server')
@@ -115,8 +115,8 @@ class CmvLib:
                 if (jobResObj and (not re.search("RUNNING", jobResObj.group(1)))):
                     logging.info("command: " + commandJob + "\nresult " + output[-100:] + " err? " + err + "\n")
                     logging.info("curl {num}".format(num=num))
-                    return CmvLib.poll_js_jobid_new(job_id, js_host)
-            return CmvLib.poll_js_jobid_new(job_id, js_host)
+                    return CmvLib.poll_js_jobid_requests(job_id, js_host)
+            return CmvLib.poll_js_jobid_requests(job_id, js_host)
 
 
 class Json:

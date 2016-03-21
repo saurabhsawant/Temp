@@ -41,7 +41,7 @@ class BuildMin15Datacube(luigi.Task):
     pcode_tz_dict = dict()
 
     row_col_dict = dict()
-    row_col_dict['ptz_dict'] = None
+    row_col_dict['inserted_at'] = None
     row_col_dict['target_id'] = None
 
     def task_init(self):
