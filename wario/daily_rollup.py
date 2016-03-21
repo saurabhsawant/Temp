@@ -15,9 +15,6 @@ from wario.lib.cmvlib import CmvBaseTask
 from wario.lib.cmvlib import day_utc_min15_iter
 from wario.min15_generator import Min15Generator
 
-def parse_cassandra_seeds(seeds):
-    """Parses a list of cassandra seeds from the given string"""
-    return seeds.split(",")
 
 class DailyRollupGenerator(CmvBaseTask):
     """Task for daily rollup"""
@@ -46,7 +43,7 @@ class DailyRollupGenerator(CmvBaseTask):
                     "timezone": self.timezone
                 }
             },
-            'cassandra_seeds': parse_cassandra_seeds(self.cassandra_seeds),
+            'cassandra_seeds': self.cassandra_seeds.split(','),
             'keyspace': self.cassandra_keyspace,
             'start_time': self.day.strftime(datefmt),
             'end_time': DateTime.next_day(self.day).strftime(datefmt),
