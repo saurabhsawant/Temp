@@ -10,6 +10,7 @@ import luigi
 from wario.lib.cmv_mysql_target import CmvMysqlTarget
 from wario.lib.cmvlib import CmvLib
 from wario.lib.cmvlib import InputSessionFile
+from wario.lib.cmvlib import Json
 
 class UrlMin15(luigi.Task):
     """Task for url min15 data generation"""
@@ -58,7 +59,7 @@ class UrlMin15(luigi.Task):
     def get_appsvr_job_status_url(self, job_id):
         """Returns job status url"""
         appsvr_url = \
-            'http://{appsvr_host_port}/apps/{app_name}/jobs/{job_id}'.format(
+            'http://{appsvr_host_port}/apps/{app_name}/jobs/{job_id}/status'.format(
                 appsvr_host_port=self.appsvr_host_port,
                 app_name=self.appsvr_app_name,
                 job_id=job_id
