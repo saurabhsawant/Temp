@@ -16,7 +16,7 @@ class InputSessionFile(luigi.ExternalTask):
 
     def output(self):
         hdfs_str = self.cube_time.strftime(self.hdfs_sessions+'/%Y/%m/%d/%H/%M/_SUCCESS')
-        logging.info(hdfs_str)
+        logging.info('Requires ', hdfs_str)
         return HdfsTarget(hdfs_str)
 
 class BuildMin15Datacube(luigi.Task):

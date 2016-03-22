@@ -130,8 +130,9 @@ class CmvMysqlTarget(luigi.Target):
         cursor = connection.cursor()
 
         try:
-            cursor.execute("""DELETE FROM {target_table}
-                WHERE target_id = %s""".format(target_table=self.table),
+            if self.exists(connection):
+                cursor.execute("""DELETE FROM {target_table}
+                    WHERE target_id = %s""".format(target_table=self.table),
                            (self.target_id,))
         except mysql.connector.Error:
             raise
