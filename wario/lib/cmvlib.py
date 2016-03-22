@@ -73,7 +73,7 @@ class CmvLib:
         return '{y}-{mo}-{d}T{h}:{mi}Z'.format(y=dt.year, mo=dt.month, d=dt.day, h=dt.hour, mi=int(dt.minute/15)*15)
 
     @staticmethod
-    def poll_js_jobid_requests(job_id, js_host):
+    def poll_js_jobid(job_id, js_host):
         logging.info('Started polling Job Server')
         while True:
             js_resp = requests.get('http://{js_host}/jobs/{job_id}'
@@ -95,7 +95,7 @@ class CmvLib:
             time.sleep(120)
 
     @staticmethod
-    def poll_js_jobid(job_id, js_host):
+    def poll_js_jobid_curl(job_id, js_host):
         import subprocess
         import re
         logging.info('Started polling Job Server')

@@ -16,7 +16,7 @@ class InputSessionFile(luigi.ExternalTask):
 
     def output(self):
         hdfs_str = self.cube_time.strftime(self.hdfs_sessions+'/%Y/%m/%d/%H/%M/_SUCCESS')
-        logging.info('Requires ', hdfs_str)
+        logging.info('Requires %s', hdfs_str)
         return HdfsTarget(hdfs_str)
 
 class BuildMin15Datacube(luigi.Task):
@@ -41,14 +41,14 @@ class BuildMin15Datacube(luigi.Task):
     pcode_tz_dict = dict()
 
     row_col_dict = dict()
-    row_col_dict['inserted_at'] = None
+    #row_col_dict['last_updated'] = None
     row_col_dict['target_id'] = None
 
     def task_init(self):
         logging.info('Initializing task params: {cn_args}, {tgt_id}'.
                      format(cn_args=self.connect_args, tgt_id=self.task_id))
         self.connect_args['user'] = 'root'
-        self.connect_args['password'] = 'password'
+        self.connect_args['password'] = ''
         self.connect_args['host'] = 'localhost:3306'
         #self.connect_args['host'] = '192.168.99.100:3306'
         self.connect_args['database'] = self.min15_target_db_name
