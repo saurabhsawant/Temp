@@ -26,6 +26,7 @@ class DailyRollupGenerator(CmvBaseTask):
     timezone = luigi.Parameter(default='Asia/Kolkata')
     rollup_namespace = luigi.Parameter(default='nst-rollup', significant=False)
     wario_target_table_name = luigi.Parameter(default='rollup', significant=False)
+    col_values = dict()
 
     def requires(self):
         cmvmin15s = []
@@ -81,8 +82,10 @@ class DailyRollupGenerator(CmvBaseTask):
             raise Exception('Error in Job Server Response.')
         else:
             logging.info("Daily rollup job completed successfully.")
+        self.col_values['day'] = self.day
+        self.col_values['pcode'] = self.pcode
+        self.col_values['timezone'] = self.timezone
         self.output().touch()
-        print ('rollup done')
 
     def output(self):
         connect_args = {
@@ -92,10 +95,10 @@ class DailyRollupGenerator(CmvBaseTask):
             'database': self.wario_target_db_name,
             'table': self.wario_target_table_name
         }
-        col_values = {
+        self.col_values = {
             'target_id': self.task_id
         }
-        return CmvMysqlTarget(connect_args, col_values)
+        return CmvMysqlTarget(connect_args, self.col_values)
 
 if __name__ == '__main__':
     luigi.run(['DailyRollupGenerator', '--workers', '1'])
