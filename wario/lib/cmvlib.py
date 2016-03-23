@@ -7,6 +7,7 @@ import pytz
 from pytz import timezone
 import requests
 import time
+import luigi
 
 from cmv_mysql_target import CmvMysqlTarget
 
@@ -32,6 +33,33 @@ class Helios:
             """
         query_values = ['churned', 'deleted', 'disabled']
         return CmvMysqlTarget(connect_args=connect_args).query(query_string, query_values)
+
+class CmvBaseTask(luigi.Task):
+    jobserver_context = luigi.Parameter(significant=False)
+    datacube_jar = luigi.Parameter(significant=False)
+    cassandra_keyspace = luigi.Parameter(significant=False)
+    cassandra_namespace = luigi.Parameter(significant=False)
+    appserver_host = luigi.Parameter(significant=False)
+    sqlcmv_hdfsdir = luigi.Parameter(significant=False)
+    sqlcmv_keyspace = luigi.Parameter(significant=False)
+    sqlcmv_nameSpace = luigi.Parameter(significant=False)
+    cassandra_seeds = luigi.Parameter(significant=False)
+    jobserver_host_port = luigi.Parameter(significant=False)
+    hdfs_sessions = luigi.Parameter(significant=False)
+    wario_target_db_host = luigi.Parameter(significant=False)
+    wario_target_db_user = luigi.Parameter(significant=False)
+    wario_target_db_password = luigi.Parameter(significant=False)
+    wario_target_db_name = luigi.Parameter(significant=False)
+
+
+    def requires(self):
+        pass
+
+    def run(self):
+        pass
+
+    def output(self):
+        pass
 
 class CmvLib:
 

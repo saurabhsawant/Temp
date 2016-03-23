@@ -2,20 +2,18 @@ __author__ = 'jmettu'
 import luigi
 import logging
 import json
-from datetime import timedelta
 from lib.cmvlib import CmvLib
+from lib.cmvlib import CmvBaseTask
 from lib.cmv_mysql_target import CmvMysqlTarget
 from lib.cmvlib import DateTime
 from cmvmin15 import BuildMin15Datacube
 from daily_rollup import DailyRollup
 
-class BuildDataCube(luigi.Task):
+class BuildDataCube(CmvBaseTask):
     start_time = luigi.DateMinuteParameter()
     end_time = luigi.DateMinuteParameter()
-    min15_target_table_name = luigi.Parameter(significant=False)
-    min15_target_db_name = luigi.Parameter(significant=False)
-    build_datcube_target_table = luigi.Parameter(significant=False)
-    build_datcube_db_table = luigi.Parameter(significant=False)
+    min15_target_table_name = None
+    wario_target_table_name = luigi.Parameter(significant=False)
     cube_time_intervals = set()
     connect_args = dict()
     row_col_dict = dict()
@@ -23,32 +21,27 @@ class BuildDataCube(luigi.Task):
     def requires(self):
         CmvLib.check_boundaries(self.start_time)
         CmvLib.check_boundaries(self.end_time)
-        now = self.start_time
         logging.info("Task: BuildDataCube, start_time = %s, end_time = %s", self.start_time, self.end_time)
-        while now < self.end_time:
-            end = now + timedelta(minutes=15)
-            self.cube_time_intervals.add((now, end))
-            now = end
-
-        return [BuildMin15Datacube(start_time=cube_window[0], end_time=cube_window[1])
-                for cube_window in self.cube_time_intervals]
+        min15_task = BuildMin15Datacube(start_time=self.start_time, end_time=self.end_time)
+        self.min15_target_table_name = min15_task.wario_target_table_name
+        return min15_task
 
     def task_init(self):
         logging.info('Initializing task params: {cn_args}, {tgt_id}'.
                      format(cn_args=self.connect_args, tgt_id=self.task_id))
-        self.connect_args['user'] = 'root'
-        self.connect_args['password'] = ''
-        self.connect_args['host'] = 'localhost:3306'
-        self.connect_args['database'] = self.build_datcube_db_table
-        self.connect_args['table'] = self.build_datcube_target_table
+        self.connect_args['user'] = self.wario_target_db_user
+        self.connect_args['password'] = self.wario_target_db_password
+        self.connect_args['host'] = self.wario_target_db_host
+        self.connect_args['database'] = self.wario_target_db_name
+        self.connect_args['table'] = self.wario_target_table_name
         self.row_col_dict['target_id'] = self.task_id
 
     def get_ptz_dict_from_db(self):
         connect_args = dict()
-        connect_args['user'] = 'root'
-        connect_args['password'] = ''
-        connect_args['host'] = 'localhost:3306'
-        connect_args['database'] = self.min15_target_db_name
+        connect_args['user'] = self.wario_target_db_user
+        connect_args['password'] = self.wario_target_db_password
+        connect_args['host'] = self.wario_target_db_host
+        connect_args['database'] = self.wario_target_db_name
         connect_args['table'] = self.min15_target_table_name
 
         query_string = 'select JSON_EXTRACT(ptz_dict, {json_item}) from {min15_table} where target_id = %s'.\
