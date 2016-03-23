@@ -98,4 +98,4 @@ class DailyRollupGenerator(CmvBaseTask):
         return CmvMysqlTarget(connect_args, col_values)
 
 if __name__ == '__main__':
-    luigi.run(['DailyRollup', '--workers', '1'])
+    luigi.run(['DailyRollupGenerator', '--workers', '1'])

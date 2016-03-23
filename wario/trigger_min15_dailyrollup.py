@@ -7,7 +7,7 @@ from lib.cmvlib import CmvBaseTask
 from lib.cmv_mysql_target import CmvMysqlTarget
 from lib.cmvlib import DateTime
 from min15_generator import Min15Generator
-from daily_rollup import DailyRollup
+from daily_rollup import DailyRollupGenerator
 
 class Min15AndDailyRollupTrigger(CmvBaseTask):
     start_time = luigi.DateMinuteParameter()
@@ -65,7 +65,7 @@ class Min15AndDailyRollupTrigger(CmvBaseTask):
             rollup_day = DateTime.utc_to_any_tz(self.start_time, rollup_tz)
             logging.info('Preparing DailyRollup with params: day = {day}, timezone = {tz}, pcode = {pcode}'.
                          format(day=rollup_day, tz=rollup_tz, pcode=rollup_pcode))
-            upstream_rollup_tasks.append(DailyRollup(day=rollup_day, timezone=rollup_tz, pcode=rollup_pcode))
+            upstream_rollup_tasks.append(DailyRollupGenerator(day=rollup_day, timezone=rollup_tz, pcode=rollup_pcode))
         logging.info ('Triggering upstream rollup tasks')
         yield upstream_rollup_tasks
         self.output().touch()

@@ -1,9 +1,9 @@
 __author__ = 'jmettu'
 import luigi
-from wario.daily_rollup import DailyRollup
+from wario.daily_rollup import DailyRollupGenerator
 from datetime import timedelta
 
-class WeeklyRollupGenerator(DailyRollup):
+class WeeklyRollupGenerator(DailyRollupGenerator):
     start_day = luigi.Parameter()
     end_day = luigi.Parameter()
     pcode = luigi.Parameter()
