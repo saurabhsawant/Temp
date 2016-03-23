@@ -92,10 +92,11 @@ class DailyRollupGenerator(CmvBaseTask):
             'database': self.wario_target_db_name,
             'table': self.wario_target_table_name
         }
-        self.col_values = {
-            'target_id': self.task_id
+        col_values = {
+            'target_id': self.task_id,
+            'pcode': self.pcode
         }
-        return CmvMysqlTarget(connect_args, self.col_values)
+        return CmvMysqlTarget(connect_args, col_values)
 
 if __name__ == '__main__':
     luigi.run(['DailyRollupGenerator', '--workers', '1'])
