@@ -15,7 +15,7 @@ from wario.lib.cmvlib import Json
 class UrlMin15(luigi.Task):
     """Task for url min15 data generation"""
     start_time = luigi.DateMinuteParameter(
-        default=datetime(year=2016, month=3, day=8, hour=12, minute=15)
+        default=datetime(year=2016, month=3, day=21, hour=12, minute=15)
     )
     cache_namespace = luigi.Parameter(default='nst_namespace_url', significant=False)
     cassandra_keyspace = luigi.Parameter(default='nst_keyspace_url', significant=False)
