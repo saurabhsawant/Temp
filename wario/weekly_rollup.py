@@ -3,7 +3,7 @@ import luigi
 from wario.daily_rollup import DailyRollup
 from datetime import timedelta
 
-class WeeklyRollup(DailyRollup):
+class WeeklyRollupGenerator(DailyRollup):
     start_day = luigi.Parameter()
     end_day = luigi.Parameter()
     pcode = luigi.Parameter()

@@ -51,7 +51,6 @@ class CmvBaseTask(luigi.Task):
     wario_target_db_password = luigi.Parameter(significant=False)
     wario_target_db_name = luigi.Parameter(significant=False)
 
-
     def requires(self):
         pass
 
@@ -140,7 +139,7 @@ class CmvLib:
                 (output, err) = p.communicate()
                 matchStr = '.*"status": "([^"]*)"'
                 jobResObj = re.match(matchStr, re.sub("\n", " ", output))
-                if (jobResObj and (not re.search("RUNNING", jobResObj.group(1)))):
+                if jobResObj and (not re.search("RUNNING", jobResObj.group(1))):
                     logging.info("command: " + commandJob + "\nresult " + output[-100:] + " err? " + err + "\n")
                     logging.info("curl {num}".format(num=num))
                     return CmvLib.poll_js_jobid_requests(job_id, js_host)

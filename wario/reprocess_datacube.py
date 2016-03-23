@@ -3,7 +3,7 @@ __author__ = 'jmettu'
 import luigi
 import csv
 from datetime import timedelta
-import cmvmin15
+from min15_generator import Min15Generator
 import daily_rollup
 import logging
 from datetime import datetime
@@ -41,7 +41,7 @@ class CmvReprocess(luigi.Task):
             start_time = datetime.strptime(line[0], '%Y-%m-%dT%H%M')
             end_time = start_time + timedelta(minutes=15)
             logging.info("CmvMin15 task params. start_time = %s, end_time = %s", start_time, end_time)
-            cmvmin15_task = cmvmin15.BuildMin15Datacube(start_time, end_time)
+            cmvmin15_task = Min15Generator(start_time, end_time)
             cmvmin15_upstream_tasks.add(cmvmin15_task)
         return cmvmin15_upstream_tasks
 

@@ -6,10 +6,10 @@ from lib.cmvlib import CmvLib
 from lib.cmvlib import CmvBaseTask
 from lib.cmv_mysql_target import CmvMysqlTarget
 from lib.cmvlib import DateTime
-from cmvmin15 import BuildMin15Datacube
+from min15_generator import Min15Generator
 from daily_rollup import DailyRollup
 
-class BuildDataCube(CmvBaseTask):
+class Min15AndDailyRollupTrigger(CmvBaseTask):
     start_time = luigi.DateMinuteParameter()
     end_time = luigi.DateMinuteParameter()
     min15_target_table_name = None
@@ -21,8 +21,8 @@ class BuildDataCube(CmvBaseTask):
     def requires(self):
         CmvLib.check_boundaries(self.start_time)
         CmvLib.check_boundaries(self.end_time)
-        logging.info("Task: BuildDataCube, start_time = %s, end_time = %s", self.start_time, self.end_time)
-        min15_task = BuildMin15Datacube(start_time=self.start_time, end_time=self.end_time)
+        logging.info("Task: Min15AndDailyRollupTrigger, start_time = %s, end_time = %s", self.start_time, self.end_time)
+        min15_task = Min15Generator(start_time=self.start_time, end_time=self.end_time)
         self.min15_target_table_name = min15_task.wario_target_table_name
         return min15_task
 
@@ -47,7 +47,7 @@ class BuildDataCube(CmvBaseTask):
         query_string = 'select JSON_EXTRACT(ptz_dict, {json_item}) from {min15_table} where target_id = %s'.\
             format(json_item='\'$.ptz_items\'', min15_table=self.min15_target_table_name)
 
-        query_values = ['BuildMin15Datacube(start_time={s}, end_time={e})'.
+        query_values = ['Min15Generator(start_time={s}, end_time={e})'.
                             format(s=self.start_time.strftime('%Y-%m-%dT%H%M'),
                                    e=self.end_time.strftime('%Y-%m-%dT%H%M'))]
 
@@ -75,6 +75,6 @@ class BuildDataCube(CmvBaseTask):
         return CmvMysqlTarget(self.connect_args, self.row_col_dict)
 
 if __name__ == '__main__':
-    luigi.run(['BuildDataCube', '--workers', '2'])
+    luigi.run(['Min15AndDailyRollupTrigger', '--workers', '2'])
 
 

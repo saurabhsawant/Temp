@@ -13,13 +13,13 @@ from wario.lib.cmvlib import CmvLib
 from wario.lib.cmvlib import DateTime
 from wario.lib.cmvlib import CmvBaseTask
 from wario.lib.cmvlib import day_utc_min15_iter
-from wario.cmvmin15 import BuildMin15Datacube
+from wario.min15_generator import Min15Generator
 
 def parse_cassandra_seeds(seeds):
     """Parses a list of cassandra seeds from the given string"""
     return seeds.split(",")
 
-class DailyRollup(CmvBaseTask):
+class DailyRollupGenerator(CmvBaseTask):
     """Task for daily rollup"""
     day = luigi.DateParameter(default=datetime(year=2016, month=3, day=8))
     pcode = luigi.Parameter(default='VzcGw6NlhJZUFfutRhfdpVYIQrRp')
@@ -30,7 +30,7 @@ class DailyRollup(CmvBaseTask):
     def requires(self):
         cmvmin15s = []
         for min15 in day_utc_min15_iter(self.day, self.timezone):
-            cmvmin15s.append(BuildMin15Datacube(start_time=min15, end_time=min15+timedelta(minutes=15)))
+            cmvmin15s.append(Min15Generator(start_time=min15, end_time=min15+timedelta(minutes=15)))
         return cmvmin15s
 
     def get_js_job_config(self):

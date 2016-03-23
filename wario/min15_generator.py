@@ -19,7 +19,7 @@ class InputSessionFile(luigi.ExternalTask):
         logging.info('Requires %s', hdfs_str)
         return HdfsTarget(hdfs_str)
 
-class BuildMin15Datacube(CmvBaseTask):
+class Min15Generator(CmvBaseTask):
     start_time = luigi.DateMinuteParameter()
     end_time = luigi.DateMinuteParameter()
     wario_target_table_name = luigi.Parameter(significant=False)
@@ -111,4 +111,4 @@ class BuildMin15Datacube(CmvBaseTask):
         return CmvMysqlTarget(self.connect_args, self.row_col_dict)
 
 if __name__ == '__main__':
-    luigi.run(['BuildMin15Datacube', '--workers', '1'])
+    luigi.run(['Min15Generator', '--workers', '1'])
