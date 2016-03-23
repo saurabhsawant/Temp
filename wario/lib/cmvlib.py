@@ -149,12 +149,12 @@ class CmvLib:
 
     @staticmethod
     def submit_config_to_appsvr(config_json, appsvr_url):
-        logging.info("Submitting appsvr config to url: %s", appsvr_url)
+        logging.debug("Submitting appsvr config to url: %s", appsvr_url)
         r = requests.post(appsvr_url, json.dumps(config_json))
         r.raise_for_status()
-        submit_status = r.json()
-        logging.info("Appsvr response: %s", submit_status)
-        return submit_status
+        submission_status = r.json()
+        logging.debug("Appsvr response: %s", submission_status)
+        return submission_status
 
     @staticmethod
     def poll_appsvr_job_status(job_status_url):
