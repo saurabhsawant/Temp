@@ -4,7 +4,7 @@ import luigi
 import csv
 from datetime import timedelta
 from min15_generator import Min15Generator
-import daily_rollup
+import rollup_daily
 import logging
 from datetime import datetime
 
@@ -52,7 +52,7 @@ class CmvReprocess(luigi.Task):
             day = datetime.strptime(line[0], '%Y-%m-%d')
             pcode = line[1]
             tz = line[2]
-            daily_rollup_task = daily_rollup.DailyRollup(day=day, pcode=pcode, timezone=tz)
+            daily_rollup_task = rollup_daily.CmvRollupDailyGenerator(day=day, pcode=pcode, timezone=tz)
             daily_rollup_upstream_tasks.add(daily_rollup_task)
         return daily_rollup_upstream_tasks
 
