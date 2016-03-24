@@ -1,9 +1,5 @@
 {
   "rookery": {
-    "show_data": {
-      "stdout_print": false,
-      "info_print": false
-    },
     "materialized": {
       "view": {
         "rollupPartitionSize": 30000,
