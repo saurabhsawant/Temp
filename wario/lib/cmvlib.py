@@ -41,13 +41,13 @@ class CmvBaseTask(luigi.Task):
     datacube_jar = luigi.Parameter(significant=False)
     cassandra_keyspace = luigi.Parameter(significant=False)
     cassandra_namespace = luigi.Parameter(significant=False)
-    appserver_host = luigi.Parameter(significant=False)
-    sqlcmv_hdfsdir = luigi.Parameter(significant=False)
-    sqlcmv_keyspace = luigi.Parameter(significant=False)
-    sqlcmv_nameSpace = luigi.Parameter(significant=False)
     cassandra_seeds = luigi.Parameter(significant=False)
     jobserver_host_port = luigi.Parameter(significant=False)
-    hdfs_sessions = luigi.Parameter(significant=False)
+    appserver_host_port = luigi.Parameter(significant=False)
+    appserver_app_name = luigi.Parameter(significant=False)
+    hdfs_namenode = luigi.Parameter(significant=False)
+    hdfs_session_dirs = luigi.Parameter(significant=False)
+    hdfs_cmv_dir = luigi.Parameter(significant=False)
     wario_target_db_host = luigi.Parameter(significant=False)
     wario_target_db_user = luigi.Parameter(significant=False)
     wario_target_db_password = luigi.Parameter(significant=False)
@@ -148,17 +148,17 @@ class CmvLib:
             return CmvLib.poll_js_jobid_requests(job_id, js_host)
 
     @staticmethod
-    def submit_config_to_appsvr(config_json, appsvr_url):
-        logging.info("Submitting appsvr config to url: %s", appsvr_url)
-        r = requests.post(appsvr_url, json.dumps(config_json))
+    def submit_config_to_appserver(config_json, appserver_url):
+        logging.info("Submitting app server config to url: %s", appserver_url)
+        r = requests.post(appserver_url, json.dumps(config_json))
         r.raise_for_status()
         submission_status = r.json()
         logging.info("Appsvr response: %s", submission_status)
         return submission_status
 
     @staticmethod
-    def poll_appsvr_job_status(job_status_url):
-        logging.info('Started polling Appsvr...')
+    def poll_appserver_job_status(job_status_url):
+        logging.info('Started polling app server...')
         while True:
             job_status = requests.get(job_status_url).json()
             if job_status['status'] != 'RUNNING':
