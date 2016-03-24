@@ -7,7 +7,7 @@ from lib.cmvlib import CmvBaseTask
 from lib.cmv_mysql_target import CmvMysqlTarget
 from lib.cmvlib import DateTime
 from min15_generator import Min15Generator
-from daily_rollup import DailyRollupGenerator
+from rollup_daily import CmvRollupDailyGenerator
 
 class Min15AndDailyRollupTrigger(CmvBaseTask):
     start_time = luigi.DateMinuteParameter()
