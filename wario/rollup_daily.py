@@ -4,7 +4,6 @@ from datetime import timedelta
 
 import luigi
 
-from wario.cmv import Cmv
 from wario.lib.cmvlib import day_utc_min15_iter
 from wario.min15_generator import Min15Generator
 from wario.rollup_base import CmvRollupBaseTask

@@ -10,7 +10,6 @@ import luigi
 from wario.lib.cmv_mysql_target import CmvMysqlTarget
 from wario.lib.cmvlib import CmvLib
 from wario.lib.cmvlib import CmvBaseTask
-from wario.lib.cmvlib import Json
 
 class CmvRollupBaseTask(CmvBaseTask):
     """Base task for rollup"""
@@ -24,6 +23,7 @@ class CmvRollupBaseTask(CmvBaseTask):
         pass
 
     def validate_day(self):
+        """Vadlidates the day parameter"""
         pass
 
     def get_start_time(self):
