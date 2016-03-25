@@ -73,7 +73,7 @@ class CmvRollupBaseTask(CmvBaseTask):
             'http://{js_host_port}/jobs?appName={app_name}&classPath={job_class}&' \
             'context={js_context}&timeout=100&sync=false'.format(
                 js_host_port=self.jobserver_host_port,
-                app_name=self.datacube_jar,
+                app_name=self.jobserver_datacube_jar,
                 job_class='ooyala.cnd.RollupDelphiDatacubes',
                 js_context=self.jobserver_context)
         return js_url

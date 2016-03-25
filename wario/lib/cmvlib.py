@@ -37,12 +37,12 @@ class Helios:
         return CmvMysqlTarget(connect_args=connect_args).query(query_string, query_values)
 
 class CmvBaseTask(luigi.Task):
+    jobserver_host_port = luigi.Parameter(significant=False)
     jobserver_context = luigi.Parameter(significant=False)
-    datacube_jar = luigi.Parameter(significant=False)
+    jobserver_datacube_jar = luigi.Parameter(significant=False)
     cassandra_keyspace = luigi.Parameter(significant=False)
     cassandra_namespace = luigi.Parameter(significant=False)
     cassandra_seeds = luigi.Parameter(significant=False)
-    jobserver_host_port = luigi.Parameter(significant=False)
     appserver_host_port = luigi.Parameter(significant=False)
     appserver_app_name = luigi.Parameter(significant=False)
     hdfs_namenode = luigi.Parameter(significant=False)

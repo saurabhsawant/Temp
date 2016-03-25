@@ -50,7 +50,7 @@ class Min15Generator(CmvBaseTask):
     def prepare_js_url(self):
         js_url = 'http://{js_host}/jobs?appName={dc_jar}&classPath=ooyala.' \
                  'cnd.CreateDelphiDatacube&context={ctxt}'. \
-            format(js_host=self.jobserver_host_port, dc_jar=self.datacube_jar, ctxt=self.jobserver_context)
+            format(js_host=self.jobserver_host_port, dc_jar=self.jobserver_datacube_jar, ctxt=self.jobserver_context)
         return js_url
 
     def requires(self):
