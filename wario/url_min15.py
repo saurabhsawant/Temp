@@ -11,7 +11,6 @@ from wario.lib.cmv_mysql_target import CmvMysqlTarget
 from wario.lib.cmvlib import CmvBaseTask
 from wario.lib.cmvlib import CmvLib
 from wario.lib.cmvlib import InputSessionFile
-from wario.lib.cmvlib import Json
 
 class UrlMin15(CmvBaseTask):
     """Task for url min15 data generation"""
