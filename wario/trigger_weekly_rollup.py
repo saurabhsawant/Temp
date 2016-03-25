@@ -9,15 +9,15 @@ from rollup_weekly import CmvRollupWeeklyGenerator
 import luigi
 import logging
 
-class WeekupRollupTrigger(CmvBaseTask):
+class WeeklyRollupTrigger(CmvBaseTask):
     day = luigi.DateParameter()
     daily_target_table_name = luigi.Parameter(significant=False)
     wario_target_table_name = luigi.Parameter(significant=False)
     connect_args = dict()
     row_col_dict = dict()
     ptz_rows = []
-    start_time = day
-    end_time = start_time + timedelta(days=6)
+    start_time = None
+    end_time = None
 
     def task_init(self):
         logging.info('Initializing task params: {cn_args}, {tgt_id}'.
@@ -41,6 +41,8 @@ class WeekupRollupTrigger(CmvBaseTask):
     def requires(self):
         CmvLib.validate_weekday(self.day)
         logging.info("Task: WeekupRollupTrigger, start_time = %s, end_time = %s", self.start_time, self.end_time)
+        self.start_time = self.day
+        self.end_time = self.start_time + timedelta(days=6)
         self.ptz_rows = self.get_ptz_from_target()
         daily_rollup_tasks = []
         for ptz in self.ptz_rows:

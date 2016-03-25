@@ -59,7 +59,6 @@ class CmvBaseTask(luigi.Task):
     wario_target_db_password = config.get('wario_db', 'wario_target_db_password')
     wario_target_db_name = config.get('wario_db', 'wario_target_db_name')
 
-
     def requires(self):
         pass
 
@@ -78,8 +77,8 @@ class CmvLib:
 
     @staticmethod
     def validate_weekday(day):
-        if day.weekday != 0:
-            raise ValueError('Given day, %sm, does not start on Monday' % day)
+        if day.weekday() != 0:
+            raise ValueError('Given day, %s, does not start on Monday' % day)
 
     @staticmethod
     def replace_config_params(json_data, tmpl_subst_params):
