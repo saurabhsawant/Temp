@@ -57,8 +57,8 @@ class Min15Generator(CmvBaseTask):
         return js_url
 
     def requires(self):
-        CmvLib.check_boundaries(self.start_time)
-        CmvLib.check_boundaries(self.end_time)
+        CmvLib.validate_min15_time(self.start_time)
+        CmvLib.validate_min15_time(self.end_time)
         cube_timeranges = set()
         now = self.start_time
         logging.info("start_time = %s, end_time = %s", self.start_time, self.end_time)

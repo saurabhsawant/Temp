@@ -72,9 +72,14 @@ class CmvBaseTask(luigi.Task):
 class CmvLib:
 
     @staticmethod
-    def check_boundaries(date_time):
+    def validate_min15_time(date_time):
         if date_time.minute % 15 != 0:
             raise ValueError('Given time %s is not at 15 min boundary' % date_time)
+
+    @staticmethod
+    def validate_weekday(day):
+        if day.weekday != 0:
+            raise ValueError('Given day, %sm, does not start on Monday' % day)
 
     @staticmethod
     def replace_config_params(json_data, tmpl_subst_params):
