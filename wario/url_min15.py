@@ -19,7 +19,7 @@ class UrlMin15(CmvBaseTask):
     )
     wario_target_table_name = luigi.Parameter(default='url_min15', significant=False)
 
-    def get_appsvr_job_config(self):
+    def get_appserver_job_config(self):
         """Returns job config"""
         tmpl_values = {
             "start_time": CmvLib.date_to_cmvformat(self.start_time),
@@ -46,7 +46,7 @@ class UrlMin15(CmvBaseTask):
             )
         return appserver_url
 
-    def get_appserver_job_submission_url(self):
+    def get_appserver_job_submit_url(self):
         """Returns job submission url"""
         appserver_url = \
             'http://{appserver_host_port}/apps/{app_name}/jobs?timeout=100&sync=false'.format(
@@ -59,11 +59,11 @@ class UrlMin15(CmvBaseTask):
         return InputSessionFile(cube_time=self.start_time)
 
     def run(self):
-        job_cfg = self.get_appsvr_job_config()
+        job_cfg = self.get_appserver_job_config()
         logging.info('Running url min15 job...')
         submission_status = CmvLib.submit_config_to_appserver(
             job_cfg,
-            self.get_appserver_job_submission_url()
+            self.get_appserver_job_submit_url()
         )
         job_id = submission_status['result']['jobId']
         time.sleep(5)
