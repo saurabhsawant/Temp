@@ -75,5 +75,8 @@ class CmvReprocess(luigi.WrapperTask):
             self.targets_deleted = True
         yield reprocess_upstream_tasks
 
+    def complete(self):
+        return self.targets_deleted
+
 if __name__ == '__main__':
     luigi.run(['CmvReprocess', '--workers', '1'])
