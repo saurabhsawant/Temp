@@ -7,9 +7,9 @@ import time
 
 import luigi
 
-from wario.lib.cmv_mysql_target import CmvMysqlTarget
-from wario.lib.cmvlib import CmvLib
-from wario.lib.cmvlib import CmvBaseTask
+from lib.cmv_mysql_target import CmvMysqlTarget
+from lib.cmvlib import CmvLib
+from lib.cmvlib import CmvBaseTask
 
 class CmvRollupBaseTask(CmvBaseTask):
     """Base task for rollup"""

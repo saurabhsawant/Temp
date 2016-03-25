@@ -15,7 +15,7 @@ class InputReprocessFile(luigi.ExternalTask):
         return luigi.LocalTarget('wario/utils/reprocess_{suffix}.csv'.format(suffix=self.reprocess_cube))
 
 
-class CmvReprocess(luigi.Task):
+class CmvReprocess(luigi.WrapperTask):
     reprocess_min15 = luigi.BoolParameter()
     reprocess_daily = luigi.BoolParameter()
     reprocess_weekly = luigi.BoolParameter()
@@ -74,9 +74,6 @@ class CmvReprocess(luigi.Task):
             self.delete_all_targets(reprocess_upstream_tasks)
             self.targets_deleted = True
         yield reprocess_upstream_tasks
-
-    def output(self):
-        pass
 
 if __name__ == '__main__':
     luigi.run(['CmvReprocess', '--workers', '1'])

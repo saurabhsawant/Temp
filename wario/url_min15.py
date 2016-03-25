@@ -7,11 +7,11 @@ import time
 
 import luigi
 
-from wario.lib.cmv_mysql_target import CmvMysqlTarget
-from wario.lib.cmvlib import CmvBaseTask
-from wario.lib.cmvlib import CmvLib
-from wario.lib.cmvlib import InputSessionFile
-from wario.lib.cmvlib import Json
+from lib.cmv_mysql_target import CmvMysqlTarget
+from lib.cmvlib import CmvBaseTask
+from lib.cmvlib import CmvLib
+from lib.cmvlib import InputSessionFile
+from lib.cmvlib import Json
 
 class UrlMin15(CmvBaseTask):
     """Task for url min15 data generation"""

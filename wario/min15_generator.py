@@ -33,11 +33,14 @@ class Min15Generator(CmvBaseTask):
     def process_config_tmpl(self, tmpl_file):
         pcode_tz_list = Helios.get_providers_from_helios()
         self.pcode_tz_dict = dict(pcode_tz_list)
-        hdfs_dirs = [hdfs_dir for hdfs_dir in self.input()]
+        hdfs_dirs = [hdfs_dir.path.rsplit('/', 1)[0] for hdfs_dir in self.input()]
+
+        for dir in hdfs_dirs:
+            print dir
 
         tmpl_subst_params = {"start_time": CmvLib.date_to_cmvformat(self.start_time),
                              "end_time": CmvLib.date_to_cmvformat(self.end_time),
-                             "cassandra_keyspace": self.cassandra_keyspace,
+                             "key_space": self.cassandra_keyspace,
                              "name_space": self.cassandra_namespace,
                              "cassandra_seeds": self.cassandra_seeds.split(','),
                              "pcode_dict": CmvLib.prepare_ptz(pcode_tz_list, hdfs_dirs)}

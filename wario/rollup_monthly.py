@@ -4,9 +4,9 @@ from datetime import date, timedelta
 
 import luigi
 
-from wario.rollup_base import CmvRollupBaseTask
-from wario.rollup_daily import CmvRollupDailyGenerator
-from wario.rollup_weekly import CmvRollupWeeklyGenerator
+from rollup_base import CmvRollupBaseTask
+from rollup_daily import CmvRollupDailyGenerator
+from rollup_weekly import CmvRollupWeeklyGenerator
 
 class CmvRollupMonthlyGenerator(CmvRollupBaseTask):
     """Task for rollup monthly"""

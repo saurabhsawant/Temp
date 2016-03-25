@@ -37,21 +37,29 @@ class Helios:
         return CmvMysqlTarget(connect_args=connect_args).query(query_string, query_values)
 
 class CmvBaseTask(luigi.Task):
-    jobserver_context = luigi.Parameter(significant=False)
-    datacube_jar = luigi.Parameter(significant=False)
-    cassandra_keyspace = luigi.Parameter(significant=False)
-    cassandra_namespace = luigi.Parameter(significant=False)
-    cassandra_seeds = luigi.Parameter(significant=False)
-    jobserver_host_port = luigi.Parameter(significant=False)
-    appserver_host_port = luigi.Parameter(significant=False)
-    appserver_app_name = luigi.Parameter(significant=False)
-    hdfs_namenode = luigi.Parameter(significant=False)
-    hdfs_session_dirs = luigi.Parameter(significant=False)
-    hdfs_cmv_dir = luigi.Parameter(significant=False)
-    wario_target_db_host = luigi.Parameter(significant=False)
-    wario_target_db_user = luigi.Parameter(significant=False)
-    wario_target_db_password = luigi.Parameter(significant=False)
-    wario_target_db_name = luigi.Parameter(significant=False)
+
+    import ConfigParser
+    config = ConfigParser.ConfigParser(allow_no_value=True)
+    config.readfp(open(r'/etc/luigi/WarioCmv.cfg'))
+
+    jobserver_host_port = config.get('env', 'jobserver_host_port')
+    jobserver_context = config.get('env', 'jobserver_context')
+    datacube_jar = config.get('env', 'datacube_jar')
+    appserver_host_port = config.get('env', 'appserver_host_port')
+    appserver_app_name = config.get('env', 'appserver_app_name')
+
+    cassandra_keyspace = config.get('cassandra', 'cassandra_keyspace')
+    cassandra_namespace = config.get('cassandra', 'cassandra_namespace')
+    cassandra_seeds = config.get('cassandra', 'cassandra_seeds')
+
+    hdfs_namenode = config.get('hadoop', 'hdfs_namenode')
+    hdfs_session_dirs = config.get('hadoop', 'hdfs_session_dirs')
+    hdfs_cmv_dir = config.get('hadoop', 'hdfs_cmv_dir')
+
+    wario_target_db_host = config.get('wario_db', 'wario_target_db_host')
+    wario_target_db_user = config.get('wario_db', 'wario_target_db_user')
+    wario_target_db_password = config.get('wario_db', 'wario_target_db_password')
+    wario_target_db_name = config.get('wario_db', 'wario_target_db_name')
 
     def requires(self):
         pass
