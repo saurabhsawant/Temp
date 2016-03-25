@@ -7,7 +7,6 @@ import pytz
 from pytz import timezone
 import requests
 import time
-import luigi
 
 from cmv_mysql_target import CmvMysqlTarget
 
@@ -37,14 +36,13 @@ class Helios:
         return CmvMysqlTarget(connect_args=connect_args).query(query_string, query_values)
 
 class CmvBaseTask(luigi.Task):
-
     import ConfigParser
     config = ConfigParser.ConfigParser(allow_no_value=True)
     config.readfp(open(r'/etc/luigi/WarioCmv.cfg'))
 
     jobserver_host_port = config.get('env', 'jobserver_host_port')
     jobserver_context = config.get('env', 'jobserver_context')
-    datacube_jar = config.get('env', 'datacube_jar')
+    jobserver_datacube_jar = config.get('env', 'jobserver_datacube_jar')
     appserver_host_port = config.get('env', 'appserver_host_port')
     appserver_app_name = config.get('env', 'appserver_app_name')
 
@@ -60,6 +58,7 @@ class CmvBaseTask(luigi.Task):
     wario_target_db_user = config.get('wario_db', 'wario_target_db_user')
     wario_target_db_password = config.get('wario_db', 'wario_target_db_password')
     wario_target_db_name = config.get('wario_db', 'wario_target_db_name')
+
 
     def requires(self):
         pass

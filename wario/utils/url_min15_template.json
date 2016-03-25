@@ -1,46 +1,46 @@
 {
-    "rookery": {
-        "cassandra": {
+  "rookery": {
+    "cassandra": {
+      "seeds": "$cassandra_seeds",
+      "keyspace": "$cassandra_keyspace"
+    },
+    "materialized": {
+      "view": {
+        "cache_namespace": "$cache_namespace",
+        "cmvGenerator": "workflow-sql-cmv",
+        "dimensions": [
+          "pcode",
+          "domain",
+          "url"
+        ],
+        "cache": {
+          "loadFromDisk": "true",
+          "cassandra": {
             "seeds": "$cassandra_seeds",
             "keyspace": "$cassandra_keyspace"
-        },
-        "materialized": {
-            "view": {
-                "cache_namespace": "$cache_namespace",
-                "cmvGenerator": "workflow-sql-cmv",
-                "dimensions": [
-                    "pcode",
-                    "domain",
-                    "url"
-                ],
-                "cache": {
-                    "loadFromDisk": "true",
-                    "cassandra": {
-                        "seeds": "$cassandra_seeds",
-                        "keyspace": "$cassandra_keyspace"
-                    }
-                }
-            }
-        },
-        "events": {
-            "start_time": "$start_time",
-            "end_time": "$end_time",
-            "rdd_duration": "min15"
-        },
-        "cmv": {
-            "coalesce": "10"
-        },
-        "hdfs": {
-            "oneHourPack": "false"
+          }
         }
+      }
+    },
+    "events": {
+      "start_time": "$start_time",
+      "end_time": "$end_time",
+      "rdd_duration": "min15"
+    },
+    "cmv": {
+      "coalesce": "10"
     },
     "hdfs": {
-        "name_node": "$hdfs_name_node",
-        "session": {
-            "dirs": "$hdfs_session_dirs"
-        },
-        "cmv": {
-            "dir": "$hdfs_cmv_dir"
-        }
+      "oneHourPack": "false"
     }
+  },
+  "hdfs": {
+    "name_node": "$hdfs_name_node",
+    "session": {
+      "dirs": "$hdfs_session_dirs"
+    },
+    "cmv": {
+      "dir": "$hdfs_cmv_dir"
+    }
+  }
 }
