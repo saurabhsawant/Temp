@@ -18,7 +18,7 @@ class CmvRollupMonthlyGenerator(CmvRollupBaseTask):
         day = self.get_start_time()
         end_day = self.get_end_time()
         while day != end_day:
-            if day.weekday() == 0 and (day + timedelta(days=6)) <= end_day:
+            if day.weekday() == 0 and (day + timedelta(days=7)) <= end_day:
                 rollups.append(
                     CmvRollupWeeklyGenerator(day=day, pcode=self.pcode, timezone=self.timezone)
                 )
@@ -39,7 +39,9 @@ class CmvRollupMonthlyGenerator(CmvRollupBaseTask):
 
     def get_end_time(self):
         self.validate_day()
-        return DateTime.get_last_day_of_month(self.day)
+        next_month_day = self.day + timedelta(days=date.max.day)
+        end_day = next_month_day - timedelta(days=(next_month_day.day - 1))
+        return end_day
 
     def get_rdd_duraion(self):
         return 'day'
