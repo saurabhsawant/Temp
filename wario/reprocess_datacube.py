@@ -8,6 +8,8 @@ import rollup_daily
 import logging
 from datetime import datetime
 
+targets_deleted = False
+
 class InputReprocessFile(luigi.ExternalTask):
     reprocess_cube = luigi.Parameter()
 
@@ -15,12 +17,11 @@ class InputReprocessFile(luigi.ExternalTask):
         return luigi.LocalTarget('wario/utils/reprocess_{suffix}.csv'.format(suffix=self.reprocess_cube))
 
 
-class CmvReprocess(luigi.WrapperTask):
+class CmvReprocess(luigi.Task):
     reprocess_min15 = luigi.BoolParameter()
     reprocess_daily = luigi.BoolParameter()
     reprocess_weekly = luigi.BoolParameter()
     reprocess_monthly = luigi.BoolParameter()
-    targets_deleted = False
 
     def requires(self):
         reqd_targets = dict()
@@ -62,6 +63,7 @@ class CmvReprocess(luigi.WrapperTask):
 
     def run(self):
         reprocess_upstream_tasks = set()
+        global targets_deleted
         #TODO: add CSV validator
         if self.reprocess_min15:
             logging.info('Reprocessing min15...')
@@ -70,13 +72,13 @@ class CmvReprocess(luigi.WrapperTask):
         if self.reprocess_daily:
             reprocess_upstream_tasks |= self.redo_daily(self.input()['daily'].open('r'))
 
-        if not self.targets_deleted:
+        if not targets_deleted:
             self.delete_all_targets(reprocess_upstream_tasks)
-            self.targets_deleted = True
+            targets_deleted = True
         yield reprocess_upstream_tasks
 
     def complete(self):
-        return self.targets_deleted
+        return targets_deleted
 
 if __name__ == '__main__':
     luigi.run(['CmvReprocess', '--workers', '1'])

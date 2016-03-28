@@ -26,14 +26,14 @@ class Min15AndDailyRollupTrigger(CmvBaseTask):
         return min15_task
 
     def task_init(self):
-        logging.info('Initializing task params: {cn_args}, {tgt_id}'.
-                     format(cn_args=self.connect_args, tgt_id=self.task_id))
         self.connect_args['user'] = self.wario_target_db_user
         self.connect_args['password'] = self.wario_target_db_password
         self.connect_args['host'] = self.wario_target_db_host
         self.connect_args['database'] = self.wario_target_db_name
         self.connect_args['table'] = self.wario_target_table_name
         self.row_col_dict['target_id'] = self.task_id
+        logging.info('Initializing task params: {cn_args}, {tgt_id}'.
+                     format(cn_args=self.connect_args, tgt_id=self.task_id))
 
     def get_ptz_dict_from_db(self):
         connect_args = dict()
