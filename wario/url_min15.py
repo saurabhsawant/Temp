@@ -49,7 +49,11 @@ class UrlMin15Generator(CmvBaseTask):
         job_id = submission_status['result']['jobId']
         time.sleep(5)
         job_status = CmvLib.poll_appserver_job_status(
-            CmvLib.get_appserver_job_status_url(self.appserver_host_port, self.appserver_app_name, job_id)
+            CmvLib.get_appserver_job_status_url(
+                self.appserver_host_port,
+                self.appserver_app_name,
+                job_id
+            )
         )
         if job_status['status'] != 'OK':
             logging.error("Job Server responded with an error. Job Server Response: %s", job_status)
