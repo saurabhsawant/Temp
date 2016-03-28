@@ -1,0 +1,28 @@
+{
+  "rookery": {
+    "materialized": {
+      "view": {
+        "cache_namespace": "$cache_namespace",
+        "rollup_namespace": "$rollup_namespace",
+        "cmvGenerator": "workflow-rollup",
+        "cache": {
+          "cassandra": {
+            "seeds": "$cassandra_seeds",
+            "keyspace": "$cassandra_keyspace"
+          }
+        }
+      }
+    },
+    "events":{
+      "start_time":"$start_time",
+      "end_time":"$end_time",
+      "rdd_duration":"$rdd_duration",
+      "rdd_rollup_duration": "$rdd_rollup_duration"
+    }
+  },
+  "hdfs": {
+    "cmv": {
+      "dir": "$hdfs_cmv_dir"
+    }
+  }
+}
