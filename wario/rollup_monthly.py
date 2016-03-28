@@ -18,7 +18,7 @@ class CmvRollupMonthlyGenerator(CmvRollupBaseTask):
         day = self.get_start_time()
         end_day = self.get_end_time()
         while day != end_day:
-            if day.weekday() == 0 and (day + timedelta(days=7)) <= end_day:
+            if day.weekday() == 0 and (day + timedelta(days=6)) <= end_day:
                 rollups.append(
                     CmvRollupWeeklyGenerator(day=day, pcode=self.pcode, timezone=self.timezone)
                 )
