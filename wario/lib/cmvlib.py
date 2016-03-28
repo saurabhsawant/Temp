@@ -199,7 +199,7 @@ class DateTime:
 
     @staticmethod
     def validate_start_of_month(day):
-        if day.day() != 1:
+        if day.day != 1:
             raise ValueError('Given day, %s, does not start of the month' % day)
 
     @staticmethod

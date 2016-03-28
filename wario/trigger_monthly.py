@@ -6,6 +6,7 @@ from lib.cmv_mysql_target import CmvMysqlTarget
 from datetime import timedelta
 from rollup_daily import CmvRollupDailyGenerator
 from rollup_weekly import CmvRollupWeeklyGenerator
+from rollup_monthly import CmvRollupMonthlyGenerator
 import luigi
 import logging
 
@@ -41,19 +42,28 @@ class MonthlyRollupTrigger(CmvBaseTask):
 
     def requires(self):
         DateTime.validate_start_of_month(self.day)
-        logging.info("Task: %s, start_time = %s, end_time = %s", self.__class__.__name__, self.start_time, self.end_time)
+        logging.info("Task: %s, start_time = %s, end_time = %s",
+                     self.__class__.__name__, self.start_time, self.end_time)
         self.start_time = self.day
-        self.end_time = self.start_time + timedelta(days=6)
+        self.end_time = DateTime.get_last_day_of_month(self.day)
         self.ptz_rows = self.get_ptz_from_target()
-        daily_rollup_tasks = []
+        downstream_tasks = []
+
         for ptz in self.ptz_rows:
-            for curr_day in (self.start_time + timedelta(days=n) for n in range(7)):
-                daily_rollup_tasks.append(CmvRollupDailyGenerator(day=curr_day, pcode=ptz[0], timezone=ptz[1]))
-        return daily_rollup_tasks
+            curr_day = self.start_time
+            while curr_day <= self.end_time:
+                if curr_day.weekday() == 0 and curr_day + timedelta(days=6) <= self.end_time:
+                    downstream_tasks.append(CmvRollupWeeklyGenerator(day=curr_day, pcode=ptz[0], timezone=ptz[1]))
+                    curr_day += curr_day + timedelta(weeks=1)
+                else:
+                    downstream_tasks.append(CmvRollupDailyGenerator(day=curr_day, pcode=ptz[0], timezone=ptz[1]))
+                    curr_day += curr_day + timedelta(days=1)
+
+        return downstream_tasks
 
     def run(self):
         for ptz in self.ptz_rows:
-            yield CmvRollupWeeklyGenerator(day=self.start_time, pcode=ptz[0], timezone=ptz[1])
+            yield CmvRollupMonthlyGenerator(day=self.start_time, pcode=ptz[0], timezone=ptz[1])
         self.output().touch()
 
     def output(self):
