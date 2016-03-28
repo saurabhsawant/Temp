@@ -1,1 +1,56 @@
-sql commands here..
+trigger tables:
+--------------
+
+create table min15_daily_rollup_trigger
+(target_id VARCHAR(512) NOT NULL, last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY(target_id));
+
+create table weekly_rollup_trigger
+(target_id VARCHAR(512) NOT NULL, last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY(target_id));
+
+create table monthly_rollup_trigger
+(target_id VARCHAR(512) NOT NULL, last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY(target_id));
+
+min15 and rollups:
+-----------------
+
+create table min15 
+(target_id VARCHAR(512) NOT NULL, 
+ptz_dict JSON, 
+last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY(target_id));
+
+create table rollup_day
+(target_id VARCHAR(512) NOT NULL, 
+day DATE NOT NULL,
+pcode VARCHAR(255) NOT NULL,
+timezone VARCHAR(255) NOT NULL,
+last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+PRIMARY KEY(target_id));
+
+create table rollup_week
+(target_id VARCHAR(512) NOT NULL, 
+day DATE NOT NULL,
+pcode VARCHAR(255) NOT NULL,
+timezone VARCHAR(255) NOT NULL,
+last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+PRIMARY KEY(target_id));
+
+create table rollup_month
+(target_id VARCHAR(512) NOT NULL, 
+day DATE NOT NULL,
+pcode VARCHAR(255) NOT NULL,
+timezone VARCHAR(255) NOT NULL,
+last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+PRIMARY KEY(target_id));
+
+commands run by cron:
+---------------------
+
+python -m luigi --module wario.trigger_min15_dailyrollup Min15AndDailyRollupTrigger --workers 3
+python -m luigi --module wario.trigger_weekly_rollup WeeklyRollupTrigger --workers 3
+python -m luigi --module wario.trigger_monthly_rollup MonthlyRollupTrigger --workers 3
+
+reprocess datacube command:
+---------------------------
+
+python -m luigi --module wario.reprocess_datacube CmvReprocess --workers 3
