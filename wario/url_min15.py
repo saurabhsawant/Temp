@@ -12,7 +12,7 @@ from wario.lib.cmvlib import CmvBaseTask
 from wario.lib.cmvlib import CmvLib
 from wario.lib.cmvlib import InputSessionFile
 
-class UrlMin15(CmvBaseTask):
+class UrlMin15Generator(CmvBaseTask):
     """Task for url min15 data generation"""
     start_time = luigi.DateMinuteParameter(
         default=datetime(year=2016, month=3, day=21, hour=12, minute=15)
@@ -72,4 +72,4 @@ class UrlMin15(CmvBaseTask):
         return CmvMysqlTarget(connect_args, col_values)
 
 if __name__ == '__main__':
-    luigi.run(['UrlMin15', '--workers', '1'])
+    luigi.run(['UrlMin15Generator', '--workers', '1'])
