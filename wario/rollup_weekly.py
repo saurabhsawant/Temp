@@ -6,7 +6,7 @@ import luigi
 
 from rollup_base import CmvRollupBaseTask
 from rollup_daily import CmvRollupDailyGenerator
-from lib.cmvlib import CmvLib
+from lib.cmvlib import DateTime
 
 class CmvRollupWeeklyGenerator(CmvRollupBaseTask):
     """Task for rollup weekly"""
@@ -24,7 +24,7 @@ class CmvRollupWeeklyGenerator(CmvRollupBaseTask):
         return daily_rollups
 
     def validate_day(self):
-        CmvLib.validate_weekday(self.day)
+        DateTime.validate_weekday(self.day)
 
     def get_start_time(self):
         self.validate_day()
