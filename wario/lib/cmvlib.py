@@ -171,6 +171,25 @@ class CmvLib:
                 return job_status
             time.sleep(30)
 
+    @staticmethod
+    def get_appserver_job_submit_url(appserver_host_port, app_name):
+        appserver_url = \
+            'http://{appserver_host_port}/apps/{app_name}/jobs?timeout=100&sync=false'.format(
+                appserver_host_port=appserver_host_port,
+                app_name=app_name
+            )
+        return appserver_url
+
+    @staticmethod
+    def get_appserver_job_status_url(appserver_host_port, app_name, job_id):
+        appserver_url = \
+            'http://{appserver_host_port}/apps/{app_name}/jobs/{job_id}/status'.format(
+                appserver_host_port=appserver_host_port,
+                app_name=app_name,
+                job_id=job_id
+            )
+        return appserver_url
+
 
 class InputSessionFile(luigi.ExternalTask):
     cube_time = luigi.DateMinuteParameter()
