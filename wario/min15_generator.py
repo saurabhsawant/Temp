@@ -5,10 +5,8 @@ import json
 from datetime import timedelta
 import luigi
 import logging
-from pprint import pprint
-import time
 
-class Min15Generator(CmvBaseTask):
+class CmvMin15Generator(CmvBaseTask):
     start_time = luigi.DateMinuteParameter()
     end_time = luigi.DateMinuteParameter()
     wario_target_table_name = luigi.Parameter(significant=False)
@@ -103,4 +101,4 @@ class Min15Generator(CmvBaseTask):
         return CmvMysqlTarget(self.connect_args, self.row_col_dict)
 
 if __name__ == '__main__':
-    luigi.run(['Min15Generator', '--workers', '1'])
+    luigi.run(['CmvMin15Generator', '--workers', '1'])

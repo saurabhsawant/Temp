@@ -5,7 +5,7 @@ from datetime import timedelta
 import luigi
 
 from lib.cmvlib import day_utc_min15_iter
-from min15_generator import Min15Generator
+from min15_generator import CmvMin15Generator
 from rollup_base import CmvRollupBaseTask
 
 class CmvRollupDailyGenerator(CmvRollupBaseTask):
@@ -15,7 +15,7 @@ class CmvRollupDailyGenerator(CmvRollupBaseTask):
     def requires(self):
         cmvmin15s = []
         for min15 in day_utc_min15_iter(self.day, self.timezone):
-            cmvmin15s.append(Min15Generator(start_time=min15, end_time=min15+timedelta(minutes=15)))
+            cmvmin15s.append(CmvMin15Generator(start_time=min15, end_time=min15+timedelta(minutes=15)))
         return cmvmin15s
 
     def get_start_time(self):

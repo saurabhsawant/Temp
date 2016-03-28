@@ -6,7 +6,7 @@ from lib.cmvlib import CmvLib
 from lib.cmvlib import CmvBaseTask
 from lib.cmv_mysql_target import CmvMysqlTarget
 from lib.cmvlib import DateTime
-from min15_generator import Min15Generator
+from min15_generator import CmvMin15Generator
 from rollup_daily import CmvRollupDailyGenerator
 
 class Min15AndDailyRollupTrigger(CmvBaseTask):
@@ -21,7 +21,7 @@ class Min15AndDailyRollupTrigger(CmvBaseTask):
         CmvLib.validate_min15_time(self.start_time)
         CmvLib.validate_min15_time(self.end_time)
         logging.info("Task: Min15AndDailyRollupTrigger, start_time = %s, end_time = %s", self.start_time, self.end_time)
-        min15_task = Min15Generator(start_time=self.start_time, end_time=self.end_time)
+        min15_task = CmvMin15Generator(start_time=self.start_time, end_time=self.end_time)
         self.min15_target_table_name = min15_task.wario_target_table_name
         return min15_task
 
@@ -46,7 +46,7 @@ class Min15AndDailyRollupTrigger(CmvBaseTask):
         query_string = 'select JSON_EXTRACT(ptz_dict, {json_item}) from {min15_table} where target_id = %s'.\
             format(json_item='\'$.ptz_items\'', min15_table=self.min15_target_table_name)
 
-        query_values = ['Min15Generator(start_time={s}, end_time={e})'.
+        query_values = ['CmvMin15Generator(start_time={s}, end_time={e})'.
                         format(s=self.start_time.strftime('%Y-%m-%dT%H%M'), e=self.end_time.strftime('%Y-%m-%dT%H%M'))]
 
         rows = CmvMysqlTarget(connect_args=connect_args).query(query_string, query_values)
