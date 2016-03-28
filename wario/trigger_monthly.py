@@ -9,7 +9,7 @@ from rollup_weekly import CmvRollupWeeklyGenerator
 import luigi
 import logging
 
-class WeeklyRollupTrigger(CmvBaseTask):
+class MonthlyRollupTrigger(CmvBaseTask):
     day = luigi.DateParameter()
     daily_target_table_name = luigi.Parameter(significant=False)
     wario_target_table_name = luigi.Parameter(significant=False)
@@ -40,7 +40,7 @@ class WeeklyRollupTrigger(CmvBaseTask):
         return CmvMysqlTarget(connect_args=self.connect_args).query(query_string, query_values)
 
     def requires(self):
-        DateTime.validate_weekday(self.day)
+        DateTime.validate_start_of_month(self.day)
         logging.info("Task: %s, start_time = %s, end_time = %s", self.__class__.__name__, self.start_time, self.end_time)
         self.start_time = self.day
         self.end_time = self.start_time + timedelta(days=6)

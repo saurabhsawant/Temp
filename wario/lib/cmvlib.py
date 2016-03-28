@@ -76,11 +76,6 @@ class CmvLib:
             raise ValueError('Given time %s is not at 15 min boundary' % date_time)
 
     @staticmethod
-    def validate_weekday(day):
-        if day.weekday() != 0:
-            raise ValueError('Given day, %s, does not start on Monday' % day)
-
-    @staticmethod
     def replace_config_params(json_data, tmpl_subst_params):
         for k in json_data:
             key_type = type(json_data[k])
@@ -196,6 +191,22 @@ class Json:
 
 
 class DateTime:
+
+    @staticmethod
+    def validate_weekday(day):
+        if day.weekday() != 0:
+            raise ValueError('Given day, %s, does not start on Monday' % day)
+
+    @staticmethod
+    def validate_start_of_month(day):
+        if day.day() != 1:
+            raise ValueError('Given day, %s, does not start of the month' % day)
+
+    @staticmethod
+    def get_last_day_of_month(date):
+        if date.month == 12:
+            return date.replace(day=31)
+        return date.replace(month=date.month+1, day=1) - datetime.timedelta(days=1)
 
     @staticmethod
     def utc_to_any_tz(utc_datetime, tz_iana_name):

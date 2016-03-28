@@ -7,6 +7,7 @@ import luigi
 from rollup_base import CmvRollupBaseTask
 from rollup_daily import CmvRollupDailyGenerator
 from rollup_weekly import CmvRollupWeeklyGenerator
+from lib.cmvlib import DateTime
 
 class CmvRollupMonthlyGenerator(CmvRollupBaseTask):
     """Task for rollup monthly"""
@@ -30,7 +31,7 @@ class CmvRollupMonthlyGenerator(CmvRollupBaseTask):
         return rollups
 
     def validate_day(self):
-        assert self.day.day == 1
+        DateTime.validate_start_of_month(self.day)
 
     def get_start_time(self):
         self.validate_day()
@@ -38,9 +39,7 @@ class CmvRollupMonthlyGenerator(CmvRollupBaseTask):
 
     def get_end_time(self):
         self.validate_day()
-        next_month_day = self.day + timedelta(days=date.max.day)
-        end_day = next_month_day - timedelta(days=(next_month_day.day - 1))
-        return end_day
+        return DateTime.get_last_day_of_month(self.day)
 
     def get_rdd_duraion(self):
         return 'day'
