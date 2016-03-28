@@ -1,1 +1,12 @@
-sql commands here..
+trigger tables:
+--------------
+
+create table min15_daily_rollup_trigger
+(target_id VARCHAR(512) NOT NULL, last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY(target_id));
+
+create table weekly_rollup_trigger
+(target_id VARCHAR(512) NOT NULL, last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY(target_id));
+
+create table monthly_rollup_trigger
+(target_id VARCHAR(512) NOT NULL, last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY(target_id));
+
