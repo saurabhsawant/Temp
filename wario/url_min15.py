@@ -36,25 +36,6 @@ class UrlMin15(CmvBaseTask):
             CmvLib.replace_config_params(cfg, tmpl_values)
             return cfg
 
-    def get_appserver_job_status_url(self, job_id):
-        """Returns job status url"""
-        appserver_url = \
-            'http://{appserver_host_port}/apps/{app_name}/jobs/{job_id}/status'.format(
-                appserver_host_port=self.appserver_host_port,
-                app_name=self.appserver_app_name,
-                job_id=job_id
-            )
-        return appserver_url
-
-    def get_appserver_job_submit_url(self):
-        """Returns job submission url"""
-        appserver_url = \
-            'http://{appserver_host_port}/apps/{app_name}/jobs?timeout=100&sync=false'.format(
-                appserver_host_port=self.appserver_host_port,
-                app_name=self.appserver_app_name
-            )
-        return appserver_url
-
     def requires(self):
         return InputSessionFile(cube_time=self.start_time)
 
@@ -63,11 +44,13 @@ class UrlMin15(CmvBaseTask):
         logging.info('Running url min15 job...')
         submission_status = CmvLib.submit_config_to_appserver(
             job_cfg,
-            self.get_appserver_job_submit_url()
+            CmvLib.get_appserver_job_submit_url(self.appserver_host_port, self.appserver_app_name)
         )
         job_id = submission_status['result']['jobId']
         time.sleep(5)
-        job_status = CmvLib.poll_appserver_job_status(self.get_appserver_job_status_url(job_id))
+        job_status = CmvLib.poll_appserver_job_status(
+            CmvLib.get_appserver_job_status_url(self.appserver_host_port, self.appserver_app_name, job_id)
+        )
         if job_status['status'] != 'OK':
             logging.error("Job Server responded with an error. Job Server Response: %s", job_status)
             raise Exception('Error in Job Server Response.')
