@@ -10,3 +10,34 @@ create table weekly_rollup_trigger
 create table monthly_rollup_trigger
 (target_id VARCHAR(512) NOT NULL, last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY(target_id));
 
+min15 and rollups:
+-----------------
+create table min15 
+(target_id VARCHAR(512) NOT NULL, 
+ptz_dict JSON, 
+last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY(target_id));
+
+create table rollup_day
+(target_id VARCHAR(512) NOT NULL, 
+day DATE NOT NULL,
+pcode VARCHAR(255) NOT NULL,
+timezone VARCHAR(255) NOT NULL,
+last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+PRIMARY KEY(target_id));
+
+create table rollup_week
+(target_id VARCHAR(512) NOT NULL, 
+day DATE NOT NULL,
+pcode VARCHAR(255) NOT NULL,
+timezone VARCHAR(255) NOT NULL,
+last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+PRIMARY KEY(target_id));
+
+create table rollup_month
+(target_id VARCHAR(512) NOT NULL, 
+day DATE NOT NULL,
+pcode VARCHAR(255) NOT NULL,
+timezone VARCHAR(255) NOT NULL,
+last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+PRIMARY KEY(target_id));
