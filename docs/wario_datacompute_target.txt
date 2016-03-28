@@ -43,6 +43,17 @@ timezone VARCHAR(255) NOT NULL,
 last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
 PRIMARY KEY(target_id));
 
+CREATE TABLE url_min15 (
+  target_id varchar(512) NOT NULL,
+  PRIMARY KEY (target_id)
+);
+
+CREATE TABLE url_rollup_day (
+  target_id varchar(512) NOT NULL,
+  day date DEFAULT NULL,
+  PRIMARY KEY (target_id)
+);
+
 commands run by cron:
 ---------------------
 
