@@ -54,10 +54,10 @@ class MonthlyRollupTrigger(CmvBaseTask):
             while curr_day <= self.end_time:
                 if curr_day.weekday() == 0 and curr_day + timedelta(days=6) <= self.end_time:
                     downstream_tasks.append(CmvRollupWeeklyGenerator(day=curr_day, pcode=ptz[0], timezone=ptz[1]))
-                    curr_day += curr_day + timedelta(weeks=1)
+                    curr_day += timedelta(weeks=1)
                 else:
                     downstream_tasks.append(CmvRollupDailyGenerator(day=curr_day, pcode=ptz[0], timezone=ptz[1]))
-                    curr_day += curr_day + timedelta(days=1)
+                    curr_day += timedelta(days=1)
 
         return downstream_tasks
 
