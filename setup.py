@@ -9,9 +9,5 @@ setup(
     description='workflow for IQ',
     url='http://github.services.ooyala.net/BigData/wario',
     packages=['wario', 'wario.lib'],
-    entry_points={'console_scripts': ['wario=wario.cmdline:trigger_min15_dailyrollup']}
+    entry_points={'console_scripts': ['wario=wario.cmdline']}
 )
-
-
-
-
