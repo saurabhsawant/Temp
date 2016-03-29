@@ -5,6 +5,8 @@ import json
 from datetime import timedelta
 import luigi
 import logging
+import pkg_resources
+import os
 
 class CmvMin15Generator(CmvBaseTask):
     start_time = luigi.DateMinuteParameter()
@@ -65,8 +67,12 @@ class CmvMin15Generator(CmvBaseTask):
             now += timedelta(minutes=15)
         return [InputSessionFile(cube_time=cube_time) for cube_time in cube_timeranges]
 
+    def get_template_path(self, file_name):
+        return pkg_resources.resource_string(os.path.join('utils', file_name), __name__)
+
     def run(self):
-        config_json = self.process_config_tmpl("wario/utils/cmv_template.json")
+
+        config_json = self.process_config_tmpl(self.get_template_path('cmv_template.json'))
         with open('new_config.json', 'w') as outfile:
             json.dump(config_json, outfile, indent=4)
         rslt_json = CmvLib.submit_config_to_js(config_json, self.prepare_js_url())
