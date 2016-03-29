@@ -12,6 +12,6 @@ def main():
     print("~ Workers: {}".format(args.workers))
 
     if args.task[0] == 'Min15AndDailyRollupTrigger':
-        task_name = Min15AndDailyRollupTrigger()
+        task_name = [Min15AndDailyRollupTrigger()]
         luigi.build(task_name, workers=args.workers)
 
