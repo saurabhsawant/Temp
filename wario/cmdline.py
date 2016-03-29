@@ -1,5 +1,6 @@
 import argparse
 import luigi
+from wario import trigger_min15_dailyrollup
 
 def main():
 
@@ -11,5 +12,6 @@ def main():
     print("~ Workers: {}".format(args.workers))
 
     if args.task[0] == 'Min15AndDailyRollupTrigger':
-        luigi.run(['wario.trigger_min15_dailyrollup.Min15AndDailyRollupTrigger', '--workers', str(args.workers)])
+        task_name = trigger_min15_dailyrollup.Min15AndDailyRollupTrigger()
+        luigi.run([task_name, '--workers', str(args.workers)])
 
