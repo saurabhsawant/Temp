@@ -11,5 +11,5 @@ def main():
     print("~ Workers: {}".format(args.workers))
 
     if args.task[0] == 'Min15AndDailyRollupTrigger':
-        luigi.run(['Min15AndDailyRollupTrigger', '--workers', args.workers])
+        luigi.run(['Min15AndDailyRollupTrigger', '--workers', str(args.workers)])
 
