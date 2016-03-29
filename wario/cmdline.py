@@ -11,5 +11,5 @@ def main():
     print("~ Workers: {}".format(args.workers))
 
     if args.task[0] == 'Min15AndDailyRollupTrigger':
-        luigi.run(['Min15AndDailyRollupTrigger', '--workers', str(args.workers)])
+        luigi.run(['wario.trigger_min15_dailyrollup.Min15AndDailyRollupTrigger', '--workers', str(args.workers)])
 
