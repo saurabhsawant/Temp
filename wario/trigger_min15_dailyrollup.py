@@ -68,7 +68,7 @@ class Min15AndDailyRollupTrigger(CmvBaseTask):
                                                                  pcode=rollup_pcode))
         logging.info('Triggering upstream rollup tasks')
         yield upstream_rollup_tasks
-        #self.output().touch()
+        self.output().touch()
 
     def output(self):
         self.task_init()
