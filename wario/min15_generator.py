@@ -68,7 +68,7 @@ class CmvMin15Generator(CmvBaseTask):
         return [InputSessionFile(cube_time=cube_time) for cube_time in cube_timeranges]
 
     def get_template_path(self, file_name):
-        return pkg_resources.resource_string(os.path.join('utils', file_name), __name__)
+        return pkg_resources.resource_string(__name__, os.path.join('utils', file_name))
 
     def run(self):
 
