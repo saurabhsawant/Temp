@@ -1,6 +1,9 @@
 import argparse
 import luigi
 from wario.trigger_min15_dailyrollup import Min15AndDailyRollupTrigger
+from wario.trigger_weekly_rollup import WeeklyRollupTrigger
+from wario.trigger_monthly_rollup import MonthlyRollupTrigger
+from wario.reprocess_datacube import CmvReprocess
 
 def main():
 
@@ -13,5 +16,14 @@ def main():
 
     if args.task[0] == 'Min15AndDailyRollupTrigger':
         task_name = [Min15AndDailyRollupTrigger()]
-        luigi.build(task_name, workers=args.workers)
+    elif args.task[0] == 'WeeklyRollupTrigger':
+        task_name = [WeeklyRollupTrigger()]
+    elif args.task[0] == 'MonthlyRollupTrigger':
+        task_name = [MonthlyRollupTrigger()]
+    elif args.task[0] == 'CmvReprocess':
+        task_name = [CmvReprocess()]
+
+    luigi.build(task_name, workers=args.workers)
+
+
 
