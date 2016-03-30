@@ -8,7 +8,6 @@ setup(
     description='workflow for IQ',
     url='http://github.services.ooyala.net/BigData/wario',
     packages=['wario', 'wario.lib'],
-    package_dir={'': 'wario'},
     package_data={'': ['utils/*.json']},
     include_package_data=True,
     entry_points={'console_scripts': ['wario=wario.cmdline:main']}
