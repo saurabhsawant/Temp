@@ -1,6 +1,11 @@
 __author__ = 'jmettu'
 
-from setuptools import setup, find_packages
+from setuptools import setup
+
+install_requires = [
+    'luigi==2.0.1',
+]
+
 
 setup(
     name='wario',
