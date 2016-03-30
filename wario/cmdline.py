@@ -6,7 +6,6 @@ from wario.trigger_monthly_rollup import MonthlyRollupTrigger
 from wario.reprocess_datacube import CmvReprocess
 
 def main():
-
     parser = argparse.ArgumentParser()
     parser.add_argument('--task', required=True, nargs=1, help='Name of the task: eg Min15AndDailyRollupTrigger')
     parser.add_argument('--workers', default=3, nargs=1, help='Number of luigi workers for a given task; default: 3')
@@ -23,8 +22,8 @@ def main():
     elif args.task[0] == 'CmvReprocess':
         task_name = [CmvReprocess()]
     else:
-        raise ValueError('Unknown Task encountered. Task candidates are: '
-                         'Min15AndDailyRollupTrigger/WeeklyRollupTrigger/MonthlyRollupTrigger/CmvReprocess')
+        raise ValueError('''Unknown Task encountered. Task candidates are:
+                            Min15AndDailyRollupTrigger/WeeklyRollupTrigger/MonthlyRollupTrigger/CmvReprocess''')
 
     luigi.build(task_name, workers=args.workers)
 
