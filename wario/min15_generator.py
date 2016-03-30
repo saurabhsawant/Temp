@@ -7,6 +7,7 @@ import luigi
 import logging
 import wario
 import os
+from datadog import statsd
 
 class CmvMin15Generator(CmvBaseTask):
     start_time = luigi.DateMinuteParameter()
@@ -64,13 +65,16 @@ class CmvMin15Generator(CmvBaseTask):
             now += timedelta(minutes=15)
         return [InputSessionFile(cube_time=cube_time) for cube_time in cube_timeranges]
 
-
     def run(self):
 
         config_json = self.process_config_tmpl(CmvLib.get_template_path('utils/cmv_template.json'))
         with open('new_config.json', 'w') as outfile:
             json.dump(config_json, outfile, indent=4)
+        # datadog metric
+        datadog_start = datetime.now(pytz.utc)
         rslt_json = CmvLib.submit_config_to_js(config_json, self.prepare_js_url())
+        datadog_end = datetime.now(pytz.utc)
+        statsd.gauge('wario.datacompute.min15_delay', datadog_end-datadog_start)
         job_id = rslt_json['result']['jobId']
 
         js_resp = CmvLib.poll_js_jobid(job_id, self.jobserver_host_port)
