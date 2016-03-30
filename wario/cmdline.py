@@ -22,6 +22,9 @@ def main():
         task_name = [MonthlyRollupTrigger()]
     elif args.task[0] == 'CmvReprocess':
         task_name = [CmvReprocess()]
+    else:
+        raise ValueError('Unknown Task encountered. Task candidates are: '
+                         'Min15AndDailyRollupTrigger/WeeklyRollupTrigger/MonthlyRollupTrigger/CmvReprocess')
 
     luigi.build(task_name, workers=args.workers)
 

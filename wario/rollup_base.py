@@ -63,7 +63,7 @@ class CmvRollupBaseTask(CmvBaseTask):
             'rdd_rollup_duration': self.get_rdd_rolled_duration()
         }
 
-        with open("wario/utils/rollup_template.json") as tmpl_file:
+        with open(CmvLib.get_template_path('utils/rollup_template.json')) as tmpl_file:
             cfg = json.load(tmpl_file)
             CmvLib.replace_config_params(cfg, tmpl_values)
             return cfg

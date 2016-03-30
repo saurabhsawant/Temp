@@ -7,6 +7,8 @@ import pytz
 from pytz import timezone
 import requests
 import time
+import os
+import wario
 
 from cmv_mysql_target import CmvMysqlTarget
 
@@ -69,6 +71,10 @@ class CmvBaseTask(luigi.Task):
         pass
 
 class CmvLib:
+
+    @staticmethod
+    def get_template_path(file_name):
+        return os.path.join(wario.__path__[0], file_name)
 
     @staticmethod
     def validate_min15_time(date_time):

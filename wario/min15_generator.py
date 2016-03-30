@@ -35,9 +35,6 @@ class CmvMin15Generator(CmvBaseTask):
         self.pcode_tz_dict = dict(pcode_tz_list)
         hdfs_dirs = [hdfs_dir.path.rsplit('/', 1)[0] for hdfs_dir in self.input()]
 
-        for dir in hdfs_dirs:
-            print dir
-
         tmpl_subst_params = {"start_time": CmvLib.date_to_cmvformat(self.start_time),
                              "end_time": CmvLib.date_to_cmvformat(self.end_time),
                              "key_space": self.cassandra_keyspace,
@@ -67,12 +64,10 @@ class CmvMin15Generator(CmvBaseTask):
             now += timedelta(minutes=15)
         return [InputSessionFile(cube_time=cube_time) for cube_time in cube_timeranges]
 
-    def get_template_path(self, file_name):
-        return os.path.join(wario.__path__[0], file_name)
 
     def run(self):
 
-        config_json = self.process_config_tmpl(self.get_template_path('utils/cmv_template.json'))
+        config_json = self.process_config_tmpl(CmvLib.get_template_path('utils/cmv_template.json'))
         with open('new_config.json', 'w') as outfile:
             json.dump(config_json, outfile, indent=4)
         rslt_json = CmvLib.submit_config_to_js(config_json, self.prepare_js_url())
