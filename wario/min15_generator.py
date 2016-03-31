@@ -5,7 +5,7 @@ import json
 from datetime import timedelta
 import luigi
 import logging
-import wario
+import time
 import os
 from datadog import statsd
 
@@ -71,10 +71,9 @@ class CmvMin15Generator(CmvBaseTask):
         with open('new_config.json', 'w') as outfile:
             json.dump(config_json, outfile, indent=4)
         # datadog metric
-        datadog_start = datetime.now(pytz.utc)
+        datadog_start = time.time()
         rslt_json = CmvLib.submit_config_to_js(config_json, self.prepare_js_url())
-        datadog_end = datetime.now(pytz.utc)
-        statsd.gauge('wario.datacompute.min15_delay', datadog_end-datadog_start)
+        statsd.gauge('wario.datacompute.min15_delay', time.time()-datadog_start, ["env:staging"])
         job_id = rslt_json['result']['jobId']
 
         js_resp = CmvLib.poll_js_jobid(job_id, self.jobserver_host_port)

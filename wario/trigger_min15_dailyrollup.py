@@ -57,7 +57,6 @@ class Min15AndDailyRollupTrigger(CmvBaseTask):
         ptz_dict_list = self.get_ptz_dict_from_db()
         upstream_rollup_tasks = []
         for ptz_dict in ptz_dict_list:
-            print (ptz_dict['pcode'], ptz_dict['timezone'])
             rollup_pcode = ptz_dict['pcode']
             rollup_tz = ptz_dict['timezone']
             rollup_day = DateTime.utc_to_any_tz(self.start_time, rollup_tz).replace(tzinfo=None)
