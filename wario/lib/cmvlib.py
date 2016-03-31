@@ -9,6 +9,7 @@ import requests
 import time
 import os
 import wario
+from datadog import statsd
 
 from cmv_mysql_target import CmvMysqlTarget
 
@@ -195,6 +196,12 @@ class CmvLib:
                 job_id=job_id
             )
         return appserver_url
+
+class DataDog:
+
+    @staticmethod
+    def gauge_this_metric(metric_name, metric_val):
+        statsd.gauge(metric_name, metric_val)
 
 
 class InputSessionFile(luigi.ExternalTask):

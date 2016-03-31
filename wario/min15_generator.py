@@ -6,8 +6,7 @@ from datetime import timedelta
 import luigi
 import logging
 import time
-import os
-from datadog import statsd
+from lib.cmvlib import DataDog
 
 class CmvMin15Generator(CmvBaseTask):
     start_time = luigi.DateMinuteParameter()
@@ -70,13 +69,12 @@ class CmvMin15Generator(CmvBaseTask):
         config_json = self.process_config_tmpl(CmvLib.get_template_path('utils/cmv_template.json'))
         with open('new_config.json', 'w') as outfile:
             json.dump(config_json, outfile, indent=4)
-        datadog_start = time.time()
+        datadog_start_time = time.time()
         rslt_json = CmvLib.submit_config_to_js(config_json, self.prepare_js_url())
         job_id = rslt_json['result']['jobId']
         js_resp = CmvLib.poll_js_jobid(job_id, self.jobserver_host_port)
-        elapsed_time = (time.time()-datadog_start)/60
-        logger.info('elapsed_time= %s', elapsed_time)
-        statsd.gauge('wario.datacompute.min15_delay', elapsed_time)
+        elapsed_time = (time.time()-datadog_start_time)/60
+        DataDog.gauge_this_metric('min15_delay', elapsed_time)
 
         if js_resp['status'] != 'OK':
             logging.error("Job Server responded with an error. Job Server Response: %s", js_resp)

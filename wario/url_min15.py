@@ -11,6 +11,7 @@ from wario.lib.cmv_mysql_target import CmvMysqlTarget
 from wario.lib.cmvlib import CmvBaseTask
 from wario.lib.cmvlib import CmvLib
 from wario.lib.cmvlib import InputSessionFile
+from wario.lib.cmvlib import DataDog
 
 class UrlMin15Generator(CmvBaseTask):
     """Task for url min15 data generation"""
@@ -42,6 +43,7 @@ class UrlMin15Generator(CmvBaseTask):
     def run(self):
         job_cfg = self.get_appserver_job_config()
         logging.info('Running url min15 job...')
+        datadog_start_time = time.time()
         submission_status = CmvLib.submit_config_to_appserver(
             job_cfg,
             CmvLib.get_appserver_job_submit_url(self.appserver_host_port, self.appserver_app_name)
@@ -55,6 +57,8 @@ class UrlMin15Generator(CmvBaseTask):
                 job_id
             )
         )
+        elapsed_time = (time.time()-datadog_start_time)/60
+        DataDog.gauge_this_metric('url_min15_delay', elapsed_time)
         if job_status['status'] != 'OK':
             logging.error("Job Server responded with an error. Job Server Response: %s", job_status)
             raise Exception('Error in Job Server Response.')
