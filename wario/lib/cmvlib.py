@@ -201,7 +201,7 @@ class DataDog:
 
     @staticmethod
     def gauge_this_metric(metric_name, metric_val):
-        statsd.gauge(metric_name, metric_val)
+        statsd.gauge('wario.datacompute.'+metric_name, metric_val)
 
 
 class InputSessionFile(luigi.ExternalTask):
