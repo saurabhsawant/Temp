@@ -70,10 +70,9 @@ class CmvMin15Generator(CmvBaseTask):
         config_json = self.process_config_tmpl(CmvLib.get_template_path('utils/cmv_template.json'))
         with open('new_config.json', 'w') as outfile:
             json.dump(config_json, outfile, indent=4)
-        # datadog metric
         datadog_start = time.time()
         rslt_json = CmvLib.submit_config_to_js(config_json, self.prepare_js_url())
-        statsd.gauge('wario.datacompute.min15_delay', time.time()-datadog_start, ["env:staging"])
+        statsd.gauge('wario.datacompute.min15_delay', (time.time()-datadog_start)/60)
         job_id = rslt_json['result']['jobId']
 
         js_resp = CmvLib.poll_js_jobid(job_id, self.jobserver_host_port)
