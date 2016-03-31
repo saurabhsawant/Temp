@@ -72,12 +72,11 @@ class CmvMin15Generator(CmvBaseTask):
             json.dump(config_json, outfile, indent=4)
         datadog_start = time.time()
         rslt_json = CmvLib.submit_config_to_js(config_json, self.prepare_js_url())
+        job_id = rslt_json['result']['jobId']
+        js_resp = CmvLib.poll_js_jobid(job_id, self.jobserver_host_port)
         elapsed_time = (time.time()-datadog_start)/60
         logger.info('elapsed_time= %s', elapsed_time)
         statsd.gauge('wario.datacompute.min15_delay', elapsed_time)
-        job_id = rslt_json['result']['jobId']
-
-        js_resp = CmvLib.poll_js_jobid(job_id, self.jobserver_host_port)
 
         if js_resp['status'] != 'OK':
             logging.error("Job Server responded with an error. Job Server Response: %s", js_resp)
