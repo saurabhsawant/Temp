@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 
 import luigi
 
-from wario.url_min15 import UrlMin15Generator
+from wario.url_min15 import CmvUrlMin15Generator
 from wario.url_rollup_base import UrlRollupBaseTask
 
 class UrlRollupDailyGenerator(UrlRollupBaseTask):
@@ -17,7 +17,7 @@ class UrlRollupDailyGenerator(UrlRollupBaseTask):
         start_time = date_minute - timedelta(hours=12)
         end_time = date_minute + timedelta(days=1, hours=12)
         while start_time != end_time:
-            urlmin15s.append(UrlMin15Generator(start_time=start_time))
+            urlmin15s.append(CmvUrlMin15Generator(start_time=start_time))
             start_time += timedelta(minutes=15)
         return urlmin15s
 
