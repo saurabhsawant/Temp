@@ -62,6 +62,9 @@ class CmvBaseTask(luigi.Task):
     wario_target_db_password = config.get('wario_db', 'wario_target_db_password')
     wario_target_db_name = config.get('wario_db', 'wario_target_db_name')
 
+    def _type(self):
+        return self.__class__.__name__
+
     def requires(self):
         pass
 
@@ -204,17 +207,17 @@ class CmvLib:
 class DataDogClient:
 
     @staticmethod
-    def gauge_this_metric(metric_name, metric_val):
-        statsd.gauge('wario.datacompute.'+metric_name, metric_val)
+    def gauge_this_metric(metric_name, metric_val, tags=None):
+        statsd.gauge('wario.datacompute.'+metric_name, metric_val, tags)
 
     @staticmethod
-    def gauge_http_status(metric_name, req_status_code):
+    def gauge_http_status(metric_name, req_status_code, tags=None):
         if req_status_code == 200:
-            DataDogClient.gauge_this_metric(metric_name+'.200', 1)
+            DataDogClient.gauge_this_metric(metric_name+'.200', 1, tags)
         elif 400 <= req_status_code < 500:
-            DataDogClient.gauge_this_metric(metric_name+'.400', 1)
+            DataDogClient.gauge_this_metric(metric_name+'.400', 1, tags)
         elif 500 <= req_status_code < 600:
-            DataDogClient.gauge_this_metric(metric_name+'.500', 1)
+            DataDogClient.gauge_this_metric(metric_name+'.500', 1, tags)
 
 
 class InputSessionFile(luigi.ExternalTask):

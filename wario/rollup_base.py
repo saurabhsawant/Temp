@@ -10,6 +10,7 @@ import luigi
 from wario.lib.cmv_mysql_target import CmvMysqlTarget
 from wario.lib.cmvlib import CmvLib
 from wario.lib.cmvlib import CmvBaseTask
+from wario.lib.cmvlib import DataDogClient
 from wario.lib.cmvlib import Json
 
 class CmvRollupBaseTask(CmvBaseTask):
@@ -79,13 +80,30 @@ class CmvRollupBaseTask(CmvBaseTask):
                 js_context=self.jobserver_context)
         return js_url
 
+    def datadog_rollup_delay(self, datadog_start_time):
+        metric_name = None
+        tag_name = None
+        if 'daily' in self._type().lower():
+            metric_name = 'rollup_day'
+            tag_name = ['rollup:day_{date}'.format(date={self.get_start_time()})]
+        elif 'weekly' in self._type().lower():
+            metric_name = 'rollup_week'
+            tag_name = ['rollup:week']
+        elif 'monthly' in self._type().lower():
+            metric_name = 'rollup_month'
+            tag_name = ['rollup:month']
+
+        DataDogClient.gauge_this_metric(metric_name, time.time()-datadog_start_time, tags=tag_name)
+
     def run(self):
         job_cfg = self.get_js_job_config()
         logging.info('Running rollup job...')
+        datadog_start_time = time.time()
         submission_status = CmvLib.submit_config_to_js(job_cfg, self.get_js_job_url())
         job_id = submission_status['result']['jobId']
         time.sleep(5)
         job_status = CmvLib.poll_js_jobid(job_id, self.jobserver_host_port)
+        self.datadog_rollup_delay(datadog_start_time)
         if job_status['status'] != 'OK':
             logging.error("Job Server responded with an error. Job Server Response: %s", job_status)
             raise Exception('Error in Job Server Response.')

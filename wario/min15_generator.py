@@ -73,8 +73,7 @@ class CmvMin15Generator(CmvBaseTask):
         rslt_json = CmvLib.submit_config_to_js(config_json, self.prepare_js_url())
         job_id = rslt_json['result']['jobId']
         js_resp = CmvLib.poll_js_jobid(job_id, self.jobserver_host_port)
-        elapsed_time = (time.time()-datadog_start_time)/60
-        DataDogClient.gauge_this_metric('min15_delay', elapsed_time)
+        DataDogClient.gauge_this_metric('min15_delay', (time.time()-datadog_start_time))
 
         if js_resp['status'] != 'OK':
             logging.error("Job Server responded with an error. Job Server Response: %s", js_resp)
@@ -94,6 +93,7 @@ class CmvMin15Generator(CmvBaseTask):
             ptz_list.append(ptz_dict_item)
         ptz_dict = dict()
         ptz_dict['ptz_items'] = ptz_list
+        DataDogClient.gauge_this_metric('min15_{time}.provider_count'.format(self.start_time), len(ptz_dict))
         self.row_col_dict['target_id'] = self.task_id
         self.row_col_dict['ptz_dict'] = json.dumps(ptz_dict)
         self.output().touch()
