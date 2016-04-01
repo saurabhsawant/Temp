@@ -95,7 +95,7 @@ class CmvLib:
     def prepare_ptz(pcode_tz_rows, file_list):
         pcode_info = {}
         for pcode_tz in pcode_tz_rows:
-            pcode_info[pcode_tz[0]] = {'numOfPartition':1, 'input-paths':[], 'timezone':pcode_tz[1]}
+            pcode_info[pcode_tz[0]] = {'numOfPartition': 1, 'input-paths': [], 'timezone': pcode_tz[1]}
         if len(pcode_info) > 0:
             pcode_info.values()[0]['input-paths'] = file_list
         return pcode_info
@@ -105,6 +105,7 @@ class CmvLib:
         headers = {'content-type': 'application/json'}
         logging.info("Submitting jobserver config to url: %s", js_url)
         r = requests.post(js_url, json.dumps(config_json), headers)
+        DataDogClient.gauge_http_status('job_server', r.status_code)
         r.raise_for_status()
         js_rslt = r.json()
         logging.info("Job Server response: %s", js_rslt)
@@ -120,6 +121,7 @@ class CmvLib:
         while True:
             js_resp = requests.get('http://{js_host}/jobs/{job_id}'
                                    .format(js_host=js_host, job_id=job_id)).json()
+            DataDogClient.gauge_http_status('job_server', js_resp.status_code)
             if js_resp['status'] != 'RUNNING':
                 return js_resp
             time.sleep(120)
@@ -164,6 +166,7 @@ class CmvLib:
     def submit_config_to_appserver(config_json, appserver_url):
         logging.info("Submitting app server config to url: %s", appserver_url)
         r = requests.post(appserver_url, json.dumps(config_json))
+        DataDogClient.gauge_http_status('app_server', r.status_code)
         r.raise_for_status()
         submission_status = r.json()
         logging.info("Appsvr response: %s", submission_status)
@@ -174,6 +177,7 @@ class CmvLib:
         logging.info('Started polling app server...')
         while True:
             job_status = requests.get(job_status_url).json()
+            DataDogClient.gauge_http_status('app_server', job_status.status_code)
             if job_status['status'] != 'RUNNING':
                 return job_status
             time.sleep(30)
@@ -197,11 +201,20 @@ class CmvLib:
             )
         return appserver_url
 
-class DataDog:
+class DataDogClient:
 
     @staticmethod
     def gauge_this_metric(metric_name, metric_val):
         statsd.gauge('wario.datacompute.'+metric_name, metric_val)
+
+    @staticmethod
+    def gauge_http_status(metric_name, req_status_code):
+        if req_status_code == 200:
+            DataDogClient.gauge_this_metric(metric_name+'.200', 1)
+        elif 400 <= req_status_code < 500:
+            DataDogClient.gauge_this_metric(metric_name+'.400', 1)
+        elif 500 <= req_status_code < 600:
+            DataDogClient.gauge_this_metric(metric_name+'.500', 1)
 
 
 class InputSessionFile(luigi.ExternalTask):

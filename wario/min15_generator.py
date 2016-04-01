@@ -6,7 +6,7 @@ from datetime import timedelta
 import luigi
 import logging
 import time
-from lib.cmvlib import DataDog
+from lib.cmvlib import DataDogClient
 
 class CmvMin15Generator(CmvBaseTask):
     start_time = luigi.DateMinuteParameter()
@@ -74,7 +74,7 @@ class CmvMin15Generator(CmvBaseTask):
         job_id = rslt_json['result']['jobId']
         js_resp = CmvLib.poll_js_jobid(job_id, self.jobserver_host_port)
         elapsed_time = (time.time()-datadog_start_time)/60
-        DataDog.gauge_this_metric('min15_delay', elapsed_time)
+        DataDogClient.gauge_this_metric('min15_delay', elapsed_time)
 
         if js_resp['status'] != 'OK':
             logging.error("Job Server responded with an error. Job Server Response: %s", js_resp)
