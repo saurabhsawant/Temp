@@ -11,7 +11,6 @@ from wario.lib.cmv_mysql_target import CmvMysqlTarget
 from wario.lib.cmvlib import CmvLib
 from wario.lib.cmvlib import CmvBaseTask
 from wario.lib.cmvlib import DataDogClient
-from wario.lib.cmvlib import Json
 
 class CmvRollupBaseTask(CmvBaseTask):
     """Base task for rollup"""
@@ -85,14 +84,12 @@ class CmvRollupBaseTask(CmvBaseTask):
         tag_name = None
         if 'daily' in self._type().lower():
             metric_name = 'rollup_day'
-            tag_name = ['rollup:day_{date}'.format(date={self.get_start_time()})]
         elif 'weekly' in self._type().lower():
             metric_name = 'rollup_week'
-            tag_name = ['rollup:week']
         elif 'monthly' in self._type().lower():
             metric_name = 'rollup_month'
-            tag_name = ['rollup:month']
 
+        tag_name = ['rollup:{date}'.format(date={self.get_start_time()})]
         DataDogClient.gauge_this_metric(metric_name, time.time()-datadog_start_time, tags=tag_name)
 
     def run(self):

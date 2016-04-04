@@ -122,9 +122,11 @@ class CmvLib:
     def poll_js_jobid(job_id, js_host):
         logging.info('Started polling Job Server')
         while True:
-            js_resp = requests.get('http://{js_host}/jobs/{job_id}'
-                                   .format(js_host=js_host, job_id=job_id)).json()
-            DataDogClient.gauge_http_status('job_server', js_resp.status_code)
+            r = requests.get('http://{js_host}/jobs/{job_id}'
+                                   .format(js_host=js_host, job_id=job_id))
+            DataDogClient.gauge_http_status('job_server', r.status_code)
+            r.raise_for_status()
+            js_resp = r.json()
             if js_resp['status'] != 'RUNNING':
                 return js_resp
             time.sleep(120)
