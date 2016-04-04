@@ -20,6 +20,8 @@ class CmvRollupBaseTask(CmvBaseTask):
     timezone = luigi.Parameter(default='Asia/Kolkata')
     rollup_namespace = luigi.Parameter(default='nst-rollup', significant=False)
     wario_target_table_name = luigi.Parameter(significant=False)
+    metric_name = None
+    tag_name = None
 
     def requires(self):
         pass
@@ -92,12 +94,10 @@ class CmvRollupBaseTask(CmvBaseTask):
         tag_name = ['rollup:{date}'.format(date={self.get_start_time()})]
         return 'wario.datacompute'+metric_name, tag_name
 
-    metric_name, tag_name = datadog_rollup_metric_name()
-    logging.info('metric_name = %s', metric_name)
-    logging.info('tag_name = %s', tag_name)
-
     @statsd.timed(metric_name, tags=tag_name)
     def run(self):
+        logging.info('metric_name = %s', self.metric_name)
+        logging.info('tag_name = %s', self.tag_name)
         job_cfg = self.get_js_job_config()
         logging.info('Running rollup job...')
         datadog_start_time = time.time()
@@ -114,6 +114,7 @@ class CmvRollupBaseTask(CmvBaseTask):
         self.output().touch()
 
     def output(self):
+        self.metric_name, self.tag_name = self.datadog_rollup_metric_name()
         connect_args = {
             'host': self.wario_target_db_host,
             'user': self.wario_target_db_user,
