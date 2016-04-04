@@ -102,7 +102,7 @@ class CmvRollupBaseTask(CmvBaseTask):
         logging.info('Running rollup job...')
         #submission_status = CmvLib.submit_config_to_js(job_cfg, self.get_js_job_url())
         #job_id = submission_status['result']['jobId']
-        time.sleep(datadog_start_time % 10 + 1)
+        #time.sleep(datadog_start_time % 10 + 1)
         #job_status = CmvLib.poll_js_jobid(job_id, self.jobserver_host_port)
         # if job_status['status'] != 'OK':
         #     logging.error("Job Server responded with an error. Job Server Response: %s", job_status)
@@ -110,7 +110,7 @@ class CmvRollupBaseTask(CmvBaseTask):
         # else:
         logging.info("Rollup job completed successfully.")
         self.output().touch()
-        DataDogClient.gauge_this_metric(self.metric_name, time.time() - datadog_start_time, tags=self.tag_name)
+        DataDogClient.gauge_this_metric(self.metric_name, datadog_start_time % 10 + 1, tags=self.tag_name)
 
     def output(self):
         self.metric_name, self.tag_name = self.rollup_datadog()
