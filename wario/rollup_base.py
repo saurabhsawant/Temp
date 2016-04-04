@@ -82,7 +82,7 @@ class CmvRollupBaseTask(CmvBaseTask):
                 js_context=self.jobserver_context)
         return js_url
 
-    def datadog_rollup_metric_name(self):
+    def rollup_datadog(self):
         metric_name = None
         if 'daily' in self._type().lower():
             metric_name = 'rollup_day'
@@ -91,8 +91,8 @@ class CmvRollupBaseTask(CmvBaseTask):
         elif 'monthly' in self._type().lower():
             metric_name = 'rollup_month'
 
-        tag_name = ['rollup:{date}'.format(date={self.get_start_time()})]
-        return 'wario.datacompute'+metric_name, tag_name
+        tag_name = ['rollup:{date}'.format(date=self.get_start_time().strftime('%Y-%m-%d'))]
+        return 'wario.datacompute.'+metric_name, tag_name
 
     @statsd.timed(metric_name, tags=tag_name)
     def run(self):
@@ -100,12 +100,10 @@ class CmvRollupBaseTask(CmvBaseTask):
         logging.info('tag_name = %s', self.tag_name)
         job_cfg = self.get_js_job_config()
         logging.info('Running rollup job...')
-        datadog_start_time = time.time()
         submission_status = CmvLib.submit_config_to_js(job_cfg, self.get_js_job_url())
         job_id = submission_status['result']['jobId']
         time.sleep(5)
         job_status = CmvLib.poll_js_jobid(job_id, self.jobserver_host_port)
-        self.datadog_rollup_delay(datadog_start_time)
         if job_status['status'] != 'OK':
             logging.error("Job Server responded with an error. Job Server Response: %s", job_status)
             raise Exception('Error in Job Server Response.')
@@ -114,7 +112,7 @@ class CmvRollupBaseTask(CmvBaseTask):
         self.output().touch()
 
     def output(self):
-        self.metric_name, self.tag_name = self.datadog_rollup_metric_name()
+        self.metric_name, self.tag_name = self.rollup_datadog()
         connect_args = {
             'host': self.wario_target_db_host,
             'user': self.wario_target_db_user,
