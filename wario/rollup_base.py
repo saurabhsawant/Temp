@@ -11,6 +11,7 @@ from wario.lib.cmv_mysql_target import CmvMysqlTarget
 from wario.lib.cmvlib import CmvLib
 from wario.lib.cmvlib import CmvBaseTask
 from wario.lib.cmvlib import DataDogClient
+from datadog import statsd
 
 class CmvRollupBaseTask(CmvBaseTask):
     """Base task for rollup"""
@@ -79,9 +80,8 @@ class CmvRollupBaseTask(CmvBaseTask):
                 js_context=self.jobserver_context)
         return js_url
 
-    def datadog_rollup_delay(self, datadog_start_time):
+    def datadog_rollup_metric_name(self):
         metric_name = None
-        tag_name = None
         if 'daily' in self._type().lower():
             metric_name = 'rollup_day'
         elif 'weekly' in self._type().lower():
@@ -90,8 +90,13 @@ class CmvRollupBaseTask(CmvBaseTask):
             metric_name = 'rollup_month'
 
         tag_name = ['rollup:{date}'.format(date={self.get_start_time()})]
-        DataDogClient.gauge_this_metric(metric_name, time.time()-datadog_start_time, tags=tag_name)
+        return 'wario.datacompute'+metric_name, tag_name
 
+    metric_name, tag_name = datadog_rollup_metric_name()
+    logging.info('metric_name = %s', metric_name)
+    logging.info('tag_name = %s', tag_name)
+
+    @statsd.timed(metric_name, tags=tag_name)
     def run(self):
         job_cfg = self.get_js_job_config()
         logging.info('Running rollup job...')
