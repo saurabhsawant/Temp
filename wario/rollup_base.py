@@ -96,6 +96,7 @@ class CmvRollupBaseTask(CmvBaseTask):
 
     @statsd.timed(metric_name, tags=tag_name)
     def run(self):
+        datadog_start_time = time.tim()
         logging.info('metric_name = %s', self.metric_name)
         logging.info('tag_name = %s', self.tag_name)
         job_cfg = self.get_js_job_config()
@@ -110,6 +111,7 @@ class CmvRollupBaseTask(CmvBaseTask):
         # else:
         logging.info("Rollup job completed successfully.")
         self.output().touch()
+        DataDogClient.gauge_this_metric(self.metric_name, time.time() - datadog_start_time, tags=self.tag_name)
 
     def output(self):
         self.metric_name, self.tag_name = self.rollup_datadog()
