@@ -94,7 +94,7 @@ class CmvRollupBaseTask(CmvBaseTask):
         tag_name = ['rollup:date_{date}'.format(date=self.get_start_time().strftime('%Y-%m-%d'))]
         return 'wario.datacompute.'+metric_name, tag_name
 
-    @statsd.timed(metric_name, tags=tag_name)
+    @statsd.timer(metric_name, tags=tag_name)
     def run(self):
         logging.info('metric_name = %s', self.metric_name)
         logging.info('tag_name = %s', self.tag_name)
