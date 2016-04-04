@@ -94,7 +94,7 @@ class CmvRollupBaseTask(CmvBaseTask):
         tag_name = ['rollup:date_{date}'.format(date=self.get_start_time().strftime('%Y-%m-%d'))]
         return 'wario.datacompute.'+metric_name, tag_name
 
-    @statsd.timer(metric_name, tags=tag_name)
+    @statsd.timed(metric_name, tags=tag_name)
     def run(self):
         logging.info('metric_name = %s', self.metric_name)
         logging.info('tag_name = %s', self.tag_name)
@@ -102,7 +102,7 @@ class CmvRollupBaseTask(CmvBaseTask):
         logging.info('Running rollup job...')
         #submission_status = CmvLib.submit_config_to_js(job_cfg, self.get_js_job_url())
         #job_id = submission_status['result']['jobId']
-        time.sleep(5)
+        time.sleep(10)
         #job_status = CmvLib.poll_js_jobid(job_id, self.jobserver_host_port)
         # if job_status['status'] != 'OK':
         #     logging.error("Job Server responded with an error. Job Server Response: %s", job_status)
