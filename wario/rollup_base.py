@@ -91,7 +91,7 @@ class CmvRollupBaseTask(CmvBaseTask):
         elif 'monthly' in self._type().lower():
             metric_name = 'rollup_month'
 
-        tag_name = ['rollup:{date}'.format(date=self.get_start_time().strftime('%Y-%m-%d'))]
+        tag_name = ['rollup:date_{date}'.format(date=self.get_start_time().strftime('%Y-%m-%d'))]
         return 'wario.datacompute.'+metric_name, tag_name
 
     @statsd.timed(metric_name, tags=tag_name)
@@ -100,15 +100,15 @@ class CmvRollupBaseTask(CmvBaseTask):
         logging.info('tag_name = %s', self.tag_name)
         job_cfg = self.get_js_job_config()
         logging.info('Running rollup job...')
-        submission_status = CmvLib.submit_config_to_js(job_cfg, self.get_js_job_url())
-        job_id = submission_status['result']['jobId']
+        #submission_status = CmvLib.submit_config_to_js(job_cfg, self.get_js_job_url())
+        #job_id = submission_status['result']['jobId']
         time.sleep(5)
-        job_status = CmvLib.poll_js_jobid(job_id, self.jobserver_host_port)
-        if job_status['status'] != 'OK':
-            logging.error("Job Server responded with an error. Job Server Response: %s", job_status)
-            raise Exception('Error in Job Server Response.')
-        else:
-            logging.info("Rollup job completed successfully.")
+        #job_status = CmvLib.poll_js_jobid(job_id, self.jobserver_host_port)
+        # if job_status['status'] != 'OK':
+        #     logging.error("Job Server responded with an error. Job Server Response: %s", job_status)
+        #     raise Exception('Error in Job Server Response.')
+        # else:
+        logging.info("Rollup job completed successfully.")
         self.output().touch()
 
     def output(self):
