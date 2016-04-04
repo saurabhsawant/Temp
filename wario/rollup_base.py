@@ -91,7 +91,7 @@ class CmvRollupBaseTask(CmvBaseTask):
         elif 'monthly' in self._type().lower():
             metric_name = 'rollup_month'
 
-        tag_name = ['rollup:date_{date}'.format(date=self.get_start_time().strftime('%Y-%m-%d'))]
+        tag_name = ['rollup_1:date_{date}'.format(date=self.get_start_time().strftime('%Y-%m-%d'))]
         return metric_name, tag_name
 
     def run(self):
