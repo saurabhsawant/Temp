@@ -85,7 +85,7 @@ class CmvRollupBaseTask(CmvBaseTask):
     def rollup_datadog(self):
         metric_name = None
         if 'daily' in self._type().lower():
-            metric_name = 'rollup_day'
+            metric_name = 'rollup_day_1'
         elif 'weekly' in self._type().lower():
             metric_name = 'rollup_week'
         elif 'monthly' in self._type().lower():
