@@ -93,9 +93,7 @@ class CmvMin15Generator(CmvBaseTask):
             ptz_list.append(ptz_dict_item)
         ptz_dict = dict()
         ptz_dict['ptz_items'] = ptz_list
-        DataDogClient.gauge_this_metric(
-            'min15_{time}.provider_count'.format(time=self.start_time.strftime('%Y-%m-%d-%H-%M')),
-            len(ptz_list))
+        DataDogClient.gauge_this_metric('min15_provider_count', len(ptz_list))
         self.row_col_dict['target_id'] = self.task_id
         self.row_col_dict['ptz_dict'] = json.dumps(ptz_dict)
         self.output().touch()
