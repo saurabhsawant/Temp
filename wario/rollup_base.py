@@ -92,7 +92,7 @@ class CmvRollupBaseTask(CmvBaseTask):
             metric_name = 'rollup_month'
 
         tag_name = ['start_date:{date}'.format(date=self.get_start_time().strftime('%Y-%m-%d'))]
-        return metric_name, tag_name
+        return 'wario.data_compute.'+metric_name, tag_name
 
     @statsd.timed(metric_name, tags=tag_name)
     def run(self):
