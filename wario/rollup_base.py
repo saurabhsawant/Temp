@@ -92,7 +92,7 @@ class CmvRollupBaseTask(CmvBaseTask):
             metric_name = 'rollup_month'
 
         tag_name = ['start_date:{date}'.format(date=self.get_start_time().strftime('%Y-%m-%d'))]
-        return 'wario.data_compute.'+metric_name, tag_name
+        return 'wario.test.datacompute.'+metric_name, tag_name
 
     @statsd.timed(metric_name, tags=tag_name)
     def run(self):
@@ -101,7 +101,7 @@ class CmvRollupBaseTask(CmvBaseTask):
         logging.info('Running rollup job...')
         #submission_status = CmvLib.submit_config_to_js(job_cfg, self.get_js_job_url())
         #job_id = submission_status['result']['jobId']
-        time.sleep(datadog_start_time % 37 + 25)
+        time.sleep(datadog_start_time % 7 + 5)
         #job_status = CmvLib.poll_js_jobid(job_id, self.jobserver_host_port)
         job_status = {'status': 'OK'}
         if job_status['status'] != 'OK':
@@ -111,7 +111,6 @@ class CmvRollupBaseTask(CmvBaseTask):
             logging.info("Rollup job completed successfully.")
         self.output().touch()
         #DataDogClient.gauge_this_metric(self.metric_name, time.time() - datadog_start_time, tags=self.tag_name)
-
 
     def output(self):
         self.metric_name, self.tag_name = self.rollup_datadog()
