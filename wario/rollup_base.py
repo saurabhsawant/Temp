@@ -94,7 +94,6 @@ class CmvRollupBaseTask(CmvBaseTask):
         tag_name = ['start_date:{date}'.format(date=self.get_start_time().strftime('%Y-%m-%d'))]
         return 'wario.test.datacompute.'+metric_name, tag_name
 
-    @statsd.timed(metric_name, tags=tag_name)
     def run(self):
         datadog_start_time = time.time()
         job_cfg = self.get_js_job_config()
@@ -111,6 +110,7 @@ class CmvRollupBaseTask(CmvBaseTask):
             logging.info("Rollup job completed successfully.")
         self.output().touch()
         #DataDogClient.gauge_this_metric(self.metric_name, time.time() - datadog_start_time, tags=self.tag_name)
+        statsd.histogram(self.metric_name,tags=self.tag_name)
 
     def output(self):
         self.metric_name, self.tag_name = self.rollup_datadog()
