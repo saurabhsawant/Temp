@@ -85,32 +85,30 @@ class CmvRollupBaseTask(CmvBaseTask):
     def rollup_datadog(self):
         metric_name = None
         if 'daily' in self._type().lower():
-            metric_name = 'rollup_day_1'
+            metric_name = 'rollup_day'
         elif 'weekly' in self._type().lower():
             metric_name = 'rollup_week'
         elif 'monthly' in self._type().lower():
             metric_name = 'rollup_month'
 
-        tag_name = ['rollup_1:date_{date}'.format(date=self.get_start_time().strftime('%Y-%m-%d'))]
+        tag_name = ['start_date:{date}'.format(date=self.get_start_time().strftime('%Y-%m-%d'))]
         return metric_name, tag_name
 
     def run(self):
         datadog_start_time = time.time()
-        logging.info('metric_name = %s', self.metric_name)
-        logging.info('tag_name = %s', self.tag_name)
         job_cfg = self.get_js_job_config()
         logging.info('Running rollup job...')
-        #submission_status = CmvLib.submit_config_to_js(job_cfg, self.get_js_job_url())
-        #job_id = submission_status['result']['jobId']
-        #time.sleep(datadog_start_time % 10 + 1)
-        #job_status = CmvLib.poll_js_jobid(job_id, self.jobserver_host_port)
-        # if job_status['status'] != 'OK':
-        #     logging.error("Job Server responded with an error. Job Server Response: %s", job_status)
-        #     raise Exception('Error in Job Server Response.')
-        # else:
-        logging.info("Rollup job completed successfully.")
+        submission_status = CmvLib.submit_config_to_js(job_cfg, self.get_js_job_url())
+        job_id = submission_status['result']['jobId']
+        time.sleep(datadog_start_time % 10 + 1)
+        job_status = CmvLib.poll_js_jobid(job_id, self.jobserver_host_port)
+        if job_status['status'] != 'OK':
+            logging.error("Job Server responded with an error. Job Server Response: %s", job_status)
+            raise Exception('Error in Job Server Response.')
+        else:
+            logging.info("Rollup job completed successfully.")
         self.output().touch()
-        DataDogClient.gauge_this_metric(self.metric_name, datadog_start_time % 10 + 1000, tags=self.tag_name)
+        DataDogClient.gauge_this_metric(self.metric_name, time.time() - datadog_start_time, tags=self.tag_name)
 
     def output(self):
         self.metric_name, self.tag_name = self.rollup_datadog()
