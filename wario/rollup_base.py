@@ -110,7 +110,7 @@ class CmvRollupBaseTask(CmvBaseTask):
         # else:
         logging.info("Rollup job completed successfully.")
         self.output().touch()
-        DataDogClient.gauge_this_metric(self.metric_name, datadog_start_time % 10 + 1, tags=self.tag_name)
+        DataDogClient.gauge_this_metric(self.metric_name, datadog_start_time % 10 + 1000, tags=self.tag_name)
 
     def output(self):
         self.metric_name, self.tag_name = self.rollup_datadog()
