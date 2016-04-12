@@ -1,3 +1,6 @@
+#
+# __author__ = 'baohua'
+#
 """Url rollup base task"""
 
 from datetime import date

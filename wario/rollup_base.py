@@ -1,3 +1,6 @@
+#
+# __author__ = 'baohua'
+#
 """Rollup base task"""
 
 from datetime import date
@@ -5,13 +8,13 @@ import json
 import logging
 import time
 
+from datadog import statsd
 import luigi
 
 from wario.lib.cmv_mysql_target import CmvMysqlTarget
 from wario.lib.cmvlib import CmvLib
 from wario.lib.cmvlib import CmvBaseTask
 from wario.lib.cmvlib import DataDogClient
-from datadog import statsd
 
 class CmvRollupBaseTask(CmvBaseTask):
     """Base task for rollup"""

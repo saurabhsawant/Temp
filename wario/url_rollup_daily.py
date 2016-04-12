@@ -1,3 +1,6 @@
+#
+# __author__ = 'baohua'
+#
 """Url rollup daily task"""
 
 from datetime import datetime, timedelta
