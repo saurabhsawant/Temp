@@ -47,6 +47,7 @@ class CmvBaseTask(luigi.Task):
     jobserver_context = config.get('env', 'jobserver_context')
     jobserver_datacube_jar = config.get('env', 'jobserver_datacube_jar')
     appserver_host_port = config.get('env', 'appserver_host_port')
+    appserver_app_name = luigi.Parameter()
 
     cassandra_keyspace = config.get('cassandra', 'cassandra_keyspace')
     cassandra_namespace = config.get('cassandra', 'cassandra_namespace')
