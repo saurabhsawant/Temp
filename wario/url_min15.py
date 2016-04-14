@@ -16,7 +16,7 @@ from wario.lib.cmvlib import CmvLib
 from wario.lib.cmvlib import InputSessionFile
 from wario.lib.cmvlib import DataDogClient
 
-class CmvUrlMin15Generator(CmvBaseTask):
+class UrlMin15Generator(CmvBaseTask):
     """Task for url min15 data generation"""
     start_time = luigi.DateMinuteParameter(
         default=datetime(year=2016, month=3, day=21, hour=12, minute=15)
