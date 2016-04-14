@@ -47,11 +47,11 @@ class CmvBaseTask(luigi.Task):
     jobserver_context = config.get('env', 'jobserver_context')
     jobserver_datacube_jar = config.get('env', 'jobserver_datacube_jar')
     appserver_host_port = config.get('env', 'appserver_host_port')
-    appserver_app_name = luigi.Parameter()
+    appserver_app_name = luigi.Parameter(significant=False)
 
     cassandra_seeds = config.get('cassandra', 'cassandra_seeds')
-    cassandra_keyspace = luigi.Parameter()
-    cassandra_namespace = luigi.Parameter()
+    cassandra_keyspace = luigi.Parameter(significant=False)
+    cassandra_namespace = luigi.Parameter(significant=False)
 
     hdfs_namenode = config.get('hadoop', 'hdfs_namenode')
     hdfs_session_dirs = config.get('hadoop', 'hdfs_session_dirs')
