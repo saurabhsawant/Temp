@@ -277,7 +277,7 @@ class DateTime:
         """Converts date in timezone to utc"""
         tz = timezone(timezone_str)
         day = datetime(date.year, date.month, date.day)
-        return tz.localize(day).astimezone(pytz.utc)
+        return tz.localize(day).astimezone(pytz.utc).replace(tzinfo=None)
 
     @staticmethod
     def next_rounded_min15(dateminute):
