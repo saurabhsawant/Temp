@@ -43,8 +43,8 @@ class Min15AndDailyRollupTrigger(CmvBaseTask):
         connect_args['database'] = self.wario_target_db_name
         connect_args['table'] = self.min15_target_table_name
 
-        query_string = 'select JSON_EXTRACT(ptz_dict, {json_item}) from {min15_table} where target_id = %s'.\
-            format(json_item='\'$.ptz_items\'', min15_table=self.min15_target_table_name)
+        query_string = 'select COLUMN_GET(ptz_dict, {json_item} as char) from {min15_table} where target_id = %s'.\
+            format(json_item='\'ptz_items\'', min15_table=self.min15_target_table_name)
 
         query_values = ['CmvMin15Generator(start_time={s}, end_time={e})'.
                         format(s=self.start_time.strftime('%Y-%m-%dT%H%M'), e=self.end_time.strftime('%Y-%m-%dT%H%M'))]
