@@ -29,6 +29,7 @@ class CmvMin15Generator(CmvBaseTask):
         self.connect_args['database'] = self.wario_target_db_name
         self.connect_args['table'] = self.wario_target_table_name
         self.row_col_dict['target_id'] = self.task_id
+        self.column_formats = { 'ptz_dict': "column_create('ptz_items', %s)" }
 
     def process_config_tmpl(self, tmpl_file):
         pcode_tz_list = Helios.get_providers_from_helios()
@@ -91,16 +92,14 @@ class CmvMin15Generator(CmvBaseTask):
             ptz_dict_item['pcode'] = str(pcode).lstrip()
             ptz_dict_item['timezone'] = self.pcode_tz_dict[str(pcode).lstrip()]
             ptz_list.append(ptz_dict_item)
-        ptz_dict = dict()
-        ptz_dict['ptz_items'] = ptz_list
         DataDogClient.gauge_this_metric('min15_provider_count', len(ptz_list))
         self.row_col_dict['target_id'] = self.task_id
-        self.row_col_dict['ptz_dict'] = json.dumps(ptz_dict)
+        self.row_col_dict['ptz_dict'] = json.dumps(ptz_list)
         self.output().touch()
 
     def output(self):
         self.task_init()
-        return CmvMysqlTarget(self.connect_args, self.row_col_dict)
+        return CmvMysqlTarget(self.connect_args, self.row_col_dict, column_formats=self.column_formats)
 
 if __name__ == '__main__':
     luigi.run(['CmvMin15Generator', '--workers', '1'])
