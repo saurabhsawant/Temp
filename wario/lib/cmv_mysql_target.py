@@ -17,7 +17,7 @@ class CmvMysqlTarget(luigi.Target):
     Target for a resource in MySql.
     """
 
-    def __init__(self, connect_args, row_col_dict=None):
+    def __init__(self, connect_args, row_col_dict=None, column_formats=None):
         """
         Initializes a MySqlTarget instance.
 
@@ -42,12 +42,17 @@ class CmvMysqlTarget(luigi.Target):
         self.table = connect_args['table']
         self.column_names = []
         self.column_values = []
+        self.column_formats = []
         self.target_id = None
         if row_col_dict:
             self.target_id = row_col_dict['target_id']
             for col in row_col_dict:
                 self.column_names.append(col)
                 self.column_values.append(row_col_dict[col])
+                if column_formats and col in column_formats:
+                    self.column_formats.append(column_formats[col])
+                else:
+                    self.column_formats.append('%s')
 
     def touch(self, connection=None):
         """
@@ -63,14 +68,13 @@ class CmvMysqlTarget(luigi.Target):
             connection.autocommit = True  # if connection created here, we commit it here
 
         column_names_string = ','.join(self.column_names)
-        values_str_fmt = ', '.join(["%s"] * len(self.column_names))
+        values_str_fmt = ', '.join(self.column_formats)
 
         insert_stmt = """INSERT INTO {target_table} ({column_names})
                VALUES ({values_str_fmt})
                ON DUPLICATE KEY UPDATE
                target_id = VALUES(target_id)
             """.format(target_table=self.table, column_names=column_names_string, values_str_fmt=values_str_fmt)
-
         connection.cursor().execute(insert_stmt, self.column_values)
         logging.info('Updated Target table {trgt}'.format(trgt=self.table))
 
