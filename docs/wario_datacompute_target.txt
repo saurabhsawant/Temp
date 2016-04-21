@@ -15,7 +15,7 @@ min15 and rollups:
 
 create table min15 
 (target_id VARCHAR(512) NOT NULL, 
-ptz_dict JSON, 
+ptz_dict longblob,
 last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 PRIMARY KEY(target_id));
 
