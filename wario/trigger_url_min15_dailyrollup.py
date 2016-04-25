@@ -20,7 +20,7 @@ class UrlMin15AndDailyRollupTrigger(CmvBaseTask):
     def requires(self):
         CmvLib.validate_min15_time(self.start_time)
         CmvLib.validate_min15_time(self.end_time)
-        logging.info("Task: UrlMin15AndDailyRollupTrigger, start_time = %s, end_time = %s", self.start_time, self.end_time)
+        logging.info("Task: %s, start_time = %s, end_time = %s", self.__class__.__name__, self.start_time, self.end_time)
         min15_task = UrlMin15Generator(start_time=self.start_time, end_time=self.end_time)
         self.min15_target_table_name = min15_task.wario_target_table_name
         return min15_task
