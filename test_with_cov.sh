@@ -1,2 +1,2 @@
-coverage run test/mysqltarget_test.py
-coverage report --include=*wario*
+coverage run -m unittest discover test -p *_test.py
+coverage report --include=*wario* --omit=*test*
