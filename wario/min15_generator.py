@@ -15,6 +15,7 @@ class CmvMin15Generator(CmvBaseTask):
     hdfs_dir_set = set()
     provider_list_str = None
     connect_args = dict()
+    column_formats = dict()
     pcode_tz_dict = dict()
 
     row_col_dict = dict()
@@ -29,7 +30,7 @@ class CmvMin15Generator(CmvBaseTask):
         self.connect_args['database'] = self.wario_target_db_name
         self.connect_args['table'] = self.wario_target_table_name
         self.row_col_dict['target_id'] = self.task_id
-        self.column_formats = { 'ptz_dict': "column_create('ptz_items', %s)" }
+        self.column_formats = {'ptz_dict': "column_create('ptz_items', %s)"}
 
     def process_config_tmpl(self, tmpl_file):
         pcode_tz_list = Helios.get_providers_from_helios()

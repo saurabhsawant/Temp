@@ -6,6 +6,7 @@ install_requires = [
     'luigi==2.0.1',
     'pytz',
     'requests',
+    'coverage',
     'python-dateutil'
 ]
 
