@@ -59,7 +59,7 @@ class UrlRollupBaseTask(CmvBaseTask):
             "hdfs_cmv_dir": self.hdfs_cmv_dir
         }
 
-        with open(CmvLib.get_template_path('utils/url_rollup_template.json')) as tmpl_file:
+        with open(CmvLib.get_template_path('resources/url_rollup_template.json')) as tmpl_file:
             cfg = json.load(tmpl_file)
             CmvLib.replace_config_params(cfg, tmpl_values)
             return cfg

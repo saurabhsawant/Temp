@@ -16,7 +16,7 @@ setup(
     description='workflow for IQ',
     url='http://github.services.ooyala.net/BigData/wario',
     packages=['wario', 'wario.lib'],
-    package_data={'': ['utils/*.json']},
+    package_data={'': ['resources/*.json']},
     include_package_data=True,
     install_requires=install_requires,
     entry_points={'console_scripts': ['wario=wario.cmdline:main']}

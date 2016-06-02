@@ -68,7 +68,7 @@ class CmvMin15Generator(CmvBaseTask):
 
     def run(self):
 
-        config_json = self.process_config_tmpl(CmvLib.get_template_path('utils/cmv_template.json'))
+        config_json = self.process_config_tmpl(CmvLib.get_template_path('resources/cmv_template.json'))
         with open('new_config.json', 'w') as outfile:
             json.dump(config_json, outfile, indent=4)
         datadog_start_time = time.time()

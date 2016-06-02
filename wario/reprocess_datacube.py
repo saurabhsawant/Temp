@@ -14,7 +14,7 @@ class InputReprocessFile(luigi.ExternalTask):
     reprocess_cube = luigi.Parameter()
 
     def output(self):
-        return luigi.LocalTarget('wario/utils/reprocess_{suffix}.csv'.format(suffix=self.reprocess_cube))
+        return luigi.LocalTarget('wario/resources/reprocess_{suffix}.csv'.format(suffix=self.reprocess_cube))
 
 
 class CmvReprocess(luigi.Task):

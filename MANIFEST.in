@@ -1,1 +1,1 @@
-include wario/utils/*.json
+include wario/resources/*.json
