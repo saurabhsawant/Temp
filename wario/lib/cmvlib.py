@@ -292,7 +292,7 @@ class DateTime:
         return datetime(date.year, date.month, date.day) + timedelta(days=1)
 
 
-class day_utc_min15_iter:
+class DayUtcMin15Iter:
     """Iterator over the list of utc min15s covered by the given day in the time zone"""
     def __init__(self, day, timezone_str):
         self.min15 = DateTime.date_to_utc(day, timezone_str)

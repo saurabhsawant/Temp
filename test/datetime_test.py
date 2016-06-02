@@ -52,8 +52,6 @@ class DataTimeTest(unittest.TestCase):
         date_time = datetime.strptime('2016-01-17T2326', '%Y-%m-%dT%H%M')
         self.assertEquals(DateTime.next_day(date_time).day, 18)
 
-
-
 if __name__ == '__main__':
     unittest.main()
 

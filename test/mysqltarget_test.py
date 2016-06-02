@@ -44,9 +44,6 @@ connect_args = {'user': username, 'password': password, 'database': database, 't
 row_col_dict = {test_col_name: test_col_val}
 target = CmvMysqlTarget(connect_args, row_col_dict)
 
-
-
-
 class MySqlTargetTest(unittest.TestCase):
 
     def get_connection(self):

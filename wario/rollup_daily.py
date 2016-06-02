@@ -8,7 +8,7 @@ from datetime import timedelta
 import luigi
 
 from wario.min15_generator import CmvMin15Generator
-from wario.lib.cmvlib import day_utc_min15_iter
+from wario.lib.cmvlib import DayUtcMin15Iter
 from wario.rollup_base import CmvRollupBaseTask
 
 class CmvRollupDailyGenerator(CmvRollupBaseTask):
@@ -17,7 +17,7 @@ class CmvRollupDailyGenerator(CmvRollupBaseTask):
 
     def requires(self):
         cmvmin15s = []
-        for min15 in day_utc_min15_iter(self.day, self.timezone):
+        for min15 in DayUtcMin15Iter(self.day, self.timezone):
             cmvmin15s.append(CmvMin15Generator(start_time=min15, end_time=min15+timedelta(minutes=15)))
         return cmvmin15s
 
