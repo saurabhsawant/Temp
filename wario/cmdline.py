@@ -39,4 +39,31 @@ def main():
                                 UrlRollupDailyGenerator,WeeklyRollupTrigger,MonthlyRollupTrigger,
                                 and CmvReprocess''')
 
+    tasks = []
+    for _ in range(args.runs):
+        if args.task[0] == 'CmvMin15Generator':
+            task = CmvMin15Generator(start_time=start_time,
+                                     end_time=start_time+timedelta(minutes=15))
+            start_time -= timedelta(minutes=15)
+        elif args.task[0] == 'UrlMin15Generator':
+            task = UrlMin15Generator(start_time=start_time)
+            start_time -= timedelta(minutes=15)
+        elif args.task[0] == 'Min15AndDailyRollupTrigger':
+            task = Min15AndDailyRollupTrigger(start_time=start_time,
+                                              end_time=start_time+timedelta(minutes=15))
+            start_time -= timedelta(minutes=15)
+        elif args.task[0] == 'UrlRollupDailyGenerator':
+            task = UrlRollupDailyGenerator(day=start_time)
+            start_time -= timedelta(days=1)
+        elif args.task[0] == 'WeeklyRollupTrigger':
+            task = WeeklyRollupTrigger(day=start_time)
+            start_time -= timedelta(days=7)
+        elif args.task[0] == 'MonthlyRollupTrigger':
+            task = MonthlyRollupTrigger(day=start_time)
+            start_time -= timedelta(days=1)
+            start_time -= timedelta(days=(start_time.day - 1))
+        elif args.task[0] == 'CmvReprocess':
+            task = [CmvReprocess()]
+        tasks.append(task)
 
+    luigi.build(tasks, workers=args.workers)
