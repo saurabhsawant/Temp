@@ -17,6 +17,7 @@ def main():
     parser.add_argument('--workers', default=3, type=int, help='Number of luigi workers for a given task; default: 3')
     args = parser.parse_args()
 
+    # Determine the start time of the last task
     utcnow = datetime.utcnow() - timedelta(minutes=args.ago)
     if args.task[0] in ['CmvMin15Generator',
                         'UrlMin15Generator',
@@ -39,6 +40,7 @@ def main():
                                 UrlRollupDailyGenerator,WeeklyRollupTrigger,MonthlyRollupTrigger,
                                 and CmvReprocess''')
 
+    # Build the sequence of tasks
     tasks = []
     for _ in range(args.runs):
         if args.task[0] == 'CmvMin15Generator':
