@@ -49,4 +49,4 @@ class CmvCheckCubeTargets(luigi.Task):
                     f.write('%s,not_completed', task.start_time)
 
     def output(self):
-        return luigi.LocalTarget('%s/%s_%s_%s', self.target_root, self.start_time, self.end_time, self.task)
+        return luigi.LocalTarget('%s/%s_%s_%s.csv', self.target_root, self.start_time, self.end_time, self.task)
