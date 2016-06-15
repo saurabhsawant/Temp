@@ -1,4 +1,3 @@
-__author__ = 'jmettu'
 import luigi
 import logging
 import json

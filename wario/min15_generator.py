@@ -1,5 +1,3 @@
-__author__ = 'jmettu'
-
 from lib.cmvlib import *
 import json
 from datetime import timedelta
@@ -12,6 +10,8 @@ class CmvMin15Generator(CmvBaseTask):
     start_time = luigi.DateMinuteParameter()
     end_time = luigi.DateMinuteParameter()
     wario_target_table_name = luigi.Parameter(significant=False)
+    appserver_app_name = luigi.Parameter(significant=False)
+    appserver_app_type = luigi.Parameter(significant=False)
     hdfs_dir_set = set()
     provider_list_str = None
     connect_args = dict()
@@ -49,12 +49,6 @@ class CmvMin15Generator(CmvBaseTask):
             CmvLib.replace_config_params(json_data, tmpl_subst_params)
             return json_data
 
-    def prepare_js_url(self):
-        js_url = 'http://{js_host}/jobs?appName={dc_jar}&classPath=ooyala.' \
-                 'cnd.CreateDelphiDatacube&context={ctxt}'. \
-            format(js_host=self.jobserver_host_port, dc_jar=self.jobserver_datacube_jar, ctxt=self.jobserver_context)
-        return js_url
-
     def requires(self):
         CmvLib.validate_min15_time(self.start_time)
         CmvLib.validate_min15_time(self.end_time)
@@ -72,16 +66,24 @@ class CmvMin15Generator(CmvBaseTask):
         with open('new_config.json', 'w') as outfile:
             json.dump(config_json, outfile, indent=4)
         datadog_start_time = time.time()
-        rslt_json = CmvLib.submit_config_to_js(config_json, self.prepare_js_url())
-        job_id = rslt_json['result']['jobId']
-        js_resp = CmvLib.poll_js_jobid(job_id, self.jobserver_host_port)
+        appserver_jobsubmit_url = CmvLib.get_appserver_job_submit_url(self.appserver_host_port,
+                                                                      self.appserver_app_name,
+                                                                      self.appserver_app_type)
+        rslt_json = CmvLib.submit_config_to_appserver(config_json, appserver_jobsubmit_url)
+
+        job_id = rslt_json['payload']['jobId']
+        appserver_jobstatus_url = CmvLib.get_appserver_job_status_url(self.appserver_host_port,
+                                                                      self.appserver_app_name,
+                                                                      job_id)
+        appserver_resp = CmvLib.poll_appserver_job_status(appserver_jobstatus_url)
         DataDogClient.gauge_this_metric('min15_delay', (time.time()-datadog_start_time))
 
-        if js_resp['status'] != 'OK':
-            logging.error("Job Server responded with an error. Job Server Response: %s", js_resp)
-            raise Exception('Error in Job Server Response.')
+        if appserver_resp['payload']['status'] != 'Finished':
+            logging.error("Job Server responded with an error. Job Server Response: %s",
+                          appserver_resp['payload']['result'])
+            raise Exception('Error in Appserver Response.')
         else:
-            provider_list_str = js_resp['result']['providers']
+            provider_list_str = appserver_resp['payload']['result']['providers']
             if provider_list_str is not None:
                 pcode_list = provider_list_str.replace('Set', '')[1:len(provider_list_str)-4].split(',')
 

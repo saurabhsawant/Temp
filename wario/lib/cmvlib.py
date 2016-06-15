@@ -47,7 +47,6 @@ class CmvBaseTask(luigi.Task):
     jobserver_context = config.get('env', 'jobserver_context')
     jobserver_datacube_jar = config.get('env', 'jobserver_datacube_jar')
     appserver_host_port = config.get('env', 'appserver_host_port')
-    appserver_app_name = luigi.Parameter(default='', significant=False)
 
     cassandra_seeds = config.get('cassandra', 'cassandra_seeds')
     cassandra_keyspace = luigi.Parameter(default='', significant=False)
@@ -104,17 +103,6 @@ class CmvLib:
         return pcode_info
 
     @staticmethod
-    def submit_config_to_js(config_json, js_url):
-        headers = {'content-type': 'application/json'}
-        logging.info("Submitting jobserver config to url: %s", js_url)
-        r = requests.post(js_url, json.dumps(config_json), headers)
-        DataDogClient.gauge_http_status('job_server', r.status_code)
-        r.raise_for_status()
-        js_rslt = r.json()
-        logging.info("Job Server response: %s", js_rslt)
-        return js_rslt
-
-    @staticmethod
     def date_to_cmvformat(dt):
         return '{y}-{mo}-{d}T{h}:{mi}Z'.format(y=dt.year, mo=dt.month, d=dt.day, h=dt.hour, mi=int(dt.minute/15)*15)
 
@@ -130,42 +118,6 @@ class CmvLib:
             if js_resp['status'] != 'RUNNING':
                 return js_resp
             time.sleep(120)
-
-    @staticmethod
-    def poll_js_jobid_urllib(job_id, js_host):
-        import urllib2
-        logging.info('Started polling Job Server')
-        while True:
-            resp = urllib2.urlopen('http://{js_host}/jobs/{job_id}'
-                                   .format(js_host=js_host, job_id=job_id))
-            json_resp = json.load(resp)
-            if json_resp['status'] != 'RUNNING':
-                return json_resp
-            time.sleep(120)
-
-    @staticmethod
-    def poll_js_jobid_curl(job_id, js_host):
-        import subprocess
-        import re
-        logging.info('Started polling Job Server')
-        js_url = 'http://{js_host}/jobs/{job_id}'.format(js_host=js_host, job_id=job_id)
-        while True:
-            commandJob = 'curl {js_url}'.format(js_url=js_url)
-            sleepTime = 5
-            sleepWork = 10
-            for num in range(10000):
-                print("Sleeping ", num)
-                time.sleep(sleepTime)
-                sleepTime = sleepWork
-                p = subprocess.Popen(commandJob, shell=True, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
-                (output, err) = p.communicate()
-                matchStr = '.*"status": "([^"]*)"'
-                jobResObj = re.match(matchStr, re.sub("\n", " ", output))
-                if jobResObj and (not re.search("RUNNING", jobResObj.group(1))):
-                    logging.info("command: " + commandJob + "\nresult " + output[-100:] + " err? " + err + "\n")
-                    logging.info("curl {num}".format(num=num))
-                    return CmvLib.poll_js_jobid_requests(job_id, js_host)
-            return CmvLib.poll_js_jobid_requests(job_id, js_host)
 
     @staticmethod
     def submit_config_to_appserver(config_json, appserver_url):
@@ -185,23 +137,25 @@ class CmvLib:
             DataDogClient.gauge_http_status('app_server', resp.status_code)
             resp.raise_for_status()
             job_status = resp.json()
-            if job_status['status'] != 'RUNNING':
+            if job_status['payload']['status'] != 'Started':
                 return job_status
             time.sleep(30)
 
     @staticmethod
-    def get_appserver_job_submit_url(appserver_host_port, app_name):
+    def get_appserver_job_submit_url(appserver_host_port, app_name, app_type=None):
         appserver_url = \
             'http://{appserver_host_port}/apps/{app_name}/jobs?timeout=100&sync=false'.format(
                 appserver_host_port=appserver_host_port,
                 app_name=app_name
             )
+        if app_type:
+            appserver_url += '&type={app_type}'.format(app_type=app_type)
         return appserver_url
 
     @staticmethod
     def get_appserver_job_status_url(appserver_host_port, app_name, job_id):
         appserver_url = \
-            'http://{appserver_host_port}/apps/{app_name}/jobs/{job_id}/status'.format(
+            'http://{appserver_host_port}/apps/{app_name}/jobs/{job_id}'.format(
                 appserver_host_port=appserver_host_port,
                 app_name=app_name,
                 job_id=job_id
