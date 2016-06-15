@@ -78,7 +78,7 @@ class UrlRollupBaseTask(CmvBaseTask):
         appserver_resp = CmvLib.poll_appserver_job_status(appserver_jobstatus_url)
 
         if appserver_resp['payload']['status'] != 'Finished':
-            logging.error("Job Server responded with an error. Job Server Response: %s",
+            logging.error("AppServer responded with an error. AppServer Response: %s",
                           appserver_resp['payload']['result'])
             raise Exception('Error in Appserver Response.')
         else:

@@ -19,7 +19,7 @@ class CmvRollupBaseTask(CmvBaseTask):
     pcode = luigi.Parameter(default='VzcGw6NlhJZUFfutRhfdpVYIQrRp')
     timezone = luigi.Parameter(default='Asia/Kolkata')
     rollup_namespace = luigi.Parameter(default='nst-rollup', significant=False)
-    wario_target_table_name = luigi.Parameter(significant=False)
+    #wario_target_table_name = luigi.Parameter(default='none', significant=False)
     appserver_app_name = luigi.Parameter(significant=False)
     appserver_app_type = luigi.Parameter(significant=False)
     metric_name = None

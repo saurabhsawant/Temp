@@ -6,6 +6,7 @@ import logging
 import time
 from lib.cmvlib import DataDogClient
 
+
 class CmvMin15Generator(CmvBaseTask):
     start_time = luigi.DateMinuteParameter()
     end_time = luigi.DateMinuteParameter()
@@ -79,11 +80,11 @@ class CmvMin15Generator(CmvBaseTask):
         DataDogClient.gauge_this_metric('min15_delay', (time.time()-datadog_start_time))
 
         if appserver_resp['payload']['status'] != 'Finished':
-            logging.error("Job Server responded with an error. Job Server Response: %s",
+            logging.error("AppServer responded with an error. AppServer Response: %s",
                           appserver_resp['payload']['result'])
             raise Exception('Error in Appserver Response.')
         else:
-            provider_list_str = appserver_resp['payload']['result']['providers']
+            provider_list_str = appserver_resp['payload']['result']['result']['providers']
             if provider_list_str is not None:
                 pcode_list = provider_list_str.replace('Set', '')[1:len(provider_list_str)-4].split(',')
 

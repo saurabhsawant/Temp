@@ -1,4 +1,3 @@
-__author__ = 'jmettu'
 from datetime import datetime
 from datetime import timedelta
 from dateutil import tz
@@ -43,14 +42,11 @@ class CmvBaseTask(luigi.Task):
     config = ConfigParser.ConfigParser(allow_no_value=True)
     config.readfp(open(r'/etc/luigi/WarioCmv.cfg'))
 
-    jobserver_host_port = config.get('env', 'jobserver_host_port')
-    jobserver_context = config.get('env', 'jobserver_context')
-    jobserver_datacube_jar = config.get('env', 'jobserver_datacube_jar')
     appserver_host_port = config.get('env', 'appserver_host_port')
 
     cassandra_seeds = config.get('cassandra', 'cassandra_seeds')
-    cassandra_keyspace = luigi.Parameter(default='', significant=False)
-    cassandra_namespace = luigi.Parameter(default='', significant=False)
+    cassandra_keyspace = config.get('cassandra', 'cassandra_keyspace')
+    cassandra_namespace = config.get('cassandra', 'cassandra_namespace')
 
     hdfs_namenode = config.get('hadoop', 'hdfs_namenode')
     hdfs_session_dirs = config.get('hadoop', 'hdfs_session_dirs')
@@ -107,19 +103,6 @@ class CmvLib:
         return '{y}-{mo}-{d}T{h}:{mi}Z'.format(y=dt.year, mo=dt.month, d=dt.day, h=dt.hour, mi=int(dt.minute/15)*15)
 
     @staticmethod
-    def poll_js_jobid(job_id, js_host):
-        logging.info('Started polling Job Server')
-        while True:
-            r = requests.get('http://{js_host}/jobs/{job_id}'
-                                   .format(js_host=js_host, job_id=job_id))
-            DataDogClient.gauge_http_status('job_server', r.status_code)
-            r.raise_for_status()
-            js_resp = r.json()
-            if js_resp['status'] != 'RUNNING':
-                return js_resp
-            time.sleep(120)
-
-    @staticmethod
     def submit_config_to_appserver(config_json, appserver_url):
         logging.info("Submitting app server config to url: %s", appserver_url)
         r = requests.post(appserver_url, json.dumps(config_json))
@@ -137,7 +120,7 @@ class CmvLib:
             DataDogClient.gauge_http_status('app_server', resp.status_code)
             resp.raise_for_status()
             job_status = resp.json()
-            if job_status['payload']['status'] != 'Started':
+            if job_status['payload']['status'] == 'Finished' or job_status['payload']['status'] == 'Failed':
                 return job_status
             time.sleep(30)
 
