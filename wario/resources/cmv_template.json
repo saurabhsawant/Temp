@@ -18,13 +18,7 @@
         "pcodes": "$pcode_dict",
         "cache":{
           "isSave":true,
-          "isInMem":false,
-          "cassandra":{
-            "seeds": "$cassandra_seeds",
-            "keyspace": "$key_space",
-            "max-thrift-size" : "64000000",
-            "delete-cl-quorum" : true
-          }
+          "isInMem":false
         }
       }
     },
@@ -45,5 +39,31 @@
       "end_time":"$end_time",
       "rdd_duration":"min15"
     }
+  },
+
+  "cubespaces": {
+      "default" : {
+        "skip_badcubes": true,
+        "strategy": "default",
+        "coalesce_part": 14,
+        "subaccount_cost": 0.2,
+        "cost_divider": 120,
+        "max_coalesce": 150,
+        "min_parallelism": 10,
+        "max_parallelism": 150,
+        "max_local_parallelism": 5,
+        "rollup_namespace": "nst-rollup",
+        "cache_namespace": "$name_space",
+        "cassandra": {
+            "seeds" : "$cassandra_seeds",
+            "keyspace" : "$key_space",
+            "port" : 9160,
+            "max-conns-per-host" : 24,
+            "max-thrift-size" : 250000000
+        },
+        "pcodeGroups": {
+          "tocDkyOtJR9drkpEl0PN2MsrhbuJ": [ "Iyamk6YZTw8DxrC60h0fQipg3BfO", "ttYTMxOmh-6nk2wKZI-ih5W1iWxx", "85N2QxOokpVPwCi8uHA_WWWmG6p2" ]
+        }
+      }
   }
 }

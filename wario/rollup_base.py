@@ -1,6 +1,3 @@
-#
-# __author__ = 'baohua'
-#
 """Rollup base task"""
 
 from datetime import date
@@ -22,7 +19,9 @@ class CmvRollupBaseTask(CmvBaseTask):
     pcode = luigi.Parameter(default='VzcGw6NlhJZUFfutRhfdpVYIQrRp')
     timezone = luigi.Parameter(default='Asia/Kolkata')
     rollup_namespace = luigi.Parameter(default='nst-rollup', significant=False)
-    wario_target_table_name = luigi.Parameter(significant=False)
+    #wario_target_table_name = luigi.Parameter(default='none', significant=False)
+    appserver_app_name = luigi.Parameter(significant=False)
+    appserver_app_type = luigi.Parameter(significant=False)
     metric_name = None
     tag_name = None
 
@@ -41,7 +40,7 @@ class CmvRollupBaseTask(CmvBaseTask):
         """Returns the end time for rollup"""
         pass
 
-    def get_rdd_duraion(self):
+    def get_rdd_duration(self):
         """Returns the rdd duration to roll"""
         pass
 
@@ -49,7 +48,7 @@ class CmvRollupBaseTask(CmvBaseTask):
         """Returns the rdd duration rolled to"""
         pass
 
-    def get_js_job_config(self):
+    def get_appserver_job_config(self):
         """Returns a rollup job config"""
         datetime_fmt = "%Y-%m-%dT%H:%M"
         tmpl_values = {
@@ -65,7 +64,7 @@ class CmvRollupBaseTask(CmvBaseTask):
             'keyspace': self.cassandra_keyspace,
             'start_time': self.get_start_time().strftime(datetime_fmt),
             'end_time': self.get_end_time().strftime(datetime_fmt),
-            'rdd_duration': self.get_rdd_duraion(),
+            'rdd_duration': self.get_rdd_duration(),
             'rdd_rollup_duration': self.get_rdd_rolled_duration()
         }
 
@@ -73,17 +72,6 @@ class CmvRollupBaseTask(CmvBaseTask):
             cfg = json.load(tmpl_file)
             CmvLib.replace_config_params(cfg, tmpl_values)
             return cfg
-
-    def get_js_job_url(self):
-        """Returns the job submission url"""
-        js_url = \
-            'http://{js_host_port}/jobs?appName={app_name}&classPath={job_class}&' \
-            'context={js_context}&timeout=100&sync=false'.format(
-                js_host_port=self.jobserver_host_port,
-                app_name=self.jobserver_datacube_jar,
-                job_class='ooyala.cnd.RollupDelphiDatacubes',
-                js_context=self.jobserver_context)
-        return js_url
 
     def rollup_datadog(self):
         metric_name = None
@@ -99,15 +87,21 @@ class CmvRollupBaseTask(CmvBaseTask):
 
     def run(self):
         datadog_start_time = time.time()
-        job_cfg = self.get_js_job_config()
+        job_cfg = self.get_appserver_job_config()
         logging.info('Running rollup job...')
-        submission_status = CmvLib.submit_config_to_js(job_cfg, self.get_js_job_url())
-        job_id = submission_status['result']['jobId']
-        time.sleep(5)
-        job_status = CmvLib.poll_js_jobid(job_id, self.jobserver_host_port)
-        if job_status['status'] != 'OK':
-            logging.error("Job Server responded with an error. Job Server Response: %s", job_status)
-            raise Exception('Error in Job Server Response.')
+        appserver_jobsubmit_url = CmvLib.get_appserver_job_submit_url(self.appserver_host_port,
+                                                                      self.appserver_app_name,
+                                                                      self.appserver_app_type)
+        rslt_json = CmvLib.submit_config_to_appserver(job_cfg, appserver_jobsubmit_url)
+        job_id = rslt_json['payload']['jobId']
+        appserver_jobstatus_url = CmvLib.get_appserver_job_status_url(self.appserver_host_port,
+                                                                      self.appserver_app_name,
+                                                                      job_id)
+        appserver_resp = CmvLib.poll_appserver_job_status(appserver_jobstatus_url)
+        if appserver_resp['payload']['status'] != 'Finished':
+            logging.error("AppServer responded with an error. AppServer Response: %s",
+                          appserver_resp['payload']['result'])
+            raise Exception('Error in Appserver Response.')
         else:
             logging.info("Rollup job completed successfully.")
         self.output().touch()

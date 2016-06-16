@@ -1,5 +1,3 @@
-__author__ = 'jmettu'
-
 from lib.cmvlib import CmvBaseTask
 from lib.cmvlib import DateTime
 from lib.cmv_mysql_target import CmvMysqlTarget

@@ -75,6 +75,7 @@ class CmvMysqlTarget(luigi.Target):
                ON DUPLICATE KEY UPDATE
                target_id = VALUES(target_id)
             """.format(target_table=self.table, column_names=column_names_string, values_str_fmt=values_str_fmt)
+
         connection.cursor().execute(insert_stmt, self.column_values)
         logging.info('Updated Target table {trgt}'.format(trgt=self.table))
 

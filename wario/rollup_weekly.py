@@ -1,6 +1,3 @@
-#
-# __author__ = 'baohua'
-#
 """Rollup weekly task"""
 
 from datetime import timedelta
@@ -37,7 +34,7 @@ class CmvRollupWeeklyGenerator(CmvRollupBaseTask):
         self.validate_day()
         return self.day + timedelta(days=7)
 
-    def get_rdd_duraion(self):
+    def get_rdd_duration(self):
         return 'day'
 
     def get_rdd_rolled_duration(self):

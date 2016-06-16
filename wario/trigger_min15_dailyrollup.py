@@ -1,4 +1,3 @@
-__author__ = 'jmettu'
 import luigi
 import logging
 import json
@@ -8,6 +7,7 @@ from lib.cmv_mysql_target import CmvMysqlTarget
 from lib.cmvlib import DateTime
 from min15_generator import CmvMin15Generator
 from rollup_daily import CmvRollupDailyGenerator
+
 
 class Min15AndDailyRollupTrigger(CmvBaseTask):
     start_time = luigi.DateMinuteParameter()
@@ -75,5 +75,3 @@ class Min15AndDailyRollupTrigger(CmvBaseTask):
 
 if __name__ == '__main__':
     luigi.run(['Min15AndDailyRollupTrigger', '--workers', '2'])
-
-

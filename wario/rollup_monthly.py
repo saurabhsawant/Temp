@@ -1,6 +1,3 @@
-#
-# __author__ = 'baohua'
-#
 """Rollup monthly task"""
 
 from datetime import date, timedelta
@@ -46,7 +43,7 @@ class CmvRollupMonthlyGenerator(CmvRollupBaseTask):
         end_day = next_month_day - timedelta(days=(next_month_day.day - 1))
         return end_day
 
-    def get_rdd_duraion(self):
+    def get_rdd_duration(self):
         return 'day'
 
     def get_rdd_rolled_duration(self):

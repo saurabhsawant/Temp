@@ -1,6 +1,3 @@
-#
-# __author__ = 'baohua'
-#
 """Url min15 task"""
 
 import json
@@ -22,6 +19,7 @@ class UrlMin15Generator(CmvBaseTask):
         default=datetime(year=2016, month=3, day=21, hour=12, minute=15)
     )
     wario_target_table_name = luigi.Parameter(default='url_min15', significant=False)
+    appserver_app_name = luigi.Parameter(default='urlmin15gen', significant=False)
 
     def get_appserver_job_config(self):
         """Returns job config"""
@@ -51,9 +49,9 @@ class UrlMin15Generator(CmvBaseTask):
             job_cfg,
             CmvLib.get_appserver_job_submit_url(self.appserver_host_port, self.appserver_app_name)
         )
-        job_id = submission_status['result']['jobId']
+        job_id = submission_status['payload']['jobId']
         time.sleep(5)
-        job_status = CmvLib.poll_appserver_job_status(
+        appserver_resp = CmvLib.poll_appserver_job_status(
             CmvLib.get_appserver_job_status_url(
                 self.appserver_host_port,
                 self.appserver_app_name,
@@ -62,9 +60,10 @@ class UrlMin15Generator(CmvBaseTask):
         )
         elapsed_time = (time.time()-datadog_start_time)/60
         DataDogClient.gauge_this_metric('url_min15_delay', elapsed_time)
-        if job_status['status'] != 'OK':
-            logging.error("Job Server responded with an error. Job Server Response: %s", job_status)
-            raise Exception('Error in Job Server Response.')
+        if appserver_resp['payload']['status'] != 'Finished':
+            logging.error("AppServer responded with an error. AppServer Response: %s",
+                          appserver_resp['payload']['result'])
+            raise Exception('Error in AppServer Response.')
         else:
             logging.info("Url min15 job completed successfully.")
         self.output().touch()

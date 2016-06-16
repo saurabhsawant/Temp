@@ -1,14 +1,15 @@
-__author__ = 'jmettu'
-
 import luigi
 import csv
 from datetime import timedelta
 from min15_generator import CmvMin15Generator
 import rollup_daily
+import rollup_weekly
 import logging
 from datetime import datetime
+from lib.cmvlib import DateTime
 
 targets_deleted = False
+
 
 class InputReprocessFile(luigi.ExternalTask):
     reprocess_cube = luigi.Parameter()
@@ -56,6 +57,18 @@ class CmvReprocess(luigi.Task):
             daily_rollup_task = rollup_daily.CmvRollupDailyGenerator(day=day, pcode=pcode, timezone=tz)
             daily_rollup_upstream_tasks.add(daily_rollup_task)
         return daily_rollup_upstream_tasks
+
+    def redo_weekly(self, redo_file_handler):
+        reader = csv.reader(redo_file_handler)
+        weekly_rollup_upstream_tasks = set()
+        for line in reader:
+            day = datetime.strptime(line[0], '%Y-%m-%d')
+            DateTime.validate_weekday(day)
+            pcode = line[1]
+            tz = line[2]
+            weekly_rollup_task = rollup_weekly.CmvRollupWeeklyGenerator(day=day, pcode=pcode, timezone=tz)
+            weekly_rollup_upstream_tasks.add(weekly_rollup_task)
+        return weekly_rollup_upstream_tasks
 
     def delete_all_targets(self, all_tasks):
         logging.info('deleting all the targets...')
