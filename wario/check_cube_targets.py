@@ -44,9 +44,12 @@ class CmvCheckCubeTargets(luigi.Task):
         with self.output().open('w') as f:
             for task in target_tasks:
                 if task.output().exists():
-                    f.write('%s,completed', task.start_time)
+                    f.write('{s},completed'.format(s=task.start_time))
                 else:
-                    f.write('%s,not_completed', task.start_time)
+                    f.write('{s},not_completed'.format(s=task.start_time))
 
     def output(self):
-        return luigi.LocalTarget('%s/%s_%s_%s.csv', self.target_root, self.start_time, self.end_time, self.task)
+        return luigi.LocalTarget('{root}/{s}_{e}_{task}.csv'.format(root=self.target_root,
+                                                                    s=self.start_time,
+                                                                    e=self.end_time,
+                                                                    task=self.task))

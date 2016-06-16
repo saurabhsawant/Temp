@@ -10,6 +10,7 @@ import luigi
 from wario.url_min15 import UrlMin15Generator
 from wario.url_rollup_base import UrlRollupBaseTask
 
+
 class UrlRollupDailyGenerator(UrlRollupBaseTask):
     """Task for url rollup daily"""
     wario_target_table_name = luigi.Parameter(default='url_rollup_day', significant=False)

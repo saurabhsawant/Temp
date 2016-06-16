@@ -9,6 +9,7 @@ from wario.trigger_weekly_rollup import WeeklyRollupTrigger
 from wario.trigger_monthly_rollup import MonthlyRollupTrigger
 from wario.reprocess_datacube import CmvReprocess
 
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--task', required=True, nargs=1, help='Name of the task: eg Min15AndDailyRollupTrigger')
