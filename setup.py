@@ -3,11 +3,14 @@ __author__ = 'jmettu'
 from setuptools import setup
 
 install_requires = [
-    'luigi==2.0.1',
+    'luigi==2.1.1',
     'pytz',
     'requests',
     'coverage',
     'python-dateutil'
+    'django'
+    'djangorestframework'
+    'mock'
 ]
 
 setup(

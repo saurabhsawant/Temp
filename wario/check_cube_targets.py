@@ -1,5 +1,5 @@
 import luigi
-from datetime import timedelta
+from datetime import timedelta, datetime
 from min15_generator import CmvMin15Generator
 from lib.cmvlib import CmvLib
 from rollup_daily import CmvRollupDailyGenerator
@@ -10,7 +10,7 @@ class CmvCheckCubeTargets(luigi.Task):
     start_time = luigi.DateMinuteParameter()
     end_time = luigi.DateMinuteParameter()
     task = luigi.Parameter()
-    target_root = luigi.Parameter(significant=False, default='/var/log/luigi_targets/checkcubes')
+    target_root = luigi.Parameter(significant=False, default='/var/log/luigi/luigi_targets/checkcubes')
 
     def requires(self):
         pass
@@ -22,7 +22,7 @@ class CmvCheckCubeTargets(luigi.Task):
             CmvLib.validate_min15_time(now)
             while now < self.end_time:
                 ends_at = now + timedelta(minutes=15)
-                cmv_task = CmvMin15Generator(now, ends_at)
+                cmv_task = CmvMin15Generator(start_time=now, end_time=ends_at)
                 now = ends_at
                 target_tasks.add(cmv_task)
         elif self.task == 'day':
@@ -44,12 +44,13 @@ class CmvCheckCubeTargets(luigi.Task):
         with self.output().open('w') as f:
             for task in target_tasks:
                 if task.output().exists():
-                    f.write('{s},completed'.format(s=task.start_time))
+                    f.write('{s}=completed'.format(s=task.start_time))
                 else:
-                    f.write('{s},not_completed'.format(s=task.start_time))
+                    f.write('{s}=not_completed'.format(s=task.start_time))
+                f.write(',')
 
     def output(self):
         return luigi.LocalTarget('{root}/{s}_{e}_{task}.csv'.format(root=self.target_root,
-                                                                    s=self.start_time,
-                                                                    e=self.end_time,
+                                                                    s=datetime.strptime(self.start_time.__str__(), "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%dT%H%M"),
+                                                                    e=datetime.strptime(self.end_time.__str__(), "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%dT%H%M"),
                                                                     task=self.task))

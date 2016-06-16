@@ -10,10 +10,9 @@ from lib.cmvlib import DataDogClient
 class CmvMin15Generator(CmvBaseTask):
     start_time = luigi.DateMinuteParameter()
     end_time = luigi.DateMinuteParameter()
-    wario_target_table_name = luigi.Parameter(significant=False)
-    appserver_app_name = luigi.Parameter(significant=False)
-    appserver_app_type = luigi.Parameter(significant=False)
-
+    wario_target_table_name = luigi.Parameter(default='min15', significant=False)
+    appserver_app_name = luigi.Parameter(default='min15-gen', significant=False)
+    appserver_app_type = luigi.Parameter(default='min15', significant=False)
     hdfs_dir_set = set()
     provider_list_str = None
     connect_args = dict()
