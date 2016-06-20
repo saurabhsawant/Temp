@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 luigi_cfg_file="$PWD/wario/resources/luigi.cfg"
 log_cfg_file="$PWD/wario/resources/log.cfg"
-log_file="$PWD/test/logs/wario.log"
+log_file="$PWD/logs/wario.log"
 
 export LUIGI_CONFIG_PATH="$luigi_cfg_file"
 
