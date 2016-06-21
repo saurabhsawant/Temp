@@ -15,7 +15,7 @@ if ! grep -q "$log_file" "$log_cfg_file"; then
 fi
 
 if ! grep -q "$session_files" "$luigi_cfg_file"; then
-    echo -e "hdfs_sessions:$session_files"
+    echo -e "hdfs_sessions:$session_files" >> $log_cfg_file
 fi
 
 sudo cp $PWD/wario/resources/WarioCmv.cfg   /etc/luigi/WarioCmv.cfg
