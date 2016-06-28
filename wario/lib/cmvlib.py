@@ -45,8 +45,8 @@ class CmvBaseTask(luigi.Task):
     appserver_host_port = config.get('env', 'appserver_host_port')
 
     cassandra_seeds = config.get('cassandra', 'cassandra_seeds')
-    cassandra_keyspace = config.get('cassandra', 'cassandra_keyspace')
-    cassandra_namespace = config.get('cassandra', 'cassandra_namespace')
+    cassandra_keyspace = luigi.Parameter(significant=False)
+    cassandra_namespace = luigi.Parameter(significant=False)
 
     hdfs_namenode = config.get('hadoop', 'hdfs_namenode')
     hdfs_session_dirs = config.get('hadoop', 'hdfs_session_dirs')

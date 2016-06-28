@@ -13,6 +13,7 @@ class CmvMin15Generator(CmvBaseTask):
     wario_target_table_name = luigi.Parameter(significant=False)
     appserver_app_name = luigi.Parameter(significant=False)
     appserver_app_type = luigi.Parameter(significant=False)
+
     hdfs_dir_set = set()
     provider_list_str = None
     connect_args = dict()
@@ -25,6 +26,7 @@ class CmvMin15Generator(CmvBaseTask):
     def task_init(self):
         logging.info('Initializing task params: {cn_args}, {tgt_id}'.
                      format(cn_args=self.connect_args, tgt_id=self.task_id))
+
         self.connect_args['user'] = self.wario_target_db_user
         self.connect_args['password'] = self.wario_target_db_password
         self.connect_args['host'] = self.wario_target_db_host

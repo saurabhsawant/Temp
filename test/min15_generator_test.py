@@ -6,10 +6,8 @@ from helpers import LuigiTestCase
 from wario.min15_generator import CmvMin15Generator
 from datetime import datetime
 from luigi.file import LocalTarget
-
 import logging
 logger = logging.getLogger('luigi-interface')
-
 
 class Min15GeneratorTest(LuigiTestCase):
 
@@ -35,8 +33,8 @@ class Min15GeneratorTest(LuigiTestCase):
             end_time = datetime.strptime('2016-01-17T0100', '%Y-%m-%dT%H%M')
 
             def requires(self):
-                return CmvMin15Generator(self.start_time, self.end_time)
-
+                return CmvMin15Generator(start_time=self.start_time,
+                                         end_time=self.end_time)
             def run(self):
                 f = self.output().open('w')
                 f.write('exists')
@@ -44,12 +42,16 @@ class Min15GeneratorTest(LuigiTestCase):
             def output(self):
                 return LocalTarget(path='test/resources/targets/TestMin15Generator.dep')
 
+        logging.info('@@@ testing logger')
         self.run_task(TestMin15Generator())
+        #self.run_locally(['TestMin15Generator'])
         d = self.summary_dict()
         print d
 
 
 if __name__ == '__main__':
+    logger.info('@@@ running locally with args')
+
     unittest.main()
 
 
