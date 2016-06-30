@@ -1,0 +1,69 @@
+{
+  "show_data.stdout_print": false,
+  "show_data.info_print":   false,
+  "rookery": {
+    "materialized": {
+      "view": {
+        "time_limit": -900,
+        "cache_namespace": "$name_space",
+        "numPartitions": 10,
+        "showInfo": false,
+        "checkSavedRdd": true,
+        "aggregateSaveRdd": true,
+        "cmvGenerator": "worflow-cmv",
+        "cmvHourToDisk": false,
+        "saveAllProviders": true,
+        "heliosUrl": "helios.prod.ooyala.com:8081",
+        "heliosParallelizm": 15,
+        "pcodes": "$pcode_dict",
+        "cache":{
+          "isSave":true,
+          "isInMem":false
+        }
+      }
+    },
+    "input-source":"hdfs-parquet-session",
+    "hdfs":{
+      "files":[],
+      "timeFilter": true,
+      "oneHourPack": false,
+      "perFileSplit": 20,
+      "readColumns": ["pcode", "countryCode", "region", "state", "dma", "deviceType", "operatingSystem", "browser", "fqdn", "embedCode", "playerId",
+        "playsStarted", "displays", "playsRequested", "playheadUpdates", "milliSecondsWatched", "playthrough25", "playthrough50", "playthrough75", "playthrough100",
+        "sharing/embedCopied", "sharing/urlsCopied", "sharing/emailsSent", "sharing/facebook", "sharing/twitter", "sharing/digg", "sharing/stumbleupon",
+        "guid", "replaysStarted", "segmentWatchedBins/_1", "segmentWatchedBins/_2", "contentWatchedBins/_1", "contentWatchedBins/_2", "startTime", "playerLoads", "autoplaysStarted", "replaysStarted"],
+      "canBeEmpty":true
+    },
+    "events":{
+      "start_time":"$start_time",
+      "end_time":"$end_time",
+      "rdd_duration":"min15"
+    }
+  },
+
+  "cubespaces": {
+      "default" : {
+        "skip_badcubes": true,
+        "strategy": "default",
+        "coalesce_part": 14,
+        "subaccount_cost": 0.2,
+        "cost_divider": 120,
+        "max_coalesce": 150,
+        "min_parallelism": 10,
+        "max_parallelism": 150,
+        "max_local_parallelism": 5,
+        "rollup_namespace": "nst-rollup",
+        "cache_namespace": "$name_space",
+        "cassandra": {
+            "seeds" : "$cassandra_seeds",
+            "keyspace" : "$key_space",
+            "port" : 9160,
+            "max-conns-per-host" : 24,
+            "max-thrift-size" : 250000000
+        },
+        "pcodeGroups": {
+          "tocDkyOtJR9drkpEl0PN2MsrhbuJ": [ "Iyamk6YZTw8DxrC60h0fQipg3BfO", "ttYTMxOmh-6nk2wKZI-ih5W1iWxx", "85N2QxOokpVPwCi8uHA_WWWmG6p2" ]
+        }
+      }
+  }
+}

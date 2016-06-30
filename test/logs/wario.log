@@ -1,0 +1,822 @@
+2016-06-23 15:30:35,152 luigi-interface INFO     Informed scheduler that task   CmvReprocessAPIHook___action____gene_c8351b74fa   has status   PENDING
+2016-06-23 15:30:35,152 luigi-interface INFO     Done scheduling tasks
+2016-06-23 15:30:35,152 luigi-interface INFO     Running Worker with 1 processes
+2016-06-23 15:30:35,152 luigi.server    INFO     Starting pruning of task graph
+2016-06-23 15:30:35,152 luigi.server    INFO     Done pruning task graph
+2016-06-23 15:30:35,152 luigi-interface INFO     [pid 32175] Worker Worker(salt=850450074, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=ssawant, pid=32175) running   CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": true})
+2016-06-23 15:30:35,152 root            INFO     Reprocessing min15...
+2016-06-23 15:30:35,154 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:00:00, end_time = 2016-06-02 00:15:00
+2016-06-23 15:30:35,155 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-23 15:30:35,155 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:30:00, end_time = 2016-06-02 00:45:00
+2016-06-23 15:30:35,156 root            INFO     deleting all the targets...
+2016-06-23 15:30:35,156 root            INFO     Initializing task params: {}, CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 15:30:35,156 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 15:30:35,160 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 15:30:35,160 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 15:30:35,161 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 15:30:35,163 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 15:30:35,163 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 15:30:35,163 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 15:30:35,166 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 15:30:35,166 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 15:30:35,166 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 15:30:35,168 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 15:30:35,168 luigi-interface INFO     [pid 32175] Worker Worker(salt=850450074, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=ssawant, pid=32175) new requirements      CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": true})
+2016-06-23 15:30:35,170 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 15:30:35,170 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 15:30:35,171 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 15:30:35,172 root            INFO     start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-23 15:30:35,172 root            INFO     /delphi/staging/sessions/2016/06/02/00/15/_SUCCESS
+2016-06-23 15:30:36,652 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d   has status   PENDING
+2016-06-23 15:30:36,653 luigi-interface WARNING  Data for InputSessionFile(cube_time=2016-06-02T0015) does not exist (yet?). The task is an external data depedency, so it can not be run from this luigi process.
+2016-06-23 15:30:36,653 luigi-interface INFO     Informed scheduler that task   InputSessionFile_2016_06_02T0015_a87a896701   has status   PENDING
+2016-06-23 15:30:36,653 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 15:30:36,653 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 15:30:36,657 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 15:30:36,657 root            INFO     start_time = 2016-06-02 00:30:00, end_time = 2016-06-02 00:45:00
+2016-06-23 15:30:36,658 root            INFO     /delphi/staging/sessions/2016/06/02/00/30/_SUCCESS
+2016-06-23 15:30:38,125 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1   has status   PENDING
+2016-06-23 15:30:38,126 luigi-interface WARNING  Data for InputSessionFile(cube_time=2016-06-02T0030) does not exist (yet?). The task is an external data depedency, so it can not be run from this luigi process.
+2016-06-23 15:30:38,126 luigi-interface INFO     Informed scheduler that task   InputSessionFile_2016_06_02T0030_22696356b6   has status   PENDING
+2016-06-23 15:30:38,126 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 15:30:38,126 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 15:30:38,129 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 15:30:38,130 root            INFO     start_time = 2016-06-02 00:00:00, end_time = 2016-06-02 00:15:00
+2016-06-23 15:30:38,131 root            INFO     /delphi/staging/sessions/2016/06/02/00/00/_SUCCESS
+2016-06-23 15:30:39,616 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a   has status   PENDING
+2016-06-23 15:30:39,617 luigi-interface WARNING  Data for InputSessionFile(cube_time=2016-06-02T0000) does not exist (yet?). The task is an external data depedency, so it can not be run from this luigi process.
+2016-06-23 15:30:39,617 luigi-interface INFO     Informed scheduler that task   InputSessionFile_2016_06_02T0000_502d4b9942   has status   PENDING
+2016-06-23 15:30:39,617 luigi-interface INFO     Informed scheduler that task   CmvReprocessAPIHook___action____gene_c8351b74fa   has status   PENDING
+2016-06-23 15:30:39,618 luigi.server    INFO     Starting pruning of task graph
+2016-06-23 15:30:39,618 luigi.server    INFO     Done pruning task graph
+2016-06-23 15:30:39,661 luigi-interface INFO     Worker Worker(salt=850450074, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=ssawant, pid=32175) was stopped. Shutting down Keep-Alive thread
+2016-06-23 15:30:39,662 root            INFO     start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-23 15:30:39,662 root            INFO     start_time = 2016-06-02 00:30:00, end_time = 2016-06-02 00:45:00
+2016-06-23 15:30:39,662 root            INFO     start_time = 2016-06-02 00:00:00, end_time = 2016-06-02 00:15:00
+2016-06-23 15:30:39,666 luigi-interface INFO     
+===== Luigi Execution Summary =====
+
+Scheduled 8 tasks of which:
+* 8 were left pending, among these:
+    * 4 were missing external dependencies:
+        - 1 CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": true})
+        - 3 InputSessionFile(cube_time=2016-06-02T0000) ...
+    * 3 had missing external dependencies:
+        - 3 CmvMin15Generator(...)
+    * 1 were left pending because of unknown reason:
+        - 1 CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": true})
+
+Did not run any tasks
+This progress looks :| because there were missing external dependencies
+
+===== Luigi Execution Summary =====
+
+2016-06-23 15:30:39,666 root            INFO     start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-23 15:30:39,667 root            INFO     start_time = 2016-06-02 00:30:00, end_time = 2016-06-02 00:45:00
+2016-06-23 15:30:39,667 root            INFO     start_time = 2016-06-02 00:00:00, end_time = 2016-06-02 00:15:00
+2016-06-23 15:34:54,481 luigi-interface INFO     Informed scheduler that task   CmvReprocessAPIHook___action____gene_c8351b74fa   has status   PENDING
+2016-06-23 15:34:54,482 luigi-interface INFO     Done scheduling tasks
+2016-06-23 15:34:54,482 luigi-interface INFO     Running Worker with 1 processes
+2016-06-23 15:34:54,482 luigi.server    INFO     Starting pruning of task graph
+2016-06-23 15:34:54,482 luigi.server    INFO     Done pruning task graph
+2016-06-23 15:34:54,482 luigi-interface INFO     [pid 32264] Worker Worker(salt=103736635, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=ssawant, pid=32264) running   CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": true})
+2016-06-23 15:34:54,482 root            INFO     Reprocessing min15...
+2016-06-23 15:34:54,484 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:00:00, end_time = 2016-06-02 00:15:00
+2016-06-23 15:34:54,484 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-23 15:34:54,485 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:30:00, end_time = 2016-06-02 00:45:00
+2016-06-23 15:34:54,485 root            INFO     deleting all the targets...
+2016-06-23 15:34:54,485 root            INFO     Initializing task params: {}, CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 15:34:54,485 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 15:34:54,490 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 15:34:54,491 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 15:34:54,491 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 15:34:54,494 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 15:34:54,494 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 15:34:54,494 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 15:34:54,496 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 15:34:54,497 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 15:34:54,497 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 15:34:54,499 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 15:34:54,499 luigi-interface INFO     [pid 32264] Worker Worker(salt=103736635, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=ssawant, pid=32264) new requirements      CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": true})
+2016-06-23 15:34:54,501 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 15:34:54,501 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 15:34:54,503 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 15:34:54,503 root            INFO     start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-23 15:34:54,503 root            INFO     /delphi/staging/sessions/2016/06/02/00/15/_SUCCESS
+2016-06-23 15:34:55,990 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d   has status   PENDING
+2016-06-23 15:34:55,991 luigi-interface WARNING  Data for InputSessionFile(cube_time=2016-06-02T0015) does not exist (yet?). The task is an external data depedency, so it can not be run from this luigi process.
+2016-06-23 15:34:55,992 luigi-interface INFO     Informed scheduler that task   InputSessionFile_2016_06_02T0015_a87a896701   has status   PENDING
+2016-06-23 15:34:55,992 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 15:34:55,992 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 15:34:55,995 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 15:34:55,996 root            INFO     start_time = 2016-06-02 00:30:00, end_time = 2016-06-02 00:45:00
+2016-06-23 15:34:55,997 root            INFO     /delphi/staging/sessions/2016/06/02/00/30/_SUCCESS
+2016-06-23 15:34:57,495 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1   has status   PENDING
+2016-06-23 15:34:57,496 luigi-interface WARNING  Data for InputSessionFile(cube_time=2016-06-02T0030) does not exist (yet?). The task is an external data depedency, so it can not be run from this luigi process.
+2016-06-23 15:34:57,496 luigi-interface INFO     Informed scheduler that task   InputSessionFile_2016_06_02T0030_22696356b6   has status   PENDING
+2016-06-23 15:34:57,496 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 15:34:57,496 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 15:34:57,499 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 15:34:57,500 root            INFO     start_time = 2016-06-02 00:00:00, end_time = 2016-06-02 00:15:00
+2016-06-23 15:34:57,500 root            INFO     /delphi/staging/sessions/2016/06/02/00/00/_SUCCESS
+2016-06-23 15:34:58,986 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a   has status   PENDING
+2016-06-23 15:34:58,987 luigi-interface WARNING  Data for InputSessionFile(cube_time=2016-06-02T0000) does not exist (yet?). The task is an external data depedency, so it can not be run from this luigi process.
+2016-06-23 15:34:58,987 luigi-interface INFO     Informed scheduler that task   InputSessionFile_2016_06_02T0000_502d4b9942   has status   PENDING
+2016-06-23 15:34:58,988 luigi-interface INFO     Informed scheduler that task   CmvReprocessAPIHook___action____gene_c8351b74fa   has status   PENDING
+2016-06-23 15:34:58,988 luigi.server    INFO     Starting pruning of task graph
+2016-06-23 15:34:58,988 luigi.server    INFO     Done pruning task graph
+2016-06-23 15:34:58,996 luigi-interface INFO     Worker Worker(salt=103736635, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=ssawant, pid=32264) was stopped. Shutting down Keep-Alive thread
+2016-06-23 15:34:58,996 root            INFO     start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-23 15:34:58,997 root            INFO     start_time = 2016-06-02 00:30:00, end_time = 2016-06-02 00:45:00
+2016-06-23 15:34:58,997 root            INFO     start_time = 2016-06-02 00:00:00, end_time = 2016-06-02 00:15:00
+2016-06-23 15:34:59,000 luigi-interface INFO     
+===== Luigi Execution Summary =====
+
+Scheduled 8 tasks of which:
+* 8 were left pending, among these:
+    * 4 were missing external dependencies:
+        - 1 CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": true})
+        - 3 InputSessionFile(cube_time=2016-06-02T0000) ...
+    * 3 had missing external dependencies:
+        - 3 CmvMin15Generator(...)
+    * 1 were left pending because of unknown reason:
+        - 1 CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": true})
+
+Did not run any tasks
+This progress looks :| because there were missing external dependencies
+
+===== Luigi Execution Summary =====
+
+2016-06-23 15:34:59,000 root            INFO     start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-23 15:34:59,000 root            INFO     start_time = 2016-06-02 00:30:00, end_time = 2016-06-02 00:45:00
+2016-06-23 15:34:59,000 root            INFO     start_time = 2016-06-02 00:00:00, end_time = 2016-06-02 00:15:00
+2016-06-23 15:44:47,945 luigi-interface INFO     Informed scheduler that task   CmvReprocessAPIHook___action____gene_c8351b74fa   has status   PENDING
+2016-06-23 15:44:47,945 luigi-interface INFO     Done scheduling tasks
+2016-06-23 15:44:47,945 luigi-interface INFO     Running Worker with 1 processes
+2016-06-23 15:44:47,945 luigi.server    INFO     Starting pruning of task graph
+2016-06-23 15:44:47,945 luigi.server    INFO     Done pruning task graph
+2016-06-23 15:44:47,945 luigi-interface INFO     [pid 32373] Worker Worker(salt=104455796, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=ssawant, pid=32373) running   CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": true})
+2016-06-23 15:44:47,945 root            INFO     Reprocessing min15...
+2016-06-23 15:44:47,947 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:00:00, end_time = 2016-06-02 00:15:00
+2016-06-23 15:44:47,948 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-23 15:44:47,948 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:30:00, end_time = 2016-06-02 00:45:00
+2016-06-23 15:44:47,949 root            INFO     deleting all the targets...
+2016-06-23 15:44:47,949 root            INFO     Initializing task params: {}, CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 15:44:47,949 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 15:44:47,953 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 15:44:47,954 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 15:44:47,954 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 15:44:47,956 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 15:44:47,957 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 15:44:47,957 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 15:44:47,959 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 15:44:47,960 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 15:44:47,960 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 15:44:47,961 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 15:44:47,962 luigi-interface INFO     [pid 32373] Worker Worker(salt=104455796, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=ssawant, pid=32373) new requirements      CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": true})
+2016-06-23 15:44:47,963 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 15:44:47,963 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 15:44:47,965 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 15:44:47,965 root            INFO     start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-23 15:44:47,966 root            INFO     /delphi/staging/sessions/2016/06/02/00/15/_SUCCESS
+2016-06-23 15:44:47,968 luigi-interface WARNING  The SnakebiteHdfsClient failed to exists, using fallback class HdfsClientCdh3
+2016-06-23 15:44:49,466 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d   has status   PENDING
+2016-06-23 15:44:49,467 luigi-interface WARNING  Data for InputSessionFile(cube_time=2016-06-02T0015) does not exist (yet?). The task is an external data depedency, so it can not be run from this luigi process.
+2016-06-23 15:44:49,468 luigi-interface INFO     Informed scheduler that task   InputSessionFile_2016_06_02T0015_a87a896701   has status   PENDING
+2016-06-23 15:44:49,468 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 15:44:49,468 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 15:44:49,471 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 15:44:49,472 root            INFO     start_time = 2016-06-02 00:30:00, end_time = 2016-06-02 00:45:00
+2016-06-23 15:44:49,473 root            INFO     /delphi/staging/sessions/2016/06/02/00/30/_SUCCESS
+2016-06-23 15:44:49,474 luigi-interface WARNING  The SnakebiteHdfsClient failed to exists, using fallback class HdfsClientCdh3
+2016-06-23 15:44:50,996 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1   has status   PENDING
+2016-06-23 15:44:50,996 luigi-interface WARNING  Data for InputSessionFile(cube_time=2016-06-02T0030) does not exist (yet?). The task is an external data depedency, so it can not be run from this luigi process.
+2016-06-23 15:44:50,997 luigi-interface INFO     Informed scheduler that task   InputSessionFile_2016_06_02T0030_22696356b6   has status   PENDING
+2016-06-23 15:44:50,997 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 15:44:50,997 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 15:44:51,000 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 15:44:51,001 root            INFO     start_time = 2016-06-02 00:00:00, end_time = 2016-06-02 00:15:00
+2016-06-23 15:44:51,001 root            INFO     /delphi/staging/sessions/2016/06/02/00/00/_SUCCESS
+2016-06-23 15:44:51,003 luigi-interface WARNING  The SnakebiteHdfsClient failed to exists, using fallback class HdfsClientCdh3
+2016-06-23 15:44:52,506 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a   has status   PENDING
+2016-06-23 15:44:52,507 luigi-interface WARNING  Data for InputSessionFile(cube_time=2016-06-02T0000) does not exist (yet?). The task is an external data depedency, so it can not be run from this luigi process.
+2016-06-23 15:44:52,507 luigi-interface INFO     Informed scheduler that task   InputSessionFile_2016_06_02T0000_502d4b9942   has status   PENDING
+2016-06-23 15:44:52,508 luigi-interface INFO     Informed scheduler that task   CmvReprocessAPIHook___action____gene_c8351b74fa   has status   PENDING
+2016-06-23 15:44:52,508 luigi.server    INFO     Starting pruning of task graph
+2016-06-23 15:44:52,508 luigi.server    INFO     Done pruning task graph
+2016-06-23 15:44:52,552 luigi-interface INFO     Worker Worker(salt=104455796, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=ssawant, pid=32373) was stopped. Shutting down Keep-Alive thread
+2016-06-23 15:44:52,552 root            INFO     start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-23 15:44:52,553 root            INFO     start_time = 2016-06-02 00:30:00, end_time = 2016-06-02 00:45:00
+2016-06-23 15:44:52,553 root            INFO     start_time = 2016-06-02 00:00:00, end_time = 2016-06-02 00:15:00
+2016-06-23 15:44:52,557 luigi-interface INFO     
+===== Luigi Execution Summary =====
+
+Scheduled 8 tasks of which:
+* 8 were left pending, among these:
+    * 4 were missing external dependencies:
+        - 1 CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": true})
+        - 3 InputSessionFile(cube_time=2016-06-02T0000) ...
+    * 3 had missing external dependencies:
+        - 3 CmvMin15Generator(...)
+    * 1 were left pending because of unknown reason:
+        - 1 CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": true})
+
+Did not run any tasks
+This progress looks :| because there were missing external dependencies
+
+===== Luigi Execution Summary =====
+
+2016-06-23 15:44:52,557 root            INFO     start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-23 15:44:52,558 root            INFO     start_time = 2016-06-02 00:30:00, end_time = 2016-06-02 00:45:00
+2016-06-23 15:44:52,558 root            INFO     start_time = 2016-06-02 00:00:00, end_time = 2016-06-02 00:15:00
+2016-06-23 16:14:25,784 luigi-interface INFO     Informed scheduler that task   CmvReprocessAPIHook___action____gene_c8351b74fa   has status   PENDING
+2016-06-23 16:14:25,785 luigi-interface INFO     Done scheduling tasks
+2016-06-23 16:14:25,785 luigi-interface INFO     Running Worker with 1 processes
+2016-06-23 16:14:25,785 luigi.server    INFO     Starting pruning of task graph
+2016-06-23 16:14:25,785 luigi.server    INFO     Done pruning task graph
+2016-06-23 16:14:25,785 luigi-interface INFO     [pid 32962] Worker Worker(salt=731892540, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=ssawant, pid=32962) running   CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": true})
+2016-06-23 16:14:25,785 root            INFO     Reprocessing min15...
+2016-06-23 16:14:25,787 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:00:00, end_time = 2016-06-02 00:15:00
+2016-06-23 16:14:25,787 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-23 16:14:25,788 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:30:00, end_time = 2016-06-02 00:45:00
+2016-06-23 16:14:25,788 root            INFO     deleting all the targets...
+2016-06-23 16:14:25,789 root            INFO     Initializing task params: {}, CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 16:14:25,789 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 16:14:25,793 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 16:14:25,794 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 16:14:25,794 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 16:14:25,797 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 16:14:25,797 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 16:14:25,797 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 16:14:25,799 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 16:14:25,800 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 16:14:25,800 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 16:14:25,801 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 16:14:25,802 luigi-interface INFO     [pid 32962] Worker Worker(salt=731892540, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=ssawant, pid=32962) new requirements      CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": true})
+2016-06-23 16:14:25,803 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 16:14:25,803 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 16:14:25,805 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 16:14:25,805 root            INFO     start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-23 16:14:25,806 root            INFO     /delphi/staging/sessions/2016/06/02/00/15/_SUCCESS
+2016-06-23 16:14:25,808 luigi-interface WARNING  The SnakebiteHdfsClient failed to exists, using fallback class HdfsClientCdh3
+2016-06-23 16:14:28,414 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d   has status   PENDING
+2016-06-23 16:14:28,415 luigi-interface WARNING  Data for InputSessionFile(cube_time=2016-06-02T0015) does not exist (yet?). The task is an external data depedency, so it can not be run from this luigi process.
+2016-06-23 16:14:28,415 luigi-interface INFO     Informed scheduler that task   InputSessionFile_2016_06_02T0015_a87a896701   has status   PENDING
+2016-06-23 16:14:28,416 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 16:14:28,416 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 16:14:28,419 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 16:14:28,420 root            INFO     start_time = 2016-06-02 00:30:00, end_time = 2016-06-02 00:45:00
+2016-06-23 16:14:28,420 root            INFO     /delphi/staging/sessions/2016/06/02/00/30/_SUCCESS
+2016-06-23 16:14:28,422 luigi-interface WARNING  The SnakebiteHdfsClient failed to exists, using fallback class HdfsClientCdh3
+2016-06-23 16:14:29,939 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1   has status   PENDING
+2016-06-23 16:14:29,940 luigi-interface WARNING  Data for InputSessionFile(cube_time=2016-06-02T0030) does not exist (yet?). The task is an external data depedency, so it can not be run from this luigi process.
+2016-06-23 16:14:29,941 luigi-interface INFO     Informed scheduler that task   InputSessionFile_2016_06_02T0030_22696356b6   has status   PENDING
+2016-06-23 16:14:29,941 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 16:14:29,941 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 16:14:29,944 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 16:14:29,945 root            INFO     start_time = 2016-06-02 00:00:00, end_time = 2016-06-02 00:15:00
+2016-06-23 16:14:29,945 root            INFO     /delphi/staging/sessions/2016/06/02/00/00/_SUCCESS
+2016-06-23 16:14:29,947 luigi-interface WARNING  The SnakebiteHdfsClient failed to exists, using fallback class HdfsClientCdh3
+2016-06-23 16:14:31,415 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a   has status   PENDING
+2016-06-23 16:14:31,416 luigi-interface WARNING  Data for InputSessionFile(cube_time=2016-06-02T0000) does not exist (yet?). The task is an external data depedency, so it can not be run from this luigi process.
+2016-06-23 16:14:31,417 luigi-interface INFO     Informed scheduler that task   InputSessionFile_2016_06_02T0000_502d4b9942   has status   PENDING
+2016-06-23 16:14:31,417 luigi-interface INFO     Informed scheduler that task   CmvReprocessAPIHook___action____gene_c8351b74fa   has status   PENDING
+2016-06-23 16:14:31,417 luigi.server    INFO     Starting pruning of task graph
+2016-06-23 16:14:31,417 luigi.server    INFO     Done pruning task graph
+2016-06-23 16:14:31,456 luigi-interface INFO     Worker Worker(salt=731892540, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=ssawant, pid=32962) was stopped. Shutting down Keep-Alive thread
+2016-06-23 16:14:31,457 root            INFO     start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-23 16:14:31,457 root            INFO     start_time = 2016-06-02 00:30:00, end_time = 2016-06-02 00:45:00
+2016-06-23 16:14:31,457 root            INFO     start_time = 2016-06-02 00:00:00, end_time = 2016-06-02 00:15:00
+2016-06-23 16:14:31,461 luigi-interface INFO     
+===== Luigi Execution Summary =====
+
+Scheduled 8 tasks of which:
+* 8 were left pending, among these:
+    * 4 were missing external dependencies:
+        - 1 CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": true})
+        - 3 InputSessionFile(cube_time=2016-06-02T0000) ...
+    * 3 had missing external dependencies:
+        - 3 CmvMin15Generator(...)
+    * 1 were left pending because of unknown reason:
+        - 1 CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": true})
+
+Did not run any tasks
+This progress looks :| because there were missing external dependencies
+
+===== Luigi Execution Summary =====
+
+2016-06-23 16:14:31,461 root            INFO     start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-23 16:14:31,462 root            INFO     start_time = 2016-06-02 00:30:00, end_time = 2016-06-02 00:45:00
+2016-06-23 16:14:31,462 root            INFO     start_time = 2016-06-02 00:00:00, end_time = 2016-06-02 00:15:00
+2016-06-23 16:14:44,577 luigi-interface INFO     Informed scheduler that task   CmvReprocessAPIHook___action____gene_c8351b74fa   has status   PENDING
+2016-06-23 16:14:44,577 luigi-interface INFO     Done scheduling tasks
+2016-06-23 16:14:44,577 luigi-interface INFO     Running Worker with 1 processes
+2016-06-23 16:14:44,577 luigi.server    INFO     Starting pruning of task graph
+2016-06-23 16:14:44,577 luigi.server    INFO     Done pruning task graph
+2016-06-23 16:14:44,577 luigi-interface INFO     [pid 33028] Worker Worker(salt=317184975, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=ssawant, pid=33028) running   CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": true})
+2016-06-23 16:14:44,577 root            INFO     Reprocessing min15...
+2016-06-23 16:14:44,579 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:00:00, end_time = 2016-06-02 00:15:00
+2016-06-23 16:14:44,579 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-23 16:14:44,580 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:30:00, end_time = 2016-06-02 00:45:00
+2016-06-23 16:14:44,580 root            INFO     deleting all the targets...
+2016-06-23 16:14:44,580 root            INFO     Initializing task params: {}, CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 16:14:44,580 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 16:14:44,584 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 16:14:44,585 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 16:14:44,585 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 16:14:44,587 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 16:14:44,588 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 16:14:44,588 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 16:14:44,743 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 16:14:44,744 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 16:14:44,744 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 16:14:44,747 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 16:14:44,748 luigi-interface INFO     [pid 33028] Worker Worker(salt=317184975, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=ssawant, pid=33028) new requirements      CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": true})
+2016-06-23 16:14:44,749 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 16:14:44,749 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 16:14:44,752 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 16:14:44,752 root            INFO     start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-23 16:14:44,753 root            INFO     /delphi/staging/sessions/2016/06/02/00/15/_SUCCESS
+2016-06-23 16:14:44,755 luigi-interface WARNING  The SnakebiteHdfsClient failed to exists, using fallback class HdfsClientCdh3
+2016-06-23 16:14:46,490 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d   has status   PENDING
+2016-06-23 16:14:46,490 luigi-interface INFO     Informed scheduler that task   InputSessionFile_2016_06_02T0015_a87a896701   has status   DONE
+2016-06-23 16:14:46,490 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 16:14:46,490 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 16:14:46,494 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 16:14:46,494 root            INFO     start_time = 2016-06-02 00:30:00, end_time = 2016-06-02 00:45:00
+2016-06-23 16:14:46,495 root            INFO     /delphi/staging/sessions/2016/06/02/00/30/_SUCCESS
+2016-06-23 16:14:46,496 luigi-interface WARNING  The SnakebiteHdfsClient failed to exists, using fallback class HdfsClientCdh3
+2016-06-23 16:14:48,102 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1   has status   PENDING
+2016-06-23 16:14:48,103 luigi-interface INFO     Informed scheduler that task   InputSessionFile_2016_06_02T0030_22696356b6   has status   DONE
+2016-06-23 16:14:48,103 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 16:14:48,103 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 16:14:48,106 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 16:14:48,107 root            INFO     start_time = 2016-06-02 00:00:00, end_time = 2016-06-02 00:15:00
+2016-06-23 16:14:48,108 root            INFO     /delphi/staging/sessions/2016/06/02/00/00/_SUCCESS
+2016-06-23 16:14:48,109 luigi-interface WARNING  The SnakebiteHdfsClient failed to exists, using fallback class HdfsClientCdh3
+2016-06-23 16:14:49,914 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a   has status   PENDING
+2016-06-23 16:14:49,915 luigi-interface INFO     Informed scheduler that task   InputSessionFile_2016_06_02T0000_502d4b9942   has status   DONE
+2016-06-23 16:14:49,915 luigi-interface INFO     Informed scheduler that task   CmvReprocessAPIHook___action____gene_c8351b74fa   has status   PENDING
+2016-06-23 16:14:49,915 luigi.server    INFO     Starting pruning of task graph
+2016-06-23 16:14:49,915 luigi.server    INFO     Done pruning task graph
+2016-06-23 16:14:49,915 luigi-interface INFO     [pid 33028] Worker Worker(salt=317184975, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=ssawant, pid=33028) running   CmvMin15Generator(start_time=2016-06-02T0015, end_time=2016-06-02T0030)
+2016-06-23 16:14:49,915 root            INFO     start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-23 16:14:49,916 root            INFO     /delphi/staging/sessions/2016/06/02/00/15/_SUCCESS
+2016-06-23 16:14:49,917 luigi-interface WARNING  The SnakebiteHdfsClient failed to exists, using fallback class HdfsClientCdh3
+2016-06-23 16:14:51,617 root            INFO     Connecting to db: vstreams at host: slavedb-lb01.services.ooyala.net, port: 3306, user: helios
+2016-06-23 16:14:51,920 root            INFO     start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-23 16:14:51,921 root            INFO     /delphi/staging/sessions/2016/06/02/00/15/_SUCCESS
+2016-06-23 16:14:52,060 root            INFO     Submitting app server config to url: http://10.11.66.162:9000/apps/min15gen/jobs?timeout=100&sync=false&type=min15
+2016-06-23 16:14:52,085 requests.packages.urllib3.connectionpool INFO     Starting new HTTP connection (1): 10.11.66.162
+2016-06-23 16:14:52,254 root            INFO     Appsvr response: {u'status': u'success', u'payload': {u'jobStatus': u'Submitted', u'jobId': u'7ad0966e-7f8a-4708-96d5-1c32eae72ebe'}, u'error': None}
+2016-06-23 16:14:52,255 root            INFO     Started polling app server...
+2016-06-23 16:14:52,256 requests.packages.urllib3.connectionpool INFO     Starting new HTTP connection (1): 10.11.66.162
+2016-06-23 16:14:55,894 luigi-interface INFO     Worker Worker(salt=317184975, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=ssawant, pid=33028) was stopped. Shutting down Keep-Alive thread
+2016-06-23 23:15:26,225 requests.packages.urllib3.connectionpool INFO     Starting new HTTP connection (1): localhost
+2016-06-23 23:15:26,227 luigi-interface INFO     Informed scheduler that task   CmvReprocessAPIHook___action____gene_c8351b74fa   has status   PENDING
+2016-06-23 23:15:26,227 luigi-interface INFO     Done scheduling tasks
+2016-06-23 23:15:26,227 luigi-interface INFO     Running Worker with 1 processes
+2016-06-23 23:15:26,233 luigi-interface INFO     [pid 33118] Worker Worker(salt=108033610, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33118, sudo_user=ssawant) running   CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": true})
+2016-06-23 23:15:26,233 root            INFO     Reprocessing min15...
+2016-06-23 23:15:26,234 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:00:00, end_time = 2016-06-02 00:15:00
+2016-06-23 23:15:26,235 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-23 23:15:26,236 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:30:00, end_time = 2016-06-02 00:45:00
+2016-06-23 23:15:26,236 root            INFO     deleting all the targets...
+2016-06-23 23:15:26,236 root            INFO     Initializing task params: {}, CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 23:15:26,236 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 23:15:26,240 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 23:15:26,241 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 23:15:26,241 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 23:15:26,243 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 23:15:26,244 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 23:15:26,244 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 23:15:26,246 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 23:15:26,246 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 23:15:26,246 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 23:15:26,248 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 23:15:26,248 luigi-interface INFO     [pid 33118] Worker Worker(salt=108033610, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33118, sudo_user=ssawant) new requirements      CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": true})
+2016-06-23 23:15:26,250 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 23:15:26,250 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 23:15:26,253 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 23:15:26,253 root            INFO     start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-23 23:15:26,254 root            INFO     /delphi/staging/sessions/2016/06/02/00/15/_SUCCESS
+2016-06-23 23:15:26,256 luigi-interface WARNING  The SnakebiteHdfsClient failed to exists, using fallback class HdfsClientCdh3
+2016-06-23 23:15:27,822 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d   has status   PENDING
+2016-06-23 23:15:27,825 luigi-interface INFO     Informed scheduler that task   InputSessionFile_2016_06_02T0015_a87a896701   has status   DONE
+2016-06-23 23:15:27,825 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 23:15:27,825 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 23:15:27,828 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 23:15:27,829 root            INFO     start_time = 2016-06-02 00:30:00, end_time = 2016-06-02 00:45:00
+2016-06-23 23:15:27,830 root            INFO     /delphi/staging/sessions/2016/06/02/00/30/_SUCCESS
+2016-06-23 23:15:27,831 luigi-interface WARNING  The SnakebiteHdfsClient failed to exists, using fallback class HdfsClientCdh3
+2016-06-23 23:15:29,444 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1   has status   PENDING
+2016-06-23 23:15:29,446 luigi-interface INFO     Informed scheduler that task   InputSessionFile_2016_06_02T0030_22696356b6   has status   DONE
+2016-06-23 23:15:29,446 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 23:15:29,447 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 23:15:29,449 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 23:15:29,450 root            INFO     start_time = 2016-06-02 00:00:00, end_time = 2016-06-02 00:15:00
+2016-06-23 23:15:29,451 root            INFO     /delphi/staging/sessions/2016/06/02/00/00/_SUCCESS
+2016-06-23 23:15:29,452 luigi-interface WARNING  The SnakebiteHdfsClient failed to exists, using fallback class HdfsClientCdh3
+2016-06-23 23:15:30,972 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a   has status   PENDING
+2016-06-23 23:15:30,975 luigi-interface INFO     Informed scheduler that task   InputSessionFile_2016_06_02T0000_502d4b9942   has status   DONE
+2016-06-23 23:15:30,978 luigi-interface INFO     Informed scheduler that task   CmvReprocessAPIHook___action____gene_c8351b74fa   has status   PENDING
+2016-06-23 23:15:30,980 luigi-interface INFO     [pid 33118] Worker Worker(salt=108033610, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33118, sudo_user=ssawant) running   CmvMin15Generator(start_time=2016-06-02T0015, end_time=2016-06-02T0030)
+2016-06-23 23:15:30,980 root            INFO     start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-23 23:15:30,981 root            INFO     /delphi/staging/sessions/2016/06/02/00/15/_SUCCESS
+2016-06-23 23:15:30,982 luigi-interface WARNING  The SnakebiteHdfsClient failed to exists, using fallback class HdfsClientCdh3
+2016-06-23 23:15:32,499 root            INFO     Connecting to db: vstreams at host: slavedb-lb01.services.ooyala.net, port: 3306, user: helios
+2016-06-23 23:15:32,708 root            INFO     start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-23 23:15:32,709 root            INFO     /delphi/staging/sessions/2016/06/02/00/15/_SUCCESS
+2016-06-23 23:15:32,841 root            INFO     Submitting app server config to url: http://10.11.66.162:9000/apps/min15gen/jobs?timeout=100&sync=false&type=min15
+2016-06-23 23:15:32,859 requests.packages.urllib3.connectionpool INFO     Starting new HTTP connection (1): 10.11.66.162
+2016-06-23 23:15:33,023 root            INFO     Appsvr response: {u'status': u'success', u'payload': {u'jobStatus': u'Submitted', u'jobId': u'e3d024f3-080e-4d11-8888-aadc6ac6da72'}, u'error': None}
+2016-06-23 23:15:33,024 root            INFO     Started polling app server...
+2016-06-23 23:15:33,026 requests.packages.urllib3.connectionpool INFO     Starting new HTTP connection (1): 10.11.66.162
+2016-06-23 23:16:03,138 requests.packages.urllib3.connectionpool INFO     Starting new HTTP connection (1): 10.11.66.162
+2016-06-23 23:16:03,229 dogstatsd       INFO     Error submitting packet, will try refreshing the socket
+2016-06-23 23:16:03,244 dogstatsd       INFO     Error submitting packet, will try refreshing the socket
+2016-06-23 23:16:03,245 dogstatsd       INFO     Error submitting packet, will try refreshing the socket
+2016-06-23 23:16:03,245 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 23:16:03,245 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 23:16:03,249 root            INFO     Updated Target table min15
+2016-06-23 23:16:03,249 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 23:16:03,252 luigi-interface INFO     [pid 33118] Worker Worker(salt=108033610, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33118, sudo_user=ssawant) done      CmvMin15Generator(start_time=2016-06-02T0015, end_time=2016-06-02T0030)
+2016-06-23 23:16:03,255 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d   has status   DONE
+2016-06-23 23:16:03,258 luigi-interface INFO     [pid 33118] Worker Worker(salt=108033610, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33118, sudo_user=ssawant) running   CmvMin15Generator(start_time=2016-06-02T0030, end_time=2016-06-02T0045)
+2016-06-23 23:16:03,258 root            INFO     start_time = 2016-06-02 00:30:00, end_time = 2016-06-02 00:45:00
+2016-06-23 23:16:03,258 root            INFO     /delphi/staging/sessions/2016/06/02/00/30/_SUCCESS
+2016-06-23 23:16:03,259 luigi-interface WARNING  The SnakebiteHdfsClient failed to exists, using fallback class HdfsClientCdh3
+2016-06-23 23:16:04,818 root            INFO     Connecting to db: vstreams at host: slavedb-lb01.services.ooyala.net, port: 3306, user: helios
+2016-06-23 23:16:05,117 root            INFO     start_time = 2016-06-02 00:30:00, end_time = 2016-06-02 00:45:00
+2016-06-23 23:16:05,118 root            INFO     /delphi/staging/sessions/2016/06/02/00/30/_SUCCESS
+2016-06-23 23:16:05,257 root            INFO     Submitting app server config to url: http://10.11.66.162:9000/apps/min15gen/jobs?timeout=100&sync=false&type=min15
+2016-06-23 23:16:05,270 requests.packages.urllib3.connectionpool INFO     Starting new HTTP connection (1): 10.11.66.162
+2016-06-23 23:16:05,498 root            INFO     Appsvr response: {u'status': u'success', u'payload': {u'jobStatus': u'Submitted', u'jobId': u'0ae2c40c-89df-410b-9c9b-2c971f7f601c'}, u'error': None}
+2016-06-23 23:16:05,498 root            INFO     Started polling app server...
+2016-06-23 23:16:05,500 requests.packages.urllib3.connectionpool INFO     Starting new HTTP connection (1): 10.11.66.162
+2016-06-23 23:16:05,663 dogstatsd       INFO     Error submitting packet, will try refreshing the socket
+2016-06-23 23:16:35,686 requests.packages.urllib3.connectionpool INFO     Starting new HTTP connection (1): 10.11.66.162
+2016-06-23 23:16:35,825 dogstatsd       INFO     Error submitting packet, will try refreshing the socket
+2016-06-23 23:16:35,840 dogstatsd       INFO     Error submitting packet, will try refreshing the socket
+2016-06-23 23:16:35,841 dogstatsd       INFO     Error submitting packet, will try refreshing the socket
+2016-06-23 23:16:35,841 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 23:16:35,841 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 23:16:35,848 root            INFO     Updated Target table min15
+2016-06-23 23:16:35,848 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 23:16:35,851 luigi-interface INFO     [pid 33118] Worker Worker(salt=108033610, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33118, sudo_user=ssawant) done      CmvMin15Generator(start_time=2016-06-02T0030, end_time=2016-06-02T0045)
+2016-06-23 23:16:35,855 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1   has status   DONE
+2016-06-23 23:16:35,857 luigi-interface INFO     [pid 33118] Worker Worker(salt=108033610, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33118, sudo_user=ssawant) running   CmvMin15Generator(start_time=2016-06-02T0000, end_time=2016-06-02T0015)
+2016-06-23 23:16:35,857 root            INFO     start_time = 2016-06-02 00:00:00, end_time = 2016-06-02 00:15:00
+2016-06-23 23:16:35,857 root            INFO     /delphi/staging/sessions/2016/06/02/00/00/_SUCCESS
+2016-06-23 23:16:35,859 luigi-interface WARNING  The SnakebiteHdfsClient failed to exists, using fallback class HdfsClientCdh3
+2016-06-23 23:16:37,322 root            INFO     Connecting to db: vstreams at host: slavedb-lb01.services.ooyala.net, port: 3306, user: helios
+2016-06-23 23:16:37,485 root            INFO     start_time = 2016-06-02 00:00:00, end_time = 2016-06-02 00:15:00
+2016-06-23 23:16:37,486 root            INFO     /delphi/staging/sessions/2016/06/02/00/00/_SUCCESS
+2016-06-23 23:16:37,612 root            INFO     Submitting app server config to url: http://10.11.66.162:9000/apps/min15gen/jobs?timeout=100&sync=false&type=min15
+2016-06-23 23:16:37,628 requests.packages.urllib3.connectionpool INFO     Starting new HTTP connection (1): 10.11.66.162
+2016-06-23 23:16:37,851 root            INFO     Appsvr response: {u'status': u'success', u'payload': {u'jobStatus': u'Submitted', u'jobId': u'd69006f8-363b-471e-ad05-e5d861240b30'}, u'error': None}
+2016-06-23 23:16:37,851 root            INFO     Started polling app server...
+2016-06-23 23:16:37,853 requests.packages.urllib3.connectionpool INFO     Starting new HTTP connection (1): 10.11.66.162
+2016-06-23 23:16:37,932 dogstatsd       INFO     Error submitting packet, will try refreshing the socket
+2016-06-23 23:17:07,951 requests.packages.urllib3.connectionpool INFO     Starting new HTTP connection (1): 10.11.66.162
+2016-06-23 23:17:08,101 dogstatsd       INFO     Error submitting packet, will try refreshing the socket
+2016-06-23 23:17:08,116 dogstatsd       INFO     Error submitting packet, will try refreshing the socket
+2016-06-23 23:17:08,117 dogstatsd       INFO     Error submitting packet, will try refreshing the socket
+2016-06-23 23:17:08,117 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 23:17:08,118 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 23:17:08,121 root            INFO     Updated Target table min15
+2016-06-23 23:17:08,122 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 23:17:08,125 luigi-interface INFO     [pid 33118] Worker Worker(salt=108033610, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33118, sudo_user=ssawant) done      CmvMin15Generator(start_time=2016-06-02T0000, end_time=2016-06-02T0015)
+2016-06-23 23:17:08,128 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a   has status   DONE
+2016-06-23 23:17:08,130 luigi-interface INFO     [pid 33118] Worker Worker(salt=108033610, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33118, sudo_user=ssawant) running   CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": true})
+2016-06-23 23:17:08,131 root            INFO     Reprocessing min15...
+2016-06-23 23:17:08,131 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:00:00, end_time = 2016-06-02 00:15:00
+2016-06-23 23:17:08,131 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-23 23:17:08,131 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:30:00, end_time = 2016-06-02 00:45:00
+2016-06-23 23:17:08,132 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 23:17:08,132 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 23:17:08,135 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 23:17:08,135 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 23:17:08,135 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 23:17:08,138 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 23:17:08,138 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 23:17:08,138 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-23 23:17:08,140 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 23:17:08,141 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-23 23:17:08,141 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-23 23:17:08,141 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-23 23:17:08,141 luigi-interface INFO     [pid 33118] Worker Worker(salt=108033610, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33118, sudo_user=ssawant) done      CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": true})
+2016-06-23 23:17:08,144 luigi-interface INFO     Informed scheduler that task   CmvReprocessAPIHook___action____gene_c8351b74fa   has status   DONE
+2016-06-23 23:17:08,186 luigi-interface INFO     Worker Worker(salt=108033610, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33118, sudo_user=ssawant) was stopped. Shutting down Keep-Alive thread
+2016-06-23 23:17:08,189 luigi-interface INFO     
+===== Luigi Execution Summary =====
+
+Scheduled 7 tasks of which:
+* 3 present dependencies were encountered:
+    - 3 InputSessionFile(cube_time=2016-06-02T0000) ...
+* 4 ran successfully:
+    - 3 CmvMin15Generator(...)
+    - 1 CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": true})
+
+This progress looks :) because there were no failed tasks or missing external dependencies
+
+===== Luigi Execution Summary =====
+
+2016-06-24 00:08:36,774 requests.packages.urllib3.connectionpool INFO     Starting new HTTP connection (1): localhost
+2016-06-24 00:08:36,776 luigi-interface INFO     Informed scheduler that task   CmvReprocessAPIHook___action____gene_e4dc7f92fd   has status   PENDING
+2016-06-24 00:08:36,776 luigi-interface INFO     Done scheduling tasks
+2016-06-24 00:08:36,776 luigi-interface INFO     Running Worker with 1 processes
+2016-06-24 00:08:36,781 luigi-interface INFO     [pid 33390] Worker Worker(salt=344922616, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33390, sudo_user=ssawant) running   CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": false})
+2016-06-24 00:08:36,781 root            INFO     Reprocessing min15...
+2016-06-24 00:08:36,782 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:00:00, end_time = 2016-06-02 00:15:00
+2016-06-24 00:08:36,783 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-24 00:08:36,783 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:30:00, end_time = 2016-06-02 00:45:00
+2016-06-24 00:08:36,784 root            INFO     Initializing task params: {}, CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-24 00:08:36,784 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-24 00:08:36,787 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-24 00:08:36,788 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-24 00:08:36,788 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-24 00:08:36,791 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-24 00:08:36,791 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-24 00:08:36,791 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-24 00:08:36,793 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-24 00:08:36,794 luigi-interface ERROR    [pid 33390] Worker Worker(salt=344922616, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33390, sudo_user=ssawant) failed    CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": false})
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/luigi/worker.py", line 175, in run
+    new_deps = self._run_get_new_deps()
+  File "/Library/Python/2.7/site-packages/luigi/worker.py", line 125, in _run_get_new_deps
+    requires = six.next(task_gen)
+  File "/Library/Python/2.7/site-packages/wario-1.0-py2.7.egg/wario/reprocess_datacube.py", line 187, in run
+    self.delete_targets(reprocess_upstream_tasks)
+  File "/Library/Python/2.7/site-packages/wario-1.0-py2.7.egg/wario/reprocess_datacube.py", line 175, in delete_targets
+    tasks[:] = [task for task in tasks if not task.output().exists()]  # a list result can be avoided?
+TypeError: 'set' object does not support item assignment
+2016-06-24 00:08:36,795 luigi-interface INFO     Skipping error email. Set `error-email` in the `core` section of the luigi config file or override `owner_email`in the task to receive error emails.
+2016-06-24 00:08:36,798 luigi-interface INFO     Informed scheduler that task   CmvReprocessAPIHook___action____gene_e4dc7f92fd   has status   FAILED
+2016-06-24 00:08:36,808 luigi-interface INFO     Worker Worker(salt=344922616, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33390, sudo_user=ssawant) was stopped. Shutting down Keep-Alive thread
+2016-06-24 00:08:36,810 luigi-interface INFO     
+===== Luigi Execution Summary =====
+
+Scheduled 1 tasks of which:
+* 1 failed:
+    - 1 CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": false})
+
+This progress looks :( because there were failed tasks
+
+===== Luigi Execution Summary =====
+
+2016-06-24 01:09:16,425 requests.packages.urllib3.connectionpool INFO     Starting new HTTP connection (1): localhost
+2016-06-24 01:09:16,427 luigi-interface INFO     Informed scheduler that task   CmvReprocessAPIHook___action____gene_e4dc7f92fd   has status   PENDING
+2016-06-24 01:09:16,427 luigi-interface INFO     Done scheduling tasks
+2016-06-24 01:09:16,427 luigi-interface INFO     Running Worker with 1 processes
+2016-06-24 01:09:16,432 luigi-interface INFO     [pid 33952] Worker Worker(salt=038322763, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33952, sudo_user=ssawant) running   CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": false})
+2016-06-24 01:09:16,432 root            INFO     Reprocessing min15...
+2016-06-24 01:09:16,434 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:00:00, end_time = 2016-06-02 00:15:00
+2016-06-24 01:09:16,434 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:15:00, end_time = 2016-06-02 00:30:00
+2016-06-24 01:09:16,435 root            INFO     CmvMin15Generator task params. start_time = 2016-06-02 00:30:00, end_time = 2016-06-02 00:45:00
+2016-06-24 01:09:16,435 root            INFO     Initializing task params: {}, CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-24 01:09:16,435 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-24 01:09:16,439 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0030_2016_06_02T0015_bb7f55ad0d
+2016-06-24 01:09:16,439 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-24 01:09:16,440 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-24 01:09:16,442 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0045_2016_06_02T0030_625f9298a1
+2016-06-24 01:09:16,443 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-24 01:09:16,443 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-24 01:09:16,445 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_02T0015_2016_06_02T0000_111cee7d9a
+2016-06-24 01:09:16,445 root            INFO     deleting all the targets...
+2016-06-24 01:09:16,446 luigi-interface INFO     [pid 33952] Worker Worker(salt=038322763, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33952, sudo_user=ssawant) done      CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": false})
+2016-06-24 01:09:16,449 luigi-interface INFO     Informed scheduler that task   CmvReprocessAPIHook___action____gene_e4dc7f92fd   has status   DONE
+2016-06-24 01:09:16,458 luigi-interface INFO     Worker Worker(salt=038322763, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33952, sudo_user=ssawant) was stopped. Shutting down Keep-Alive thread
+2016-06-24 01:09:16,460 luigi-interface INFO     
+===== Luigi Execution Summary =====
+
+Scheduled 1 tasks of which:
+* 1 ran successfully:
+    - 1 CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-02T0000", "cube": "min15", "end_time": "2016-06-02T0030", "delete_all": false})
+
+This progress looks :) because there were no failed tasks or missing external dependencies
+
+===== Luigi Execution Summary =====
+
+2016-06-24 01:10:08,052 requests.packages.urllib3.connectionpool INFO     Starting new HTTP connection (1): localhost
+2016-06-24 01:10:08,054 luigi-interface INFO     Informed scheduler that task   CmvReprocessAPIHook___action____gene_f68ec405f6   has status   PENDING
+2016-06-24 01:10:08,054 luigi-interface INFO     Done scheduling tasks
+2016-06-24 01:10:08,054 luigi-interface INFO     Running Worker with 1 processes
+2016-06-24 01:10:08,059 luigi-interface INFO     [pid 33961] Worker Worker(salt=204760171, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33961, sudo_user=ssawant) running   CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-03T0000", "cube": "min15", "end_time": "2016-06-03T0030", "delete_all": false})
+2016-06-24 01:10:08,059 root            INFO     Reprocessing min15...
+2016-06-24 01:10:08,061 root            INFO     CmvMin15Generator task params. start_time = 2016-06-03 00:00:00, end_time = 2016-06-03 00:15:00
+2016-06-24 01:10:08,061 root            INFO     CmvMin15Generator task params. start_time = 2016-06-03 00:15:00, end_time = 2016-06-03 00:30:00
+2016-06-24 01:10:08,062 root            INFO     CmvMin15Generator task params. start_time = 2016-06-03 00:30:00, end_time = 2016-06-03 00:45:00
+2016-06-24 01:10:08,062 root            INFO     Initializing task params: {}, CmvMin15Generator_2016_06_03T0030_2016_06_03T0015_fb5eaf9fa3
+2016-06-24 01:10:08,062 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-24 01:10:08,065 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_03T0030_2016_06_03T0015_fb5eaf9fa3
+2016-06-24 01:10:08,066 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_03T0015_2016_06_03T0000_dda14d3e70
+2016-06-24 01:10:08,066 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-24 01:10:08,068 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_03T0015_2016_06_03T0000_dda14d3e70
+2016-06-24 01:10:08,069 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_03T0045_2016_06_03T0030_82878a3605
+2016-06-24 01:10:08,069 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-24 01:10:08,071 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_03T0045_2016_06_03T0030_82878a3605
+2016-06-24 01:10:08,072 root            INFO     deleting all the targets...
+2016-06-24 01:10:08,072 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_03T0030_2016_06_03T0015_fb5eaf9fa3
+2016-06-24 01:10:08,072 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-24 01:10:08,074 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_03T0030_2016_06_03T0015_fb5eaf9fa3
+2016-06-24 01:10:08,075 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_03T0015_2016_06_03T0000_dda14d3e70
+2016-06-24 01:10:08,075 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-24 01:10:08,077 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_03T0015_2016_06_03T0000_dda14d3e70
+2016-06-24 01:10:08,084 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_03T0045_2016_06_03T0030_82878a3605
+2016-06-24 01:10:08,084 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-24 01:10:08,087 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_03T0045_2016_06_03T0030_82878a3605
+2016-06-24 01:10:08,088 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_03T0030_2016_06_03T0015_fb5eaf9fa3
+2016-06-24 01:10:08,088 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-24 01:10:08,091 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_03T0030_2016_06_03T0015_fb5eaf9fa3
+2016-06-24 01:10:08,091 luigi-interface INFO     [pid 33961] Worker Worker(salt=204760171, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33961, sudo_user=ssawant) new requirements      CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-03T0000", "cube": "min15", "end_time": "2016-06-03T0030", "delete_all": false})
+2016-06-24 01:10:08,093 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_03T0030_2016_06_03T0015_fb5eaf9fa3
+2016-06-24 01:10:08,093 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-24 01:10:08,095 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_03T0030_2016_06_03T0015_fb5eaf9fa3
+2016-06-24 01:10:08,095 root            INFO     start_time = 2016-06-03 00:15:00, end_time = 2016-06-03 00:30:00
+2016-06-24 01:10:08,096 root            INFO     /delphi/staging/sessions/2016/06/03/00/15/_SUCCESS
+2016-06-24 01:10:08,099 luigi-interface WARNING  The SnakebiteHdfsClient failed to exists, using fallback class HdfsClientCdh3
+2016-06-24 01:10:12,965 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_03T0030_2016_06_03T0015_fb5eaf9fa3   has status   PENDING
+2016-06-24 01:10:12,968 luigi-interface INFO     Informed scheduler that task   InputSessionFile_2016_06_03T0015_6ca05bcc02   has status   DONE
+2016-06-24 01:10:12,968 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_03T0015_2016_06_03T0000_dda14d3e70
+2016-06-24 01:10:12,968 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-24 01:10:12,971 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_03T0015_2016_06_03T0000_dda14d3e70
+2016-06-24 01:10:12,972 root            INFO     start_time = 2016-06-03 00:00:00, end_time = 2016-06-03 00:15:00
+2016-06-24 01:10:12,972 root            INFO     /delphi/staging/sessions/2016/06/03/00/00/_SUCCESS
+2016-06-24 01:10:12,973 luigi-interface WARNING  The SnakebiteHdfsClient failed to exists, using fallback class HdfsClientCdh3
+2016-06-24 01:10:14,517 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_03T0015_2016_06_03T0000_dda14d3e70   has status   PENDING
+2016-06-24 01:10:14,520 luigi-interface INFO     Informed scheduler that task   InputSessionFile_2016_06_03T0000_185efdd4f2   has status   DONE
+2016-06-24 01:10:14,520 root            INFO     Initializing task params: {'table': 'min15', 'host': '192.168.99.100:3306', 'password': '', 'user': 'root', 'database': 'wario'}, CmvMin15Generator_2016_06_03T0045_2016_06_03T0030_82878a3605
+2016-06-24 01:10:14,520 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-24 01:10:14,523 root            INFO     Checking exists for table: min15, and target_id: CmvMin15Generator_2016_06_03T0045_2016_06_03T0030_82878a3605
+2016-06-24 01:10:14,524 root            INFO     start_time = 2016-06-03 00:30:00, end_time = 2016-06-03 00:45:00
+2016-06-24 01:10:14,524 root            INFO     /delphi/staging/sessions/2016/06/03/00/30/_SUCCESS
+2016-06-24 01:10:14,526 luigi-interface WARNING  The SnakebiteHdfsClient failed to exists, using fallback class HdfsClientCdh3
+2016-06-24 01:10:16,072 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_03T0045_2016_06_03T0030_82878a3605   has status   PENDING
+2016-06-24 01:10:16,075 luigi-interface INFO     Informed scheduler that task   InputSessionFile_2016_06_03T0030_f0e94511be   has status   DONE
+2016-06-24 01:10:16,078 luigi-interface INFO     Informed scheduler that task   CmvReprocessAPIHook___action____gene_f68ec405f6   has status   PENDING
+2016-06-24 01:10:16,080 luigi-interface INFO     [pid 33961] Worker Worker(salt=204760171, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33961, sudo_user=ssawant) running   CmvMin15Generator(start_time=2016-06-03T0015, end_time=2016-06-03T0030)
+2016-06-24 01:10:16,081 root            INFO     start_time = 2016-06-03 00:15:00, end_time = 2016-06-03 00:30:00
+2016-06-24 01:10:16,081 root            INFO     /delphi/staging/sessions/2016/06/03/00/15/_SUCCESS
+2016-06-24 01:10:16,082 luigi-interface WARNING  The SnakebiteHdfsClient failed to exists, using fallback class HdfsClientCdh3
+2016-06-24 01:10:19,914 root            INFO     Connecting to db: vstreams at host: slavedb-lb01.services.ooyala.net, port: 3306, user: helios
+2016-06-24 01:10:20,541 root            INFO     start_time = 2016-06-03 00:15:00, end_time = 2016-06-03 00:30:00
+2016-06-24 01:10:20,542 root            INFO     /delphi/staging/sessions/2016/06/03/00/15/_SUCCESS
+2016-06-24 01:10:20,672 root            INFO     Submitting app server config to url: http://10.11.66.162:9000/apps/min15gen/jobs?timeout=100&sync=false&type=min15
+2016-06-24 01:10:20,687 requests.packages.urllib3.connectionpool INFO     Starting new HTTP connection (1): 10.11.66.162
+2016-06-24 01:10:20,744 luigi-interface ERROR    [pid 33961] Worker Worker(salt=204760171, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33961, sudo_user=ssawant) failed    CmvMin15Generator(start_time=2016-06-03T0015, end_time=2016-06-03T0030)
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/luigi/worker.py", line 175, in run
+    new_deps = self._run_get_new_deps()
+  File "/Library/Python/2.7/site-packages/luigi/worker.py", line 117, in _run_get_new_deps
+    task_gen = self.task.run()
+  File "/Library/Python/2.7/site-packages/wario-1.0-py2.7.egg/wario/min15_generator.py", line 73, in run
+    rslt_json = CmvLib.submit_config_to_appserver(config_json, appserver_jobsubmit_url)
+  File "/Library/Python/2.7/site-packages/wario-1.0-py2.7.egg/wario/lib/cmvlib.py", line 108, in submit_config_to_appserver
+    r = requests.post(appserver_url, json.dumps(config_json))
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 111, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 57, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 475, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 585, in send
+    r = adapter.send(request, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/adapters.py", line 467, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPConnectionPool(host='10.11.66.162', port=9000): Max retries exceeded with url: /apps/min15gen/jobs?timeout=100&sync=false&type=min15 (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x10e60e250>: Failed to establish a new connection: [Errno 61] Connection refused',))
+2016-06-24 01:10:20,748 luigi-interface INFO     Skipping error email. Set `error-email` in the `core` section of the luigi config file or override `owner_email`in the task to receive error emails.
+2016-06-24 01:10:20,752 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_03T0030_2016_06_03T0015_fb5eaf9fa3   has status   FAILED
+2016-06-24 01:10:20,755 luigi-interface INFO     [pid 33961] Worker Worker(salt=204760171, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33961, sudo_user=ssawant) running   CmvMin15Generator(start_time=2016-06-03T0000, end_time=2016-06-03T0015)
+2016-06-24 01:10:20,755 root            INFO     start_time = 2016-06-03 00:00:00, end_time = 2016-06-03 00:15:00
+2016-06-24 01:10:20,755 root            INFO     /delphi/staging/sessions/2016/06/03/00/00/_SUCCESS
+2016-06-24 01:10:20,756 luigi-interface WARNING  The SnakebiteHdfsClient failed to exists, using fallback class HdfsClientCdh3
+2016-06-24 01:10:22,222 root            INFO     Connecting to db: vstreams at host: slavedb-lb01.services.ooyala.net, port: 3306, user: helios
+2016-06-24 01:10:22,391 root            INFO     start_time = 2016-06-03 00:00:00, end_time = 2016-06-03 00:15:00
+2016-06-24 01:10:22,392 root            INFO     /delphi/staging/sessions/2016/06/03/00/00/_SUCCESS
+2016-06-24 01:10:22,518 root            INFO     Submitting app server config to url: http://10.11.66.162:9000/apps/min15gen/jobs?timeout=100&sync=false&type=min15
+2016-06-24 01:10:22,534 requests.packages.urllib3.connectionpool INFO     Starting new HTTP connection (1): 10.11.66.162
+2016-06-24 01:10:22,625 luigi-interface ERROR    [pid 33961] Worker Worker(salt=204760171, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33961, sudo_user=ssawant) failed    CmvMin15Generator(start_time=2016-06-03T0000, end_time=2016-06-03T0015)
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/luigi/worker.py", line 175, in run
+    new_deps = self._run_get_new_deps()
+  File "/Library/Python/2.7/site-packages/luigi/worker.py", line 117, in _run_get_new_deps
+    task_gen = self.task.run()
+  File "/Library/Python/2.7/site-packages/wario-1.0-py2.7.egg/wario/min15_generator.py", line 73, in run
+    rslt_json = CmvLib.submit_config_to_appserver(config_json, appserver_jobsubmit_url)
+  File "/Library/Python/2.7/site-packages/wario-1.0-py2.7.egg/wario/lib/cmvlib.py", line 108, in submit_config_to_appserver
+    r = requests.post(appserver_url, json.dumps(config_json))
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 111, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 57, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 475, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 585, in send
+    r = adapter.send(request, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/adapters.py", line 467, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPConnectionPool(host='10.11.66.162', port=9000): Max retries exceeded with url: /apps/min15gen/jobs?timeout=100&sync=false&type=min15 (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x10e788610>: Failed to establish a new connection: [Errno 61] Connection refused',))
+2016-06-24 01:10:22,629 luigi-interface INFO     Skipping error email. Set `error-email` in the `core` section of the luigi config file or override `owner_email`in the task to receive error emails.
+2016-06-24 01:10:22,633 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_03T0015_2016_06_03T0000_dda14d3e70   has status   FAILED
+2016-06-24 01:10:22,635 luigi-interface INFO     [pid 33961] Worker Worker(salt=204760171, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33961, sudo_user=ssawant) running   CmvMin15Generator(start_time=2016-06-03T0030, end_time=2016-06-03T0045)
+2016-06-24 01:10:22,635 root            INFO     start_time = 2016-06-03 00:30:00, end_time = 2016-06-03 00:45:00
+2016-06-24 01:10:22,636 root            INFO     /delphi/staging/sessions/2016/06/03/00/30/_SUCCESS
+2016-06-24 01:10:22,637 luigi-interface WARNING  The SnakebiteHdfsClient failed to exists, using fallback class HdfsClientCdh3
+2016-06-24 01:10:24,163 root            INFO     Connecting to db: vstreams at host: slavedb-lb01.services.ooyala.net, port: 3306, user: helios
+2016-06-24 01:10:24,328 root            INFO     start_time = 2016-06-03 00:30:00, end_time = 2016-06-03 00:45:00
+2016-06-24 01:10:24,328 root            INFO     /delphi/staging/sessions/2016/06/03/00/30/_SUCCESS
+2016-06-24 01:10:24,462 root            INFO     Submitting app server config to url: http://10.11.66.162:9000/apps/min15gen/jobs?timeout=100&sync=false&type=min15
+2016-06-24 01:10:24,478 requests.packages.urllib3.connectionpool INFO     Starting new HTTP connection (1): 10.11.66.162
+2016-06-24 01:10:24,511 luigi-interface ERROR    [pid 33961] Worker Worker(salt=204760171, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33961, sudo_user=ssawant) failed    CmvMin15Generator(start_time=2016-06-03T0030, end_time=2016-06-03T0045)
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/luigi/worker.py", line 175, in run
+    new_deps = self._run_get_new_deps()
+  File "/Library/Python/2.7/site-packages/luigi/worker.py", line 117, in _run_get_new_deps
+    task_gen = self.task.run()
+  File "/Library/Python/2.7/site-packages/wario-1.0-py2.7.egg/wario/min15_generator.py", line 73, in run
+    rslt_json = CmvLib.submit_config_to_appserver(config_json, appserver_jobsubmit_url)
+  File "/Library/Python/2.7/site-packages/wario-1.0-py2.7.egg/wario/lib/cmvlib.py", line 108, in submit_config_to_appserver
+    r = requests.post(appserver_url, json.dumps(config_json))
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 111, in post
+    return request('post', url, data=data, json=json, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/api.py", line 57, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 475, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/Library/Python/2.7/site-packages/requests/sessions.py", line 585, in send
+    r = adapter.send(request, **kwargs)
+  File "/Library/Python/2.7/site-packages/requests/adapters.py", line 467, in send
+    raise ConnectionError(e, request=request)
+ConnectionError: HTTPConnectionPool(host='10.11.66.162', port=9000): Max retries exceeded with url: /apps/min15gen/jobs?timeout=100&sync=false&type=min15 (Caused by NewConnectionError('<requests.packages.urllib3.connection.HTTPConnection object at 0x10e7b6ad0>: Failed to establish a new connection: [Errno 61] Connection refused',))
+2016-06-24 01:10:24,515 luigi-interface INFO     Skipping error email. Set `error-email` in the `core` section of the luigi config file or override `owner_email`in the task to receive error emails.
+2016-06-24 01:10:24,518 luigi-interface INFO     Informed scheduler that task   CmvMin15Generator_2016_06_03T0045_2016_06_03T0030_82878a3605   has status   FAILED
+2016-06-24 01:10:24,536 luigi-interface INFO     Worker Worker(salt=204760171, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=33961, sudo_user=ssawant) was stopped. Shutting down Keep-Alive thread
+2016-06-24 01:10:24,541 luigi-interface INFO     
+===== Luigi Execution Summary =====
+
+Scheduled 8 tasks of which:
+* 3 present dependencies were encountered:
+    - 3 InputSessionFile(cube_time=2016-06-03T0000) ...
+* 3 failed:
+    - 3 CmvMin15Generator(...)
+* 2 were left pending, among these:
+    * 1 were missing external dependencies:
+        - 1 CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-03T0000", "cube": "min15", "end_time": "2016-06-03T0030", "delete_all": false})
+    * 1 were left pending because of unknown reason:
+        - 1 CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-03T0000", "cube": "min15", "end_time": "2016-06-03T0030", "delete_all": false})
+
+This progress looks :( because there were failed tasks
+
+===== Luigi Execution Summary =====
+
+2016-06-27 21:30:44,968 requests.packages.urllib3.connectionpool INFO     Starting new HTTP connection (1): localhost
+2016-06-27 21:30:44,999 luigi-interface INFO     Informed scheduler that task   CmvReprocessAPIHook___action____gene_f68ec405f6   has status   PENDING
+2016-06-27 21:30:45,000 luigi-interface INFO     Done scheduling tasks
+2016-06-27 21:30:45,001 luigi-interface INFO     Running Worker with 1 processes
+2016-06-27 21:30:45,008 luigi-interface INFO     [pid 50743] Worker Worker(salt=468625267, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=50743, sudo_user=ssawant) running   CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-03T0000", "cube": "min15", "end_time": "2016-06-03T0030", "delete_all": false})
+2016-06-27 21:30:45,008 root            INFO     Reprocessing min15...
+2016-06-27 21:30:45,009 root            INFO     CmvMin15Generator task params. start_time = 2016-06-03 00:00:00, end_time = 2016-06-03 00:15:00
+2016-06-27 21:30:45,010 root            INFO     CmvMin15Generator task params. start_time = 2016-06-03 00:15:00, end_time = 2016-06-03 00:30:00
+2016-06-27 21:30:45,010 root            INFO     CmvMin15Generator task params. start_time = 2016-06-03 00:30:00, end_time = 2016-06-03 00:45:00
+2016-06-27 21:30:45,011 root            INFO     Initializing task params: {}, CmvMin15Generator_2016_06_03T0030_2016_06_03T0015_fb5eaf9fa3
+2016-06-27 21:30:45,011 root            INFO     Connecting to db: wario at host: 192.168.99.100, port: 3306, user: root
+2016-06-27 21:32:00,216 luigi-interface ERROR    [pid 50743] Worker Worker(salt=468625267, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=50743, sudo_user=ssawant) failed    CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-03T0000", "cube": "min15", "end_time": "2016-06-03T0030", "delete_all": false})
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/luigi/worker.py", line 175, in run
+    new_deps = self._run_get_new_deps()
+  File "/Library/Python/2.7/site-packages/luigi/worker.py", line 125, in _run_get_new_deps
+    requires = six.next(task_gen)
+  File "/Library/Python/2.7/site-packages/wario-1.0-py2.7.egg/wario/reprocess_datacube.py", line 190, in run
+    reprocess_upstream_tasks = self.delete_targets(reprocess_upstream_tasks)
+  File "/Library/Python/2.7/site-packages/wario-1.0-py2.7.egg/wario/reprocess_datacube.py", line 171, in delete_targets
+    tasks = [task for task in tasks if not task.output().exists()]
+  File "/Library/Python/2.7/site-packages/wario-1.0-py2.7.egg/wario/lib/cmv_mysql_target.py", line 110, in exists
+    connection = self.connect()
+  File "/Library/Python/2.7/site-packages/wario-1.0-py2.7.egg/wario/lib/cmv_mysql_target.py", line 153, in connect
+    autocommit=autocommit)
+  File "/Library/Python/2.7/site-packages/mysql/connector/__init__.py", line 179, in connect
+    return MySQLConnection(*args, **kwargs)
+  File "/Library/Python/2.7/site-packages/mysql/connector/connection.py", line 95, in __init__
+    self.connect(**kwargs)
+  File "/Library/Python/2.7/site-packages/mysql/connector/abstracts.py", line 719, in connect
+    self._open_connection()
+  File "/Library/Python/2.7/site-packages/mysql/connector/connection.py", line 206, in _open_connection
+    self._socket.open_connection()
+  File "/Library/Python/2.7/site-packages/mysql/connector/network.py", line 475, in open_connection
+    errno=2003, values=(self.get_address(), _strioerror(err)))
+InterfaceError: 2003: Can't connect to MySQL server on '192.168.99.100:3306' (60 Operation timed out)
+2016-06-27 21:32:00,221 luigi-interface INFO     Skipping error email. Set `error-email` in the `core` section of the luigi config file or override `owner_email`in the task to receive error emails.
+2016-06-27 21:32:00,226 luigi-interface INFO     Informed scheduler that task   CmvReprocessAPIHook___action____gene_f68ec405f6   has status   FAILED
+2016-06-27 21:32:00,280 luigi-interface INFO     Worker Worker(salt=468625267, workers=1, host=OOAdmins-MacBook-Pro-2.local, username=root, pid=50743, sudo_user=ssawant) was stopped. Shutting down Keep-Alive thread
+2016-06-27 21:32:00,282 luigi-interface INFO     
+===== Luigi Execution Summary =====
+
+Scheduled 1 tasks of which:
+* 1 failed:
+    - 1 CmvReprocessAPIHook(param={"action": "generate", "start_time": "2016-06-03T0000", "cube": "min15", "end_time": "2016-06-03T0030", "delete_all": false})
+
+This progress looks :( because there were failed tasks
+
+===== Luigi Execution Summary =====
+

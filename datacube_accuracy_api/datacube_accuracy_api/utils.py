@@ -124,6 +124,8 @@ def response_for_check(request_data):
     command.append("--end-time={}".format(request_data['end_time']))
     command.append("--task={}".format(request_data['cube']))
 
+    LOGGER.debug(command)
+
     # response jason data mainly consists of message and response
     # in case of errors, only the message will be populated
     response_data = dict()
@@ -201,7 +203,7 @@ def response_for_generate(request_data):
     command.append("CmvReprocessAPIHook")
     command.append("--param={}".format(json.dumps(request_data)))
 
-    print command
+    LOGGER.debug(command)
 
     # response jason data mainly consists of message and response
     # in case of errors, only the message will be populated
@@ -209,10 +211,10 @@ def response_for_generate(request_data):
     try:
         LOGGER.info("subprocess.check_call  for command : %s", command)
         # Synchronous call, not more than couple of seconds
-        my_env = os.environ.copy()
-        my_env["HADOOP_HOME"] = "/Users/ssawant/repos/vendor/hadoop_distros/current"
-        my_env["HADOOP_CONF_DIR"] = "/Users/ssawant/repos/vendor/hadoop_distros/current/conf-cdh5-staging"
-        subprocess.check_call(command, env=my_env)
+        #my_env = os.environ.copy()
+        #my_env["HADOOP_HOME"] = "/Users/ssawant/repos/vendor/hadoop_distros/current"
+        #my_env["HADOOP_CONF_DIR"] = "/Users/ssawant/repos/vendor/hadoop_distros/current/conf-cdh5-staging"
+        subprocess.check_call(command) #, env=my_env)
     # TODO handle specific exceptions in case diffrent logging is required
     except Exception as e:
         # standard format to be followed for custom exceptions
